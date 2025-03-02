@@ -21,16 +21,16 @@ export default function Footer () {
               <nav>
                 <ul>
                   <li>
-                    <Link href={'/buro'}>Бюро</Link>
+                    <LinkWithWrapper dotReverce={true} isWrapper={false} name={"Бюро"} link={"/buro"} />
                   </li>
                   <li>
-                    <Link href={'/projects'}>Проекты</Link>
+                    <LinkWithWrapper dotReverce={true} isWrapper={false} name={"Проекты"} link={"/projects"} />
                   </li>
                   <li>
-                    <Link href={'/services'}>Услуги</Link>
+                    <LinkWithWrapper dotReverce={true} isWrapper={false} name={"Услуги"} link={"/services"} />
                   </li>
                   <li>
-                    <Link href={'/contacts'}>Контакты</Link>
+                    <LinkWithWrapper dotReverce={true} isWrapper={false} name={"Контакты"} link={"/contacts"} />
                   </li>
                 </ul>
               </nav>

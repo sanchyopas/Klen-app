@@ -7,27 +7,6 @@
   aspect-ratio: 1364 / 1582;
   overflow: hidden;
 
-  .title {
-    padding-bottom: 40px;
-    @media (max-width: 767px) {
-      padding-bottom: 20px;
-    }
-
-    h2 {
-      margin: 0;
-      font-size: 40px;
-      line-height: 48px;
-      color: #424242;
-      font-weight: 600;
-      text-transform: lowercase;
-      text-wrap: balance;
-      @media (max-width: 767px) {
-        font-size: 28px;
-        line-height: 40px;
-      }
-    }
-  }
-
   .item {
     position: relative;
     width: calc(50% - 12px);
@@ -42,15 +21,15 @@
     }
 
     @media (min-width: 768px) {
-      &:nth-child(1),
-      &:nth-child(6) {
+      &:nth-child(6n - 5),
+      &:nth-child(6n) {
         aspect-ratio: 670 / 670;
       }
 
-      &:nth-child(2),
-      &:nth-child(3),
-      &:nth-child(4),
-      &:nth-child(5) {
+      &:nth-child(6n - 4),
+      &:nth-child(6n - 3),
+      &:nth-child(6n - 2),
+      &:nth-child(6n - 1) {
         aspect-ratio: 670 / 420;
       }
     }

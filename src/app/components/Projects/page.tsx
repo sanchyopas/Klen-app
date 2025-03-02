@@ -38,7 +38,7 @@ export default function Projects() {
   return (
     <section id="projects">
       <div className={"container"}>
-        <div className={s.title}>
+        <div className="title">
           <h2>Проекты</h2>
         </div>
         <div className={s.projectsList}>

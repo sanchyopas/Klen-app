@@ -1,0 +1,82 @@
+#hello {
+  position: relative;
+  height: calc(100svh - 72px);
+  width: calc(100% - 80px);
+  max-width: calc(1920px - 80px);
+  margin: 0 auto;
+  padding: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @media (max-width: 767px) {
+    height: calc(100svh - 80px);
+    width: calc(100% - 24px);
+  }
+
+  .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 145px;
+    overflow: hidden;
+    @media (max-width: 767px) {
+      bottom: 0;
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      mask: url('/img/Logo_Mask.svg') bottom/contain no-repeat,
+      linear-gradient(#424242 0 0); /* we need this extra layer for mask-composite */
+      mask-composite: exclude;
+      background: #fff;
+      @media (max-width: 767px) {
+        top: initial;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        aspect-ratio: 118 / 40;
+        mask: initial;
+        mask-composite: initial;
+        background-image: url('/img/Hero_Mobile.svg');
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        background-size: contain;
+        background-color: initial;
+      }
+    }
+  }
+
+  .container {
+    height: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    @media (max-width: 767px) {
+      justify-content: start;
+      align-items: start;
+    }
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 60px;
+    line-height: 72px;
+    text-transform: uppercase;
+    margin: 0 0 40px;
+    @media (max-width: 991px) {
+      font-size: 50px;
+    }
+    @media (max-width: 767px) {
+      font-size: 28px;
+      line-height: 40px;
+      margin: 24px 24px 0 24px;
+    }
+  }
+}

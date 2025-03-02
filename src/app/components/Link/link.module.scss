@@ -1,0 +1,76 @@
+.linkWrapper {
+  margin-top: 16px;
+  @media (max-width: 767px) {
+    margin-top: 20px;
+  }
+}
+
+.link {
+  display: inline-block;
+  position: relative;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: #424242;
+  text-transform: lowercase;
+  transition: all 0.25s;
+  overflow: hidden;
+
+  &.dot {
+    padding-left: 24px;
+    padding-right: 0;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #424242;
+      position: absolute;
+      left: 0;
+      top: 9px;
+      transition: all 0.25s;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        padding-left: 0;
+        padding-right: 24px;
+
+        &:before {
+          left: -24px;
+        }
+      }
+    }
+  }
+
+  &.dotReverce {
+    padding-left: 0;
+    padding-right: 24px;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #424242;
+      position: absolute;
+      left: -24px;
+      top: 9px;
+      transition: all 0.25s;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        padding-left: 24px;
+        padding-right: 0;
+
+        &:before {
+          left: 0;
+        }
+      }
+    }
+  }
+}

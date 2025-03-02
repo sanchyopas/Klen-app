@@ -1,0 +1,118 @@
+#services {
+  .servicesList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-wrap: wrap;
+    .item {
+      width: fit-content;
+      position: relative;
+
+      // Это удалить
+      @media (max-width: 767px) {
+        display: none;
+      }
+
+      img {
+        display: none;
+        @media (max-width: 767px) {
+          display: block;
+          width: 100%;
+          object-fit: cover;
+          aspect-ratio: 328 / 420;
+        }
+      }
+
+      .name {
+        width: fit-content;
+        margin: 0;
+        pointer-events: none;
+        color: #424242;
+        font-size: 24px;
+        line-height: 36px;
+        font-weight: 400;
+        transition: all 0.25s;
+        text-transform: lowercase;
+        @media (max-width: 767px) {
+          font-size: 20px;
+          line-height: 28px;
+          margin-top: 8px;
+        }
+      }
+
+      &.active {
+        // Это удалить
+        @media (max-width: 767px) {
+          display: block;
+        }
+        .name {
+          opacity: 1;
+        }
+      }
+
+      @media (hover: hover) {
+        .name {
+          opacity: 0.8;
+        }
+        &:hover {
+          .name {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    & + .link-wrapper {
+      margin-top: 40px;
+      @media (max-width: 767px) {
+        margin-top: 48px;
+      }
+    }
+  }
+
+  .servicesImageList {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 670 / 620;
+    @media (max-width: 767px) {
+      display: none;
+    }
+    .item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: all 0.25s;
+      opacity: 0;
+      &.active {
+        opacity: 1;
+      }
+      img {
+        display: block;
+        width: 100%;
+        object-fit: cover;
+        aspect-ratio: 670 / 620;
+      }
+    }
+  }
+
+  .title {
+    padding-bottom: 40px;
+    @media (max-width: 767px) {
+      padding-bottom: 20px;
+    }
+    h2 {
+      margin: 0;
+      font-size: 40px;
+      line-height: 48px;
+      color: #424242;
+      font-weight: 600;
+      text-transform: lowercase;
+      text-wrap: balance;
+      @media (max-width: 767px) {
+        font-size: 28px;
+        line-height: 40px;
+      }
+    }
+  }
+}

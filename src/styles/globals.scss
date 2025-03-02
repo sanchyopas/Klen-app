@@ -1,0 +1,69 @@
+// пример переменных
+$main_font: 'Inter', serif;
+
+$animation_speed: 0.25s;
+
+* {
+  outline: none;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+.container,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+  padding-left: 40px;
+  padding-right: 40px;
+  max-width: 100% !important;
+  @media (max-width: 767px) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  @media (min-width: 1400px) {
+    max-width: 1920px !important;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 360px;
+  overflow-x: hidden;
+  font-family: $main_font;
+  padding-top: 72px;
+  @media (max-width: 767px) {
+    padding-top: 80px;
+  }
+  main {
+    flex: 1 0 auto;
+    section {
+      padding: 40px 0;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: #424242;
+  }
+
+  .fullscreen_bg {
+    position: relative;
+    img.bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

@@ -1,11 +1,12 @@
-import Head from "next/head";
+export const metadata = {
+  title: "Страница сервиса - Klen",
+  description: "Свяжитесь с нами",
+  keywords: ["Klen", "Компания Клен"]
+};
 
 export default function ProjectsPage () {
   return (
     <div>
-      <Head>
-        <title>Страница сервиса</title>
-      </Head>
       <h1>Страница сервиса</h1>
     </div>
   );

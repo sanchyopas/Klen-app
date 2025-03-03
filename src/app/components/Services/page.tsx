@@ -1,6 +1,7 @@
 import Link from "next/link";
 import s from "./services.module.scss"
 import LinkWithWrapper from "@/app/components/Link/Link";
+import Title from "@/app/components/Title/page";
 
 export default function Services() {
 
@@ -39,9 +40,9 @@ export default function Services() {
       <div className="container">
         <div className="row">
           <div className="col-12 col-md-6">
-            <div className={s.title}>
-              <h2>Услуги</h2>
-            </div>
+
+            <Title title="Услуги"/>
+
             <div className={s.servicesList}>
               {services.map(service => (
                 <div className={`${s.item} ${service.is_active === true ? "active" : ""}`} key={service.name}>

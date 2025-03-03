@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <IndexScreen/>
-      <Projects />
+      <Projects title={"Проекты"} link={"/projects"}  />
       <Buro />
       <Services />
     </>

@@ -95,24 +95,4 @@
       }
     }
   }
-
-  .title {
-    padding-bottom: 40px;
-    @media (max-width: 767px) {
-      padding-bottom: 20px;
-    }
-    h2 {
-      margin: 0;
-      font-size: 40px;
-      line-height: 48px;
-      color: #424242;
-      font-weight: 600;
-      text-transform: lowercase;
-      text-wrap: balance;
-      @media (max-width: 767px) {
-        font-size: 28px;
-        line-height: 40px;
-      }
-    }
-  }
 }

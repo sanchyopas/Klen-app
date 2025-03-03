@@ -1,9 +1,10 @@
-import Link from "next/link";
 import s from "./projects.module.scss"
 import LinkWithWrapper from "@/app/components/Link/Link";
+import Title from "@/app/components/Title/page";
+import ProjectCard from "@/app/components/ProjectCard/page";
 
-export default function Projects() {
-    const projects = [
+export default function Projects( props:any ) {
+  const projects = [
       {
         "link": "pr1",
         "image": "image-1.jpg",
@@ -35,27 +36,25 @@ export default function Projects() {
         "title": "концепция благоустройства ЖК Снегири"
       },
     ]
+
+  const {title, link} = props
+
   return (
     <section id="projects">
       <div className={"container"}>
-        <div className="title">
-          <h2>Проекты</h2>
-        </div>
+
+        {!!title && <Title title={title}/>}
+
         <div className={s.projectsList}>
           {
             projects.map((project) => ((
-              <div className={s.item} key={project.link}>
-                <img
-                  src={`/img/${project.image}`}
-                  alt={project.title}
-                />
-                <Link href={`/projects/${project.link}`}></Link>
-                <h3 className={s.name}>{project.title}</h3>
-              </div>
+              <ProjectCard data={project} key={project.link}/>
             )))
           }
         </div>
-        <LinkWithWrapper link={"/projects"} dotReverce={false} isWrapper={true} name={"все проекты"} />
+
+        {!!link && <LinkWithWrapper className={s.linkWrapper} link={"/projects"} dotReverce={false} isWrapper={true} name={"все проекты"} />}
+
       </div>
     </section>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import s from "./footer.module.scss"
 import Link from "next/link";
 import LinkWithWrapper from "@/app/components/Link/Link";
+import Title from "@/app/components/Title/page";
 
 export default function Footer () {
   return (
@@ -37,9 +38,7 @@ export default function Footer () {
             </div>
 
             <div className="col-12 col-md-6">
-              <div className="title">
-                <h2>Давайте обсудим ваш проект</h2>
-              </div>
+              <Title title={"Давайте обсудим ваш проект"}/>
               <ul>
                 <li>
                   <LinkWithWrapper dotReverce={false} isWrapper={false} name={"Отправить заявку"} link={"#"} />

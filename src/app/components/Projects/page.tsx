@@ -4,40 +4,8 @@ import Title from "@/app/components/Title/page";
 import ProjectCard from "@/app/components/ProjectCard/page";
 
 export default function Projects( props:any ) {
-  const projects = [
-      {
-        "link": "pr1",
-        "image": "image-1.jpg",
-        "title": "brodsky"
-      },
-      {
-        "link": "pr2",
-        "image": "image-2.jpg",
-        "title": "интерьер МОП"
-      },
-      {
-        "link": "pr3",
-        "image": "image-3.jpg",
-        "title": "реновация облика фасадов"
-      },
-      {
-        "link": "pr4",
-        "image": "image-4.jpg",
-        "title": "жилой интерьер"
-      },
-      {
-        "link": "pr5",
-        "image": "image-5.jpg",
-        "title": "концепция фасадных решений ЖК 'Порто-Ново'"
-      },
-      {
-        "link": "pr6",
-        "image": "image-6.jpg",
-        "title": "концепция благоустройства ЖК Снегири"
-      },
-    ]
 
-  const {title, link} = props
+  const {title, link, projects} = props
 
   return (
     <section id="projects">
@@ -47,7 +15,7 @@ export default function Projects( props:any ) {
 
         <div className={s.projectsList}>
           {
-            projects.map((project) => ((
+            projects.map((project:any) => ((
               <ProjectCard data={project} key={project.link}/>
             )))
           }

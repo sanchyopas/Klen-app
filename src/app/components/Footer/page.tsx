@@ -22,16 +22,16 @@ export default function Footer () {
               <nav>
                 <ul>
                   <li>
-                    <LinkWithWrapper dotReverce={true} isWrapper={false} name={"Бюро"} link={"/buro"} />
+                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Бюро"} link={"/buro"} />
                   </li>
                   <li>
-                    <LinkWithWrapper dotReverce={true} isWrapper={false} name={"Проекты"} link={"/projects"} />
+                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Проекты"} link={"/projects"} />
                   </li>
                   <li>
-                    <LinkWithWrapper dotReverce={true} isWrapper={false} name={"Услуги"} link={"/services"} />
+                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Услуги"} link={"/services"} />
                   </li>
                   <li>
-                    <LinkWithWrapper dotReverce={true} isWrapper={false} name={"Контакты"} link={"/contacts"} />
+                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Контакты"} link={"/contacts"} />
                   </li>
                 </ul>
               </nav>
@@ -41,10 +41,10 @@ export default function Footer () {
               <Title title={"Давайте обсудим ваш проект"}/>
               <ul>
                 <li>
-                  <LinkWithWrapper dotReverce={false} isWrapper={false} name={"Отправить заявку"} link={"#"} />
+                  <LinkWithWrapper className="" dotReverce={false} isWrapper={false} name={"Отправить заявку"} link={"#"} />
                 </li>
                 <li className={s.grayLink}>
-                  <LinkWithWrapper dotReverce={false} isWrapper={false} name={"Пригласить в тендер"} link={"#"} />
+                  <LinkWithWrapper className="" dotReverce={false} isWrapper={false} name={"Пригласить в тендер"} link={"#"} />
                 </li>
               </ul>
             </div>

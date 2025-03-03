@@ -8,8 +8,14 @@ $animation_speed: 0.25s;
   box-sizing: border-box;
 }
 
+
 html {
   height: 100%;
+}
+
+p {
+  padding: 0;
+  margin: 0;
 }
 
 .container,

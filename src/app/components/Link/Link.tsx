@@ -4,7 +4,7 @@ import s from "./link.module.scss"
 type LinkProps = {
   dotReverce: boolean;
   isWrapper: boolean;
-  className: string;
+  className?: string;
   name: string;
   link: string;
 }

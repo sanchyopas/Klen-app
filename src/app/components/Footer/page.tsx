@@ -8,7 +8,7 @@ export default function Footer () {
     <>
       <footer className={s.footer}>
         <div className="container">
-          <div className="row">
+          <div className={`${s.row} row`}>
             <div className="col-12 col-md-6">
               <div className={s.logo}>
                 <a href="/">KLЁN — architectural bureau</a>
@@ -53,7 +53,7 @@ export default function Footer () {
         </div>
 
         <div className={`container ${s.footerEndLine}`}>
-          <div className="row">
+          <div className={`${s.row} row`}>
             <div className="col-12 col-md-6">
               <span>ⓒ 2025</span>
             </div>

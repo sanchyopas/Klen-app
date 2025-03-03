@@ -1,6 +1,16 @@
+'use client'
+
 import s from "./header.module.scss"
 import Link from "next/link";
+import {useState} from "react";
+
 export default function Header() {
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const openMenu = () => {
+    setMenuOpen(!menuOpen);
+  }
 
   return (
     <header className={s.header}>
@@ -14,7 +24,8 @@ export default function Header() {
         </div>
 
         <button
-          className={s.burger}
+          className={ menuOpen ? `${s.burger} ${s.open}` : s.burger }
+          onClick={openMenu}
         >
           <span></span>
           <span></span>
@@ -22,7 +33,7 @@ export default function Header() {
           <span></span>
         </button>
 
-        <div className={s.mobileMenuWrapper}>
+        <div className={ menuOpen ? `${s.mobileMenuWrapper} ${s.open}` : s.mobileMenuWrapper }>
           <nav>
             <ul>
               <li><Link href="/buro">Бюро</Link></li>

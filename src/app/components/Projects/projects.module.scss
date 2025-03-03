@@ -1,22 +1,25 @@
 .projectsList {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  flex-wrap: wrap;
-  aspect-ratio: 1364 / 1582;
   overflow: hidden;
+
+  @media (min-width: 768px) {
+    columns: 2;
+    column-gap: 24px;
+    margin-bottom: -24px;
+  }
 
   .item {
     position: relative;
-    width: calc(50% - 12px);
     background: #dedede;
     overflow: hidden;
-    @media (max-width: 767px) {
-      width: 100%;
+
+    @media (min-width: 768px) {
+      break-inside: avoid-column;
+      margin-bottom: 24px;
     }
 
     @media (max-width: 767px) {
+      width: 100%;
       aspect-ratio: 328 / 420;
     }
 

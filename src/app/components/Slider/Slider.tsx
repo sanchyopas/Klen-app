@@ -12,7 +12,7 @@ import Title from "@/app/components/Title/Title";
 
 type SliderProps = {
   is_mobile?: boolean;
-  slides?: any
+  slides: any
   is_boolet?: boolean;
   name_btn?: string;
   link_btn?: string;

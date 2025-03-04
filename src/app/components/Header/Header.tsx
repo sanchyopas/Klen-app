@@ -18,7 +18,7 @@ export default function Header() {
       <div className={`${s.container} container`}>
         <div className={s.logo}>
           <Link href="/">KLЁN — architectural bureau</Link>
-          <Image src={"/img/logo.svg"} alt={"KLЁN — architectural bureau"} width={117} height={40} layout="intrinsic" />
+          <Image src={"/img/Logo.svg"} alt={"KLЁN — architectural bureau"} width={117} height={40} layout="intrinsic" />
         </div>
 
         <button

@@ -89,6 +89,7 @@
 }
 
 .narrowText {
+  text-align: justify;
   .text {
     width: 100%;
     max-width: 670px;
@@ -103,6 +104,7 @@
 }
 
 .wideText {
+  text-align: justify;
   .text {
     width: 100%;
     max-width: 900px;
@@ -117,17 +119,73 @@
 }
 
 .twoColsText {
+  text-align: justify;
   .text {
     width: 100%;
     max-width: 1245px;
     margin: 0 auto;
     opacity: 0.8;
-    columns: 2;
-    column-gap: 135px;
+    @media (min-width: 768px) {
+      columns: 2;
+      column-gap: 135px;
+    }
     & > * {
       & + * {
         margin-top: 16px;
       }
     }
   }
+}
+
+.fullScreenImage {
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+.halfScreenImage {
+  img {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+.imagesGreed {
+  .greed {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 10px;
+
+    @media (max-width: 767px) {
+      img {
+        display: none;
+        &:first-child {
+          display: block;
+          width: 100%;
+          aspect-ratio: 440 / 660;
+          object-fit: cover;
+        }
+      }
+    }
+
+    @media (min-width: 768px) {
+      img {
+        display: block;
+        width: calc( (100% - 20px ) / 3);
+        aspect-ratio: 440 / 660;
+        object-fit: cover;
+        &.wide {
+          width: calc( ((100% - 20px ) / 3) * 2 + 10px);
+          aspect-ratio: 1360 / 660;
+        }
+      }
+    }
+
+  }
+
+
 }

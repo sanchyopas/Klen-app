@@ -126,6 +126,16 @@ body {
     }
   }
 
+  h1 {
+    font-size: 60px;
+    line-height: 1.2;
+    text-transform: lowercase;
+    margin: 0;
+    @media (max-width: 767px) {
+      font-size: 32px;
+    }
+  }
+
   h2 {
     font-size: 40px;
     line-height: 48px;

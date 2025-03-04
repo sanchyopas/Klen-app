@@ -1,7 +1,8 @@
+import { ReactElement } from "react";
 import s from "./title.module.scss"
 
 type TitleProps = {
-  title: string;
+  title: ReactElement;
   className?: string;
   is_mobile?: boolean;
 }
@@ -9,7 +10,7 @@ type TitleProps = {
 export default function Title( { title, className, is_mobile }:TitleProps  ) {
   return (
     <div className={`${s.title} ${className} ${is_mobile ? s.mb : ""}`}>
-      <h2>{title}</h2>
+      {title}
     </div>
   );
 };

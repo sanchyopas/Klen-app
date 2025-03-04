@@ -17,6 +17,7 @@
       aspect-ratio: 328 / 420;
 
       @media screen and (min-width: 768px) {
+        max-height: initial;
         aspect-ratio: 1360 / 720;
       }
     }

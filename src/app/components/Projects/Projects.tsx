@@ -11,7 +11,7 @@ export default function Projects( props:any ) {
     <section id={`projects`} className={`${is_pc ? s.pc : ""}`}>
       <div className={"container"}>
 
-        {!!title && <Title title={title}/>}
+        {!!title && <Title title={<h2>{title}</h2>} />}
 
         <div className={s.projectsList}>
           {

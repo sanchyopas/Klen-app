@@ -3,6 +3,7 @@ import IndexScreen from "@/app/components/IndexScreen/IndexScreen";
 import Buro from "@/app/components/Buro/Buro";
 import Services from "@/app/components/Services/Services";
 import Slider from "@/app/components/Slider/Slider";
+import React from "react";
 
 export default function Home() {
 
@@ -44,7 +45,7 @@ export default function Home() {
     <>
       <IndexScreen/>
       <Projects title={"Проекты"} link={"/projects"} projects={projects} is_pc={true} />
-      <Slider slides={projects} is_boolet={false} name_btn={"все проекты"} link_btn={"/projects"} is_mobile={true}/>
+      <Slider slides={projects} title={<h2>Проекты</h2>} is_boolet={false} name_btn={"все проекты"} link_btn={"/projects"} is_mobile={true}/>
       <Buro />
       <Services />
     </>

@@ -57,7 +57,7 @@ export default function Services() {
   return (
     <section id={s.services}>
       <div className="container">
-        <Title title="Услуги" className={s.title} />
+        <Title title={<h2>Услуги</h2>} className={s.title} />
         <div className={`row ${s.row}`}>
           <div className={`col-12 col-lg-6 ${s.wrapper}`}>
             <div className={s.servicesList}>

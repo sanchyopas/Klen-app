@@ -1,6 +1,6 @@
 "use client"
 import s from "./Slider.module.scss"
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, ReactElement} from 'react';
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation, Pagination, Scrollbar, A11y} from 'swiper/modules';
 
@@ -16,13 +16,15 @@ type SliderProps = {
   is_boolet?: boolean;
   name_btn?: string;
   link_btn?: string;
+  title?: ReactElement;
+  class_name?: string;
 }
 
 type Slide = {
   image: string;
 }
 
-export default function Slider({is_mobile, slides, is_boolet, name_btn, link_btn}: SliderProps) {
+export default function Slider({is_mobile, slides, is_boolet, name_btn, link_btn, title, class_name}: SliderProps) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const paginationRef = useRef(null);
@@ -35,9 +37,9 @@ export default function Slider({is_mobile, slides, is_boolet, name_btn, link_btn
 
   console.log("Slider Props:", { slides, is_boolet, name_btn, link_btn });
   return (
-    <div className={`${s.slider} ${is_mobile ? s.mb : ""}`}>
+    <div className={`${s.slider} ${is_mobile ? s.mb : ""} ${!!class_name && class_name}`}>
       <div className="container">
-        <Title title={"проекты"} is_mobile={true} />
+        {!!title && <Title title={title} is_mobile={true} />}
         {isMounted && (
           <Swiper
             key={1}

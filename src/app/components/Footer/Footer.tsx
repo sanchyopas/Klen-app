@@ -39,7 +39,7 @@ export default function Footer () {
             </div>
 
             <div className="col-12 col-md-6">
-              <Title title={"Давайте обсудим ваш проект"}/>
+              <Title title={<h2>Давайте обсудим ваш проект</h2>}/>
               <ul>
                 <li>
                   <LinkWithWrapper className="" dotReverce={false} isWrapper={false} name={"Отправить заявку"} link={"#"} />

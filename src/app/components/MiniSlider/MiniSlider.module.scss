@@ -1,0 +1,24 @@
+.MiniSlider {
+  padding: 0px!important;
+  margin-top: -15px;
+  @media (max-width: 767px){
+    margin-top: -20px;
+  }
+  & > div {
+    padding: 0;
+  }
+
+  img {
+    aspect-ratio: 670 / 670!important;
+    @media (max-width: 767px) {
+      aspect-ratio: 328 / 600!important;
+      max-height: 720px!important;
+    }
+  }
+}
+
+
+
+
+
+

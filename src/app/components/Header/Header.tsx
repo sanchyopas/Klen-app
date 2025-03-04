@@ -2,6 +2,7 @@
 
 import s from "./header.module.scss"
 import Link from "next/link";
+import Image from "next/image";
 import {useState} from "react";
 
 export default function Header() {
@@ -17,10 +18,7 @@ export default function Header() {
       <div className={`${s.container} container`}>
         <div className={s.logo}>
           <Link href="/">KLЁN — architectural bureau</Link>
-          <img
-            src={"/img/logo.svg"}
-            alt="KLЁN — architectural bureau"
-          />
+          <Image src={"/img/logo.svg"} alt={"KLЁN — architectural bureau"} width={117} height={40} layout="intrinsic" />
         </div>
 
         <button

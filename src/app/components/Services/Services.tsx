@@ -1,7 +1,7 @@
 "use client"
 import s from "./services.module.scss"
 import LinkWithWrapper from "@/app/components/Link/Link";
-import Title from "@/app/components/Title/page";
+import Title from "@/app/components/Title/Title";
 import {useRef, useState} from "react";
 import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";

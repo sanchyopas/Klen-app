@@ -2,7 +2,8 @@ import React from 'react';
 import s from "./footer.module.scss"
 import Link from "next/link";
 import LinkWithWrapper from "@/app/components/Link/Link";
-import Title from "@/app/components/Title/page";
+import Title from "@/app/components/Title/Title";
+
 
 export default function Footer () {
   return (

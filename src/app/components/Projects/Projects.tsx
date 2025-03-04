@@ -1,6 +1,6 @@
 import s from "./projects.module.scss"
-import Title from "@/app/components/Title/page";
-import ProjectCard from "@/app/components/ProjectCard/page";
+import Title from "@/app/components/Title/Title";
+import ProjectCard from "@/app/components/ProjectCard/ProjectCard";
 import LinkWithWrapper from "@/app/components/Link/Link";
 
 export default function Projects( props:any ) {

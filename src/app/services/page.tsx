@@ -1,4 +1,4 @@
-import Title from "../components/Title/page";
+import Title from "../components/Title/Title";
 import s from "./services.module.scss";
 import LinkWithWrapper from "@/app/components/Link/Link";
 
@@ -11,10 +11,8 @@ export const metadata = {
 export default function ProjectsPage () {
   return (
     <>
-
       <div>
         <Title title={"Текстовые блоки"}/>
-
         <section className={s.narrowText}>
           <div className="container">
             <div className={s.text}>
@@ -399,7 +397,6 @@ export default function ProjectsPage () {
                 <div className="col-12 col-md-6">
 
                   <div className={s.text}>
-                    <p>
                       <ul>
                         <li>Построение осмысленной структуры города в будущем дает возможность полноценно использовать
                           сформированное пространство
@@ -407,19 +404,16 @@ export default function ProjectsPage () {
                         <li><p>Дополняя его элементами комфортной городской среды на следующих этапах</p></li>
                         <li><span>Дополняя его элементами комфортной городской среды на следующих этапах</span></li>
                       </ul>
-                    </p>
                   </div>
 
                   <div className={s.text}>
-                    <p>
-                      <ol>
-                        <li>Построение осмысленной структуры города в будущем дает возможность полноценно использовать
-                          сформированное пространство
-                        </li>
-                        <li><p>Дополняя его элементами комфортной городской среды на следующих этапах</p></li>
-                        <li><span>Дополняя его элементами комфортной городской среды на следующих этапах</span></li>
-                      </ol>
-                    </p>
+                    <ol>
+                      <li>Построение осмысленной структуры города в будущем дает возможность полноценно использовать
+                        сформированное пространство
+                      </li>
+                      <li><p>Дополняя его элементами комфортной городской среды на следующих этапах</p></li>
+                      <li><span>Дополняя его элементами комфортной городской среды на следующих этапах</span></li>
+                    </ol>
                   </div>
 
                   <div className={s.text}>

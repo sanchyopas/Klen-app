@@ -1,7 +1,7 @@
-import Projects from "@/app/components/Projects/page";
-import IndexScreen from "@/app/components/IndexScreen/page";
-import Buro from "@/app/components/Buro/page";
-import Services from "@/app/components/Services/page";
+import Projects from "@/app/components/Projects/Projects";
+import IndexScreen from "@/app/components/IndexScreen/IndexScreen";
+import Buro from "@/app/components/Buro/Buro";
+import Services from "@/app/components/Services/Services";
 
 export default function Home() {
 

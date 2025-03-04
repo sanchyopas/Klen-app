@@ -1,3 +1,5 @@
+import Slider from "@/app/components/Slider/Slider";
+
 interface Props {
   params: {
     slug: string;
@@ -7,6 +9,9 @@ interface Props {
 
 export default function Project({params}: Props) {
   return (
-    <h1>Проект {params.slug}</h1>
+    <>
+    <Slider/>
+    </>
+
   );
 }

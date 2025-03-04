@@ -10,63 +10,44 @@
 }
 
 .two_columns_content {
-  .row {
-    & > div {
-      &:first-child {
-        padding-right: 135px;
-        @media (max-width: 767px) {
-          padding-right: 12px;
-          padding-bottom: 20px;
-        }
-      }
-    }
-  }
 
   & + & {
     margin-top: 20px;
   }
 
+  @media (max-width: 767px) {
+    .row {
+      & > div:last-child {
+        margin-top: 40px;
+
+        .img {
+          margin-top: -20px;
+        }
+      }
+    }
+  }
+
   .text {
     color: #424242;
-    font-size: 16px;
-    line-height: 24px;
     display: flex;
     flex-direction: column;
     gap: 40px;
+    padding-right: 135px;
+
+    &.noPadding {
+      padding-right: 0;
+    }
+
+    & + .text {
+      margin-top: 80px;
+      @media (max-width: 767px) {
+        margin-top: 40px;
+      }
+    }
 
     @media (max-width: 767px) {
       gap: 20px;
-    }
-
-    h2 {
-      font-size: 40px;
-      line-height: 48px;
-      text-transform: lowercase;
-      margin: 0;
-    }
-
-    h3 {
-      font-size: 24px;
-      line-height: 36px;
-      margin: 0;
-    }
-
-    h4 {
-      font-size: 20px;
-      line-height: 28px;
-      margin: 0;
-    }
-
-    h5 {
-      font-size: 16px;
-      line-height: 24px;
-      margin: 0;
-    }
-
-    h6 {
-      font-size: 16px;
-      line-height: 24px;
-      margin: 0;
+      padding-right: 0;
     }
 
     p {
@@ -84,6 +65,16 @@
     }
   }
 
+  .noGapContent {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (max-width: 767px) {
+      gap: 16px;
+    }
+  }
+
   .img {
     position: relative;
     img {
@@ -92,6 +83,50 @@
       @media (max-width: 767px) {
         aspect-ratio: 1 / 1;
         object-fit: cover;
+      }
+    }
+  }
+}
+
+.narrowText {
+  .text {
+    width: 100%;
+    max-width: 670px;
+    margin: 0 auto;
+    opacity: 0.8;
+    & > * {
+      & + * {
+        margin-top: 16px;
+      }
+    }
+  }
+}
+
+.wideText {
+  .text {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    opacity: 0.8;
+    & > * {
+      & + * {
+        margin-top: 16px;
+      }
+    }
+  }
+}
+
+.twoColsText {
+  .text {
+    width: 100%;
+    max-width: 1245px;
+    margin: 0 auto;
+    opacity: 0.8;
+    columns: 2;
+    column-gap: 135px;
+    & > * {
+      & + * {
+        margin-top: 16px;
       }
     }
   }

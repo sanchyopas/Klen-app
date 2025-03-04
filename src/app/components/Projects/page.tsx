@@ -1,7 +1,7 @@
 import s from "./projects.module.scss"
-import LinkWithWrapper from "@/app/components/Link/Link";
 import Title from "@/app/components/Title/page";
 import ProjectCard from "@/app/components/ProjectCard/page";
+import LinkWithWrapper from "@/app/components/Link/Link";
 
 export default function Projects( props:any ) {
 

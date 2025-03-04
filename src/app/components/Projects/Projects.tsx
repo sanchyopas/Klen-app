@@ -5,10 +5,10 @@ import LinkWithWrapper from "@/app/components/Link/Link";
 
 export default function Projects( props:any ) {
 
-  const {title, link, projects} = props
+  const {title, link, projects, is_pc} = props
 
   return (
-    <section id="projects">
+    <section id={`projects`} className={`${is_pc ? s.pc : ""}`}>
       <div className={"container"}>
 
         {!!title && <Title title={title}/>}

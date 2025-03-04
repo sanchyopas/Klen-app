@@ -8,7 +8,7 @@ export default function ProjectCard( { data }:any ) {
   return (
     <div className={s.item} key={link}>
       <img
-        src={`/img/${image}`}
+        src={`${image}`}
         alt={title}
       />
       <Link href={`/projects/${link}`}></Link>

@@ -7,8 +7,22 @@ import {Navigation, Pagination, Scrollbar, A11y} from 'swiper/modules';
 import "swiper/css";
 import "swiper/css/pagination";
 import {NavigationOptions} from "swiper/types";
+import LinkWithWrapper from "@/app/components/Link/Link";
+import Title from "@/app/components/Title/Title";
 
-export default function Slider() {
+type SliderProps = {
+  is_mobile?: boolean;
+  slides?: any
+  is_boolet?: boolean;
+  name_btn?: string;
+  link_btn?: string;
+}
+
+type Slide = {
+  image: string;
+}
+
+export default function Slider({is_mobile, slides, is_boolet, name_btn, link_btn}: SliderProps) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const paginationRef = useRef(null);
@@ -19,10 +33,11 @@ export default function Slider() {
     setIsMounted(true);
   }, []);
 
-
+  console.log("Slider Props:", { slides, is_boolet, name_btn, link_btn });
   return (
-    <div className={s.slider}>
+    <div className={`${s.slider} ${is_mobile ? s.mb : ""}`}>
       <div className="container">
+        <Title title={"проекты"} is_mobile={true} />
         {isMounted && (
           <Swiper
             key={1}
@@ -30,9 +45,6 @@ export default function Slider() {
             pagination={{
               el: paginationRef.current,
               clickable: true,
-              /*renderBullet: (index, className) => {
-                return `<span class="${className}"></span>`;
-              },*/
             }}
             navigation={{
               nextEl: nextRef.current,
@@ -48,22 +60,21 @@ export default function Slider() {
               swiper.navigation?.update();
             }}
           >
-            <SwiperSlide className={s.slider__slide}>
-              <img src="/img/slider/s-1.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className={s.slider__slide}>
-              <img src="/img/slider/s-2.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className={s.slider__slide}>
-              <img src="/img/slider/s-3.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className={s.slider__slide}>
-              <img src="/img/slider/s-1.jpg" alt="" />
-            </SwiperSlide>
+            {slides.map((item:Slide, i:number) => (
+              <SwiperSlide className={s.slider__slide} key={i}>
+                <img src={item.image} alt="" />
+              </SwiperSlide>
+            ))}
+
           </Swiper>
         )}
         <div className={s["slider__actions"]}>
-          <div ref={paginationRef} className={`${s.slider__pagination}`} />
+          {is_boolet ? (
+            <div ref={paginationRef} className={`${s.slider__pagination}`} />
+          ):(
+            <LinkWithWrapper dotReverce={false} isWrapper={false} name={name_btn} link={link_btn}/>
+          )}
+
           <div className={s["slider__navigations"]}>
             <button ref={prevRef} className={s["slider__prev"]}>
               <img src="/img/icon/arrow_left.svg" alt="" />

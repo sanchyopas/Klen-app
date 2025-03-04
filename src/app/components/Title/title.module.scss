@@ -16,4 +16,11 @@
       line-height: 40px;
     }
   }
+
+  //Потом переделаю удалю
+  &.mb{
+    @media screen and (min-width: 768px) {
+      display: none;
+    }
+  }
 }

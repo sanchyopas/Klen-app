@@ -1,0 +1,32 @@
+.page404 {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100svh;
+  width: 100%;
+  max-width: calc(670px + 80px);
+  margin: 0 auto;
+  & > {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  img {
+    width: 100%;
+  }
+
+  .text {
+    margin-top: 80px;
+    margin-bottom: 40px;
+    opacity: 0.8;
+  }
+
+  .linkList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px
+  }
+}

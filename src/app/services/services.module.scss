@@ -154,38 +154,33 @@
 }
 
 .imagesGreed {
-  .greed {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 20px;
 
-    @media (max-width: 767px) {
-      img {
-        display: none;
-        &:first-child {
-          display: block;
-          width: 100%;
-          aspect-ratio: 440 / 660;
-          object-fit: cover;
-        }
-      }
-    }
-
-    @media (min-width: 768px) {
-      img {
+  @media (max-width: 767px) {
+    img {
+      display: none;
+      &:first-child {
         display: block;
-        width: calc( (100% - 20px ) / 3);
+        width: 100%;
         aspect-ratio: 440 / 660;
         object-fit: cover;
-        &.wide {
-          width: calc( ((100% - 20px ) / 3) * 2 + 10px);
-          aspect-ratio: 1360 / 660;
-        }
       }
     }
-
   }
 
-
+  @media (min-width: 768px) {
+    img {
+      display: block;
+      width: calc( (100% - 40px ) / 3);
+      aspect-ratio: 440 / 660;
+      object-fit: cover;
+      &.wide {
+        width: calc( ((100% - 40px ) / 3) * 2 + 20px);
+        aspect-ratio: 1360 / 660;
+      }
+    }
+  }
 }

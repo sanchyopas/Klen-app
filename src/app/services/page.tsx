@@ -60,9 +60,9 @@ export default function ProjectsPage () {
       </section>
 
 
-      <section className={s.imagesGreed}>
+      <section>
         <div className="container">
-          <div className={s.greed}>
+          <div className={s.imagesGreed}>
             <img
               src="/img/bureau.jpg"
               alt=""
@@ -75,9 +75,9 @@ export default function ProjectsPage () {
         </div>
       </section>
 
-      <section className={s.imagesGreed}>
+      <section>
         <div className="container">
-          <div className={s.greed}>
+          <div className={s.imagesGreed}>
             <img
               src="/img/bureau.jpg"
               alt=""
@@ -94,12 +94,12 @@ export default function ProjectsPage () {
         </div>
       </section>
 
-      <section className={s.imagesGreed}>
+      <section>
         <div className="container">
-          <div className={s.greed}>
+          <div className={s.imagesGreed}>
             <img
-              src="/img/bureau.jpg"
               className={s.wide}
+              src="/img/bureau.jpg"
               alt=""
             />
             <img
@@ -109,6 +109,7 @@ export default function ProjectsPage () {
           </div>
         </div>
       </section>
+
 
       <Slider slides={slides} is_boolet={true} is_mobile={false}/>
 

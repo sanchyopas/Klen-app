@@ -5,6 +5,8 @@ import Services from "@/app/components/Services/Services";
 import Slider from "@/app/components/Slider/Slider";
 import React from "react";
 
+
+
 export default function Home() {
 
   const projects = [

@@ -26,6 +26,14 @@ export default function YandexMap() {
           scaleble: false,
         });
 
+        const isTouch =  window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+
+        if(isTouch) {
+          map.behaviors.disable("drag");
+          map.behaviors.disable("multiTouch");
+          map.behaviors.disable("scrollZoom");
+        }
+
         map.behaviors.disable("scrollZoom");
         map.behaviors.disable("dblClickZoom");
         map.behaviors.disable("multiTouch");

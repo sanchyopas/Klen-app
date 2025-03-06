@@ -74,3 +74,21 @@
     }
   }
 }
+
+.transataonEffect {
+  position: absolute;
+  z-index: 999;
+  display: block;
+  pointer-events: none;
+  border-radius: 50%;
+  width: 20px;
+  background: #fff;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 5s;
+  //opacity: 0;
+  &.active {
+    transform: translate(-50%, -50%) scale(10000);
+    //opacity: 1;
+  }
+}

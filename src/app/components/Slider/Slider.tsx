@@ -35,7 +35,6 @@ export default function Slider({is_mobile, slides, is_boolet, name_btn, link_btn
     setIsMounted(true);
   }, []);
 
-  console.log("Slider Props:", { slides, is_boolet, name_btn, link_btn });
   return (
     <div className={`${s.slider} ${is_mobile ? s.mb : ""} ${!!class_name && class_name}`}>
       <div className="container">

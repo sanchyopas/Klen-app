@@ -30,7 +30,11 @@ img {
   margin: 0;
   padding: 0;
 }
-
+/* Убираем копирайт и кнопки */
+.ymaps-2-1-79-copyrights-pane,
+.ymaps-2-1-79-controls__bottom {
+  display: none !important;
+}
 
 .swiper-pagination-bullet{
   display: block !important;

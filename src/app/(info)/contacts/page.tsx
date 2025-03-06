@@ -1,10 +1,11 @@
 import React from 'react';
+import YandexMap from "@/app/components/YandexMap/YandexMap";
 
 export default function Contact() {
   return (
-    <div>
-      <h1>Страница контактов</h1>
-    </div>
+    <>
+      <YandexMap />
+    </>
   );
 };
 

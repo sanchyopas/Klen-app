@@ -4,7 +4,7 @@ import Buro from "@/app/components/Buro/Buro";
 import Services from "@/app/components/Services/Services";
 import Slider from "@/app/components/Slider/Slider";
 import React from "react";
-
+import Link from "next/link";
 
 
 export default function Home() {
@@ -41,7 +41,6 @@ export default function Home() {
       "title": "концепция благоустройства ЖК Снегири"
     },
   ]
-
 
   return (
     <>

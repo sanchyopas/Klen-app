@@ -1,16 +1,17 @@
-import { ReactElement } from "react";
+import {ReactElement} from "react";
 import s from "./title.module.scss"
 
 type TitleProps = {
-  title: ReactElement;
+  title: string;
   className?: string;
   is_mobile?: boolean;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
-export default function Title( { title, className, is_mobile }:TitleProps  ) {
+export default function Title({title, className, is_mobile, as: Tag = "h2"}: TitleProps) {
   return (
     <div className={`${s.title} ${className} ${is_mobile ? s.mb : ""}`}>
-      {title}
+      <Tag>{title}</Tag>
     </div>
   );
 };

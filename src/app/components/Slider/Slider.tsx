@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import {NavigationOptions} from "swiper/types";
 import LinkWithWrapper from "@/app/components/Link/Link";
 import Title from "@/app/components/Title/Title";
+import Image from "next/image";
 
 type SliderProps = {
   is_mobile?: boolean;
@@ -39,7 +40,6 @@ export default function Slider({is_mobile, slides, is_boolet, name_btn, link_btn
     <div className={`${s.slider} ${is_mobile ? s.mb : ""} ${!!class_name && class_name}`}>
       <div className="container">
         {!!title && <Title title={title} is_mobile={true} />}
-        {isMounted && (
           <Swiper
             key={1}
             modules={[Pagination, Navigation]}
@@ -63,12 +63,11 @@ export default function Slider({is_mobile, slides, is_boolet, name_btn, link_btn
           >
             {slides.map((item:Slide, i:number) => (
               <SwiperSlide className={s.slider__slide} key={i}>
-                <img src={item.image} alt="" />
+                <Image src={`${item.image}`} alt={"slide"} width={1300} height={720}/>
               </SwiperSlide>
             ))}
 
           </Swiper>
-        )}
         <div className={s["slider__actions"]}>
           {is_boolet ? (
             <div ref={paginationRef} className={`${s.slider__pagination}`} />

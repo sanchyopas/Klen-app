@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.scss";
 import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
-import Preloader from "@/app/components/Preloader/Preloader";
+
 
 const InterSans = Inter({
   subsets: ["latin"],
@@ -25,10 +25,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={InterSans.variable}>
         {/*<Preloader />*/}
-        <Header/>
-        <main>
-          {children}
-        </main>
+        <Header />
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

@@ -1,23 +1,19 @@
-import s from "@/app/projects/[slug]/project.module.scss";
+import s from "@/app/projects/[id]/project.module.scss";
 import Image from "next/image";
 
 type Props = {
-  images: string[],
+  imageOne: string;
+  imageTwo: string;
 }
 
-
-
-export default function TwoColumnImage({images}: Props) {
+export default function TwoColumnImage({imageOne, imageTwo}: Props) {
 
   return (
     <section>
       <div className="container">
         <div className={s.imagesGreed}>
-          {
-            images.map((image, i) => (
-              <img src={image} alt=""/>
-            ))
-          }
+          <img src={`https://dev.modx.fresco.bz/upload_resources/${imageOne}`} alt=""/>
+          <img src={`https://dev.modx.fresco.bz/upload_resources/${imageTwo}`} alt=""/>
         </div>
       </div>
     </section>

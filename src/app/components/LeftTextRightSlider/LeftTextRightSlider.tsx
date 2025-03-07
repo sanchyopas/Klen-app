@@ -1,29 +1,26 @@
 import s from "@/app/projects/[id]/project.module.scss";
-import Image from "next/image";
+import MiniSlider from "@/app/components/MiniSlider/MiniSlider";
 
 type Props = {
-  image: string,
   text: string,
-  title: string,
+  title: string
+  slides: any
 }
 
-export default function LeftTextRightImage({image, text, title}: Props) {
+export default function LeftTextRightSlider({slides, title, text}: Props) {
   return (
     <section id={s.services}>
       <div className={s.two_columns_content}>
-
         <div className="container">
           <div className={`${s.row} row`}>
             <div className="col-12 col-md-6">
-              <h2>{title}</h2>
-              <div className={s.text} dangerouslySetInnerHTML={{ __html: text }}></div>
-
-            </div>
-
-            <div className="col-12 col-md-6">
-              <div className={s.img}>
-                <img src={`https://dev.modx.fresco.bz/upload_resources/${image}`} alt=""/>
+              <div className={s.text}>
+                <h3>{title}</h3>
+                <div className={s.noGapContent} dangerouslySetInnerHTML={{__html: text}}></div>
               </div>
+            </div>
+            <div className="col-12 col-md-6">
+              <MiniSlider slides={slides}/>
             </div>
           </div>
         </div>

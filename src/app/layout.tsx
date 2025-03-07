@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type {Metadata} from "next";
+import {Inter} from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.scss";
 import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
-
+import Preloader from "@/app/components/Preloader/Preloader";
+import StoreProvider from "@/app/StoreProvider";
 
 const InterSans = Inter({
   subsets: ["latin"],
@@ -17,18 +18,20 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
+                                     children,
+                                   }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={InterSans.variable}>
-        {/*<Preloader />*/}
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <body className={InterSans.variable}>
+          {/*<Preloader />*/}
+          <Header/>
+          <main>{children}</main>
+          <Footer/>
+          </body>
+      </html>
+    </StoreProvider>
   );
 }

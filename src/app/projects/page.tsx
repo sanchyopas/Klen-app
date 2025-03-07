@@ -1,4 +1,5 @@
 import Projects from "@/app/components/Projects/Projects";
+import {useGetProjectByIdQuery} from "@/app/redux/caseApi";
 
 export default function ProjectsPage () {
 

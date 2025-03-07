@@ -39,9 +39,8 @@ export default function Slider({is_mobile, slides, is_boolet, name_btn, link_btn
   return (
     <div className={`${s.slider} ${is_mobile ? s.mb : ""} ${!!class_name && class_name}`}>
       <div className="container">
-        {!!title && <Title title={title} is_mobile={true} />}
+        {/*{!!title && <Title title={title} is_mobile={true} />}*/}
           <Swiper
-            key={1}
             modules={[Pagination, Navigation]}
             pagination={{
               el: paginationRef.current,
@@ -63,7 +62,8 @@ export default function Slider({is_mobile, slides, is_boolet, name_btn, link_btn
           >
             {slides.map((item:Slide, i:number) => (
               <SwiperSlide className={s.slider__slide} key={i}>
-                <Image src={`${item.image}`} alt={"slide"} width={1300} height={720}/>
+                <img src={`https://dev.modx.fresco.bz/upload_resources/${item.image}`} alt=""/>
+                {/*<Image src={`https://dev.modx.fresco.bz/${item.image}`} alt={"slide"} width={1300} height={720}/>*/}
               </SwiperSlide>
             ))}
 

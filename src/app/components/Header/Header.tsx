@@ -4,6 +4,7 @@ import s from "./header.module.scss"
 import Link from "next/link";
 import Image from "next/image";
 import {useState} from "react";
+import MenuLink from "@/app/components/MenuLink/MenuLink";
 
 export default function Header() {
 
@@ -34,10 +35,10 @@ export default function Header() {
         <div className={ menuOpen ? `${s.mobileMenuWrapper} ${s.open}` : s.mobileMenuWrapper }>
           <nav>
             <ul>
-              <li><Link href="/buro">Бюро</Link></li>
-              <li><Link href="/projects">Проекты</Link></li>
-              <li><Link href="/services">Услуги</Link></li>
-              <li><Link href="/contacts">Контакты</Link></li>
+              <li><MenuLink clickEvent={openMenu} link={'/buro'} name={'Бюро'}/></li>
+              <li><MenuLink clickEvent={openMenu} link={'/projects'} name={'Проекты'}/></li>
+              <li><MenuLink clickEvent={openMenu} link={'/services'} name={'Услуги'}/></li>
+              <li><MenuLink clickEvent={openMenu} link={'/contacts'} name={'Контакты'}/></li>
             </ul>
           </nav>
 

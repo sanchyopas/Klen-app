@@ -2,11 +2,11 @@ import s from "@/app/projects/[id]/project.module.scss";
 
 type Props = {
   title: string,
-  text: string,
+  text: any,
   list: any;
 }
 
-export default function TitleTextLeftListRight({title, text, list}:Props) {
+export default function TitleTextLeftNumListRight({title, text, list}:Props) {
   return (
     <div className={s.two_columns_content__wrapper}>
       <div className={s.two_columns_content}>
@@ -25,7 +25,7 @@ export default function TitleTextLeftListRight({title, text, list}:Props) {
             <div className="col-12 col-md-6">
 
               <div className={s.text}>
-                <ul>
+                <ol>
                   {
                     list.map((item:any, i:number) => {
                       return (
@@ -33,7 +33,7 @@ export default function TitleTextLeftListRight({title, text, list}:Props) {
                       )
                     })
                   }
-                </ul>
+                </ol>
               </div>
 
             </div>

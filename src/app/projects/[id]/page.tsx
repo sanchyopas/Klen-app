@@ -13,12 +13,15 @@ async function getProject(id: number) {
   return res.json();
 }
 
-export default async function ProjectPage({ params }: { params: { id: string } }) {
+export default async function ProjectPage({ params }: { params: { id: number } }) {
   const project = await getProject(Number(params.id));
 
   return (
     <>
-      <Title title={project.object.main_screen.title} as={"h1"}/>
+      <>
+        <div className="container"><Title title={project.object.main_screen.title} as={"h1"}/></div>
+      </>
+
       {
         project.object.BlocksList.map((block:any, index:number)=> {
           return <DynamicBlock block={block} key={index} />

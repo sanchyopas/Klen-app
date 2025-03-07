@@ -2,6 +2,7 @@
 import s from "./map.module.scss";
 import {useEffect, useRef} from "react";
 import LinkWithWrapper from "@/app/components/Link/Link";
+import TextSection from "@/app/components/TextSection/TextSection";
 
 declare global {
   interface Window {

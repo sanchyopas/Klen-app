@@ -10,14 +10,15 @@ import LeftTextRightSlider from "@/app/components/LeftTextRightSlider/LeftTextRi
 import TwoColumnImage from "@/app/components/TwoColumnImage/TwoColumnImage";
 import ThreeColumnImage from "@/app/components/ThreeColumnImage/ThreeColumnImage";
 import TwoImageLeftWideNarrow from "@/app/components/TwoImageLeftWideNarrow/TwoImageLeftWideNarrow";
+import TitleTextLeftListRight from "@/app/components/TitleTextLeftListRight/TitleTextLeftListRight";
+import TitleTextLeftNumListRight from "@/app/components/TitleTextLeftNumListRight/TitleTextLeftNumListRight";
 
 export const DynamicBlock = ({block}: any) => {
   switch (block.template) {
     case "Текстовый блок - 2 колонки без заголовков":
-      return (<ProjectInfo description={block.text_left} details={block.text_right}/>)
+      return <ProjectInfo description={block.text_left} details={block.text_right}/>
     case "Галлерея фото":
-      console.log("block.image в DynamicBlock:", block.image);
-      return (<Slider slides={Array.isArray(block.image) ? block.image : []} is_boolet={true}/>);
+      return <Slider slides={Array.isArray(block.image) ? block.image : []} is_boolet={true}/>
     case "Текстовый блок - узкая колонка по центру":
       return <SmallTextSection text={block.text}/>
     case "Текст":
@@ -36,6 +37,10 @@ export const DynamicBlock = ({block}: any) => {
       return <LeftTextRightImage image={block.image} text={block.text} title={block.title}/>
     case "2 изображения широкое слева узкое справа":
       return <TwoImageLeftWideNarrow image_left={block.image_left} image_right={block.image_right}  />
+    // case "Заголовок h2 и текст слева + список справа":
+    //   return <TitleTextLeftListRight text={block.text.text} title={block.title} list={block.list}/>
+    // case "Заголовок h3 и текст слева + нумерованный список справа":
+    //   return <TitleTextLeftNumListRight textPage={block.text} title={block.title} list={block.list} />
     default:
       return <>Нет ничего</>
   }

@@ -3,6 +3,7 @@ import s from "./services.module.scss";
 import LinkWithWrapper from "@/app/components/Link/Link";
 import Slider from "@/app/components/Slider/Slider";
 import MiniSlider from "@/app/components/MiniSlider/MiniSlider";
+import Link from "next/link";
 
 export const metadata = {
   title: "Страница сервиса - Klen",
@@ -50,9 +51,9 @@ export default function ProjectsPage () {
                     (благоустройство, фасады, интерьеры)</p>
 
                   <div className={s.linkList}>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Best use"}/>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Разработка продукта и продуктовой стратегии"}/>
                   </div>
                 </div>
@@ -84,9 +85,9 @@ export default function ProjectsPage () {
                     (благоустройство, фасады, интерьеры)</p>
 
                   <div className={s.linkList}>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Best use"}/>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Разработка продукта и продуктовой стратегии"}/>
                   </div>
                 </div>
@@ -118,9 +119,9 @@ export default function ProjectsPage () {
                     (благоустройство, фасады, интерьеры)</p>
 
                   <div className={s.linkList}>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Best use"}/>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Разработка продукта и продуктовой стратегии"}/>
                   </div>
                 </div>
@@ -152,9 +153,9 @@ export default function ProjectsPage () {
                     (благоустройство, фасады, интерьеры)</p>
 
                   <div className={s.linkList}>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Best use"}/>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Разработка продукта и продуктовой стратегии"}/>
                   </div>
                 </div>
@@ -186,9 +187,9 @@ export default function ProjectsPage () {
                     (благоустройство, фасады, интерьеры)</p>
 
                   <div className={s.linkList}>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Best use"}/>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Разработка продукта и продуктовой стратегии"}/>
                   </div>
                 </div>
@@ -220,9 +221,9 @@ export default function ProjectsPage () {
                     (благоустройство, фасады, интерьеры)</p>
 
                   <div className={s.linkList}>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Best use"}/>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Разработка продукта и продуктовой стратегии"}/>
                   </div>
                 </div>
@@ -254,9 +255,9 @@ export default function ProjectsPage () {
                     (благоустройство, фасады, интерьеры)</p>
 
                   <div className={s.linkList}>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Best use"}/>
-                    <LinkWithWrapper className={s.linkWrapper} link={"#"} dotReverce={false} isWrapper={false}
+                    <LinkWithWrapper className={s.linkWrapper} link={`/services/test`} dotReverce={false} isWrapper={false}
                                      name={"Разработка продукта и продуктовой стратегии"}/>
                   </div>
                 </div>

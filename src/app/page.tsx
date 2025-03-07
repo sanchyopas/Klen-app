@@ -46,7 +46,7 @@ export default function Home() {
     <>
       <IndexScreen/>
       <Projects title={"Проекты"} link={"/projects"} projects={projects} is_pc={true} />
-      <Slider slides={projects} title={<h2>Проекты</h2>} is_boolet={false} name_btn={"все проекты"} link_btn={"/projects"} is_mobile={true}/>
+      <Slider slides={projects} title={"Проекты"} title_as={"h2"} is_boolet={false} name_btn={"все проекты"} link_btn={"/projects"} is_mobile={true}/>
       <Buro />
       <Services />
     </>

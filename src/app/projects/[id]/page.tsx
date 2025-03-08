@@ -1,5 +1,7 @@
 import {DynamicBlock} from "@/app/components/DynamicBlock/DynamicBlock";
 import Title from "@/app/components/Title/Title";
+import Projects from "@/app/components/Projects/Projects";
+import React from "react";
 
 type Params = {
   id: number
@@ -41,6 +43,20 @@ export default async function ProjectPage(props: { params: Promise<Params> }) {
   const {id} = params;
   const project = await getProject(Number(id));
 
+
+  const projects = [
+    {
+      "link": "pr1",
+      "image": "/img/image-1.jpg",
+      "title": "brodsky"
+    },
+    {
+      "link": "pr2",
+      "image": "/img/image-2.jpg",
+      "title": "интерьер МОП"
+    },
+  ]
+
   return (
     <>
       <section>
@@ -52,6 +68,8 @@ export default async function ProjectPage(props: { params: Promise<Params> }) {
           return <DynamicBlock block={block} key={index}/>
         })
       }
+
+      <Projects title={"Следующий проект"} isNextProjects={true} projects={projects} />
     </>
   );
 }

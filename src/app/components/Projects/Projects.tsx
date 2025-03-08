@@ -2,10 +2,11 @@ import s from "./projects.module.scss"
 import Title from "@/app/components/Title/Title";
 import ProjectCard from "@/app/components/ProjectCard/ProjectCard";
 import LinkWithWrapper from "@/app/components/Link/Link";
+import {log} from "node:util";
 
 export default function Projects( props:any ) {
 
-  const {title, link, projects, is_pc, isNextProjects} = props
+  const {title, link, projects, is_pc, isNextProjects, btn_name} = props
 
   return (
     <section id={`projects`} className={`${is_pc ? s.pc : ""}`}>
@@ -14,12 +15,12 @@ export default function Projects( props:any ) {
         <div className={isNextProjects ? `${s.projectsList} ${s.nextProjects}` : s.projectsList}>
           {
             projects.map((project:any) => ((
-              <ProjectCard data={project} key={project.link}/>
+              <ProjectCard key={project.id} id={project.id} title={project.main_screen_preview_text} image={project.image.desktop} />
             )))
           }
         </div>
 
-        {!!link && <LinkWithWrapper className={s.linkWrapper} link={"/projects"} dotReverce={false} isWrapper={true} name={"все проекты"} />}
+        {!!link && <LinkWithWrapper className={s.linkWrapper} link={"/projects"} dotReverce={false} isWrapper={true} name={btn_name} />}
 
       </div>
     </section>

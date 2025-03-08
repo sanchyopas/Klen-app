@@ -6,14 +6,25 @@
   margin: 0 auto;
   padding: 0;
   aspect-ratio: 16 / 9;
+  overflow: hidden;
+
   @media (max-width: 767px) {
     height: 100svh;
     width: calc(100% - 24px);
   }
 
+  //@media(hover:hover){
+  //  &:hover{
+  //    .bg{
+  //      transform: scale(1.1) !important;
+  //    }
+  //  }
+  //}
+
   a {
     display: block;
     font-size: 0;
+
     &::before {
       content: '';
       position: absolute;
@@ -27,11 +38,11 @@
   .bg {
     position: relative;
     display: block;
-    top: 40px;
     margin: 0 auto;
-    height: calc(100% - 80px);
+    height: 100%;
     width: 100%;
     object-fit: cover;
+    transition: all 2s;
   }
 
   .title {

@@ -1,19 +1,19 @@
 "use client";
 
 import s from "./Slider.module.scss";
-import React, { useEffect, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import React, {useEffect, useRef, useState} from "react";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Navigation, Pagination} from "swiper/modules";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import { NavigationOptions } from "swiper/types";
+import {NavigationOptions} from "swiper/types";
 import LinkWithWrapper from "@/app/components/Link/Link";
 import Title from "@/app/components/Title/Title";
 
-gsap.registerPlugin(ScrollTrigger); // ✅ Регистрируем ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
 
 type SliderProps = {
   is_mobile?: boolean;
@@ -27,7 +27,7 @@ type SliderProps = {
 };
 
 type Slide = {
-  image: string;
+  image: any;
 };
 
 export default function Slider({
@@ -43,26 +43,28 @@ export default function Slider({
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const paginationRef = useRef(null);
-  const sliderRef = useRef(null); // 🔥 Реф для анимации слайдера
+  const sliderRef = useRef(null);
 
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    const isTouchDevice = window.matchMedia("(hover: none)").matches;
+    if (isTouchDevice) return;
     setIsMounted(true);
 
     if (sliderRef.current) {
       gsap.fromTo(
         sliderRef.current,
-        { opacity: 0, y: 50 }, // ⬇️ Слайдер скрыт и смещён вниз
+        {opacity: 0, y: 50},
         {
           opacity: 1,
           y: 0,
           duration: 1,
           ease: "power2.out",
           scrollTrigger: {
-            trigger: sliderRef.current, // 📌 Анимация запускается, когда слайдер входит в viewport
-            start: "top 85%", // 🔥 Когда верх слайдера попадает в 85% экрана
-            toggleActions: "play none none none", // Срабатывает один раз
+            trigger: sliderRef.current,
+            start: "top 85%",
+            toggleActions: "play none none none",
           },
         }
       );
@@ -71,9 +73,9 @@ export default function Slider({
 
   return (
     <div
-      ref={sliderRef} // 🎯 Применяем анимацию к слайдеру
+      ref={sliderRef}
       className={`${s.slider} ${is_mobile ? s.mb : ""} ${!!class_name && class_name}`}
-      style={{ opacity: 0 }} // 🚀 Оставляем скрытым перед анимацией
+
     >
       <div className="container">
         <Swiper
@@ -98,24 +100,24 @@ export default function Slider({
         >
           {slides.map((item: Slide, i: number) => (
             <SwiperSlide className={s.slider__slide} key={i}>
-              <img src={`https://dev.modx.fresco.bz/upload_resources/${item.image}`} alt="" />
+              <img src={`https://dev.modx.fresco.bz${item.image.desktop}`} alt=""/>
             </SwiperSlide>
           ))}
         </Swiper>
 
         <div className={s["slider__actions"]}>
           {is_boolet ? (
-            <div ref={paginationRef} className={`${s.slider__pagination}`} />
+            <div ref={paginationRef} className={`${s.slider__pagination}`}/>
           ) : (
-            <LinkWithWrapper dotReverce={false} isWrapper={false} name={name_btn} link={link_btn} />
+            <LinkWithWrapper dotReverce={false} isWrapper={false} name={name_btn} link={link_btn}/>
           )}
 
           <div className={s["slider__navigations"]}>
             <button ref={prevRef} className={s["slider__prev"]}>
-              <img src="/img/icon/arrow_left.svg" alt="" />
+              <img src="/img/icon/arrow_left.svg" alt=""/>
             </button>
             <button ref={nextRef} className={s["slider__next"]}>
-              <img src="/img/icon/arrow_right.svg" alt="" />
+              <img src="/img/icon/arrow_right.svg" alt=""/>
             </button>
           </div>
         </div>

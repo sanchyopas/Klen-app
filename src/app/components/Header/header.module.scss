@@ -6,6 +6,7 @@
   flex: 0 0 auto;
   background: #fff;
   z-index: 99;
+  overflow: hidden;
 
   .container {
     display: flex;
@@ -20,6 +21,13 @@
     @media (max-width: 767px) {
       padding: 16px 0 24px;
     }
+
+    // Эта конструкция бомба, если не тач устройство применит вот эти стили
+    @media (hover: hover) and (pointer: fine) {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+
     a {
       display: block;
       height: 0;

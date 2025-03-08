@@ -1,17 +1,20 @@
 import s from "./projectCard.module.scss"
 import Link from "next/link";
 
-export default function ProjectCard( { data }:any ) {
+type Props = {
+  title: string;
+  image: string;
+  id: number;
+}
 
-  const { link, image, title } = data
-
+export default function ProjectCard(  { title, image, id }:Props ) {
   return (
-    <div className={s.item} key={link}>
+    <div className={s.item} key={id}>
       <img
-        src={`${image}`}
+        src={`https://dev.modx.fresco.bz${image}`}
         alt={title}
       />
-      <Link href={`/projects/${link}`}></Link>
+      <Link href={`/projects/${id}`}></Link>
       <h3 className={s.name}>{title}</h3>
     </div>
   );

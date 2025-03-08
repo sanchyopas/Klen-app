@@ -5,29 +5,29 @@ import s from "@/app/projects/[id]/project.module.scss";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger); // ✅ Регистрируем ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
   image: string;
 };
 
 export default function ParallaxImageBig({ image }: Props) {
-  const imageRef = useRef(null); // 🎯 Ссылка на картинку
+  const imageRef = useRef(null);
 
   useEffect(() => {
     const el = imageRef.current;
 
     gsap.fromTo(
       el,
-      { y: 150 }, // 🔹 Стартовое положение (ниже обычного)
+      { y: 150 },
       {
-        y: -150, // 🔥 Плавное движение вверх
+        y: -150,
         ease: "none",
         scrollTrigger: {
           trigger: el,
-          start: "top bottom", // 🟢 Анимация начинается, когда картинка касается нижнего края экрана
-          end: "bottom top", // 🔴 Завершается, когда она полностью уходит за верх экрана
-          scrub: 2, // 📌 Плавное движение, зависящее от скорости скролла
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 2,
         },
       }
     );

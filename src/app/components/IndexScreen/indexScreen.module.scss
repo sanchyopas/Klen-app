@@ -5,12 +5,20 @@
   max-width: calc(1920px - 80px);
   margin: 0 auto;
   padding: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  overflow: hidden;
+
   @media (max-width: 767px) {
     height: calc(100svh - 80px);
     width: calc(100% - 24px);
+  }
+
+  .helloImage{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .mask {

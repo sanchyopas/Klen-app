@@ -1,59 +1,89 @@
-'use client'
+"use client";
 
-import s from "./header.module.scss"
+import { useEffect, useState } from "react";
+import { gsap } from "gsap";
+import s from "./header.module.scss";
 import Link from "next/link";
 import Image from "next/image";
-import {useState} from "react";
 import MenuLink from "@/app/components/MenuLink/MenuLink";
 
 export default function Header() {
-
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const openMenu = () => {
-    setMenuOpen(!menuOpen);
-  }
+  useEffect(() => {
+    const isTouchDevice = window.matchMedia("(hover: none)").matches;
+    if (isTouchDevice) return;
+
+    gsap.fromTo(
+      ".logo",
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }
+    );
+
+    gsap.fromTo(
+      gsap.utils.toArray(".menu-item"),
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.4 }
+    );
+
+    gsap.fromTo(
+      gsap.utils.toArray(".contact-item"),
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.6 }
+    );
+  }, []);
+
+const menuItem = [
+  {
+    "name": "Бюро",
+    "link": "/buro"
+  },
+  {
+    "name": "Проекты",
+    "link": "/projects"
+  },{
+    "name": "Услуги",
+    "link": "/services"
+  },{
+    "name": "Контакты",
+    "link": "/contacts"
+  },
+]
 
   return (
     <header className={s.header}>
       <div className={`${s.container} container`}>
-        <div className={s.logo}>
+        <div className={`${s.logo} logo`}>
           <Link href="/">KLЁN — architectural bureau</Link>
           <Image src={"/img/Logo.svg"} alt={"KLЁN — architectural bureau"} width={117} height={40} layout="responsive" />
         </div>
 
-        <button
-          className={ menuOpen ? `${s.burger} ${s.open}` : s.burger }
-          onClick={openMenu}
-        >
+        <button className={menuOpen ? `${s.burger} ${s.open}` : s.burger} onClick={() => setMenuOpen(!menuOpen)}>
           <span></span>
           <span></span>
           <span></span>
           <span></span>
         </button>
 
-        <div className={ menuOpen ? `${s.mobileMenuWrapper} ${s.open}` : s.mobileMenuWrapper }>
+        <div className={`${menuOpen ? `${s.mobileMenuWrapper} ${s.open}` : s.mobileMenuWrapper} mobileMenuWrapper`}>
           <nav>
             <ul>
-              <li><MenuLink clickEvent={openMenu} link={'/buro'} name={'Бюро'}/></li>
-              <li><MenuLink clickEvent={openMenu} link={'/projects'} name={'Проекты'}/></li>
-              <li><MenuLink clickEvent={openMenu} link={'/services'} name={'Услуги'}/></li>
-              <li><MenuLink clickEvent={openMenu} link={'/contacts'} name={'Контакты'}/></li>
+              {menuItem.map((item, index) => (
+                <li key={index} className="menu-item">
+                  <MenuLink clickEvent={() => setMenuOpen(false)} link={item.link} name={item.name} />
+                </li>
+              ))}
             </ul>
           </nav>
 
           <div className={s.contacts}>
-            <a
-              href="https://www.t.me/#"
-              target="_blank"
-            ><img
-              src="/img/icon/Telegram.svg"
-              alt=""
-            /></a>
-            <a href="tel:+79267617433">+7 (926) 761-74-33</a>
+            <a href="https://www.t.me/#" target="_blank" className="contact-item">
+              <img src="/img/icon/Telegram.svg" alt="Telegram" />
+            </a>
+            <a href="tel:+79267617433" className="contact-item">+7 (926) 761-74-33</a>
           </div>
         </div>
       </div>
     </header>
   );
-};
+}

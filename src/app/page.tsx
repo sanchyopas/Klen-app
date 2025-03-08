@@ -4,49 +4,78 @@ import Buro from "@/app/components/Buro/Buro";
 import Services from "@/app/components/Services/Services";
 import Slider from "@/app/components/Slider/Slider";
 import React from "react";
-import Link from "next/link";
+import { notFound } from "next/navigation";
 
+async function getData() {
+  try {
+    const res = await fetch(`https://dev.modx.fresco.bz/api/main`, {
+      cache: "no-store",
+    });
 
-export default function Home() {
+    if (!res.ok) {
+      if (res.status === 404) {
+        return null;
+      }
+      throw new Error(`Error: ${res.status} ${res.statusText}`);
+    }
 
-  const projects = [
-    {
-      "link": "pr1",
-      "image": "/img/image-1.jpg",
-      "title": "brodsky"
-    },
-    {
-      "link": "pr2",
-      "image": "/img/image-2.jpg",
-      "title": "интерьер МОП"
-    },
-    {
-      "link": "pr3",
-      "image": "/img/image-3.jpg",
-      "title": "реновация облика фасадов"
-    },
-    {
-      "link": "pr4",
-      "image": "/img/image-4.jpg",
-      "title": "жилой интерьер"
-    },
-    {
-      "link": "pr5",
-      "image": "/img/image-5.jpg",
-      "title": "концепция фасадных решений ЖК 'Порто-Ново'"
-    },
-    {
-      "link": "pr6",
-      "image": "/img/image-6.jpg",
-      "title": "концепция благоустройства ЖК Снегири"
-    },
-  ]
+    return res.json();
+  } catch (error) {
+    console.error("Error:", error);
+    return null;
+  }
+}
+
+export async function generateMetadata() {
+  const result = await getData();
+
+  if (!result || !result.object?.seo) {
+    return {
+      title: "Not found",
+    };
+  }
+
+  return {
+    title: result.object.seo.title || "Тайтыл",
+    description: result.object.seo.description || "Дескрипшын",
+  };
+}
+
+export default async function Home() {
+  const result = await getData();
+
+  if (!result || !result.object) {
+    notFound();
+    return null;
+  }
+
+  const projects = result.object.projects || {};
+  const projectsList = projects.list || [];
+  const hasProjects = projectsList.length > 0;
 
   return (
     <>
-      <IndexScreen/>
-      <Projects title={"Проекты"} link={"/projects"} projects={projects} is_pc={true} />
-      <Slider slides={projects} title={"Проекты"} title_as={"h2"} is_boolet={false} name_btn={"все проекты"} link_btn={"/projects"} is_mobile={true}/>
+      <IndexScreen />
+      {hasProjects && (
+        <>
+          <Projects
+            title={projects.title_h2 || "Проекты"}
+            link={projects.button_link || "#"}
+            btn_name={projects.button_name || "Подробнее"}
+            projects={projectsList}
+            is_pc={true}
+          />
+          <Slider
+            slides={projectsList}
+            title={"Проекты"}
+            title_as={"h2"}
+            is_boolet={false}
+            name_btn={"все проекты"}
+            link_btn={"/projects"}
+            is_mobile={true}
+          />
+        </>
+      )}
       <Buro />
       <Services />
     </>

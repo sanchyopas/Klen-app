@@ -1,19 +1,18 @@
 #services {
-
   .title {
     @media screen and (min-width: 992px) {
       margin-bottom: -88px;
     }
   }
 
-  .row{
+  .row {
     @media screen and (max-width: 992px) {
       flex-direction: column-reverse;
       max-width: 500px;
     }
   }
 
-  .wrapper{
+  .wrapper {
     @media screen and (max-width: 992px) {
       width: 100%;
       display: flex;
@@ -72,7 +71,7 @@
 
       @media screen and (max-width: 992px) {
         &.active {
-         background: rgba(66, 66, 66, 1);
+          background: rgba(66, 66, 66, 1);
         }
       }
 
@@ -101,38 +100,31 @@
     }
   }
 
-  .servicesImageList {
+  .imageContainer {
     position: relative;
     width: 100%;
+    overflow: hidden;
 
     @media screen and (min-width: 992px) {
       aspect-ratio: 670 / 620;
     }
+  }
 
-    .item {
-      padding-bottom: 28px;
+  .animatedImage {
+    position: absolute;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 670 / 620;
+    z-index: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 
-      .name {
-        color: #424242;
-        font-size: 20px;
-        line-height: 28px;
-        margin-top: 8px;
-        font-weight: 400;
-        transition: all 0.25s;
-        text-transform: lowercase;
-      }
-
-      img {
-        display: block;
-        width: 100%;
-        object-fit: cover;
-        aspect-ratio: 670 / 620;
-        z-index: 0;
-
-        @media screen and (max-width: 992px) {
-          aspect-ratio: 328 / 420;
-        }
-      }
+    @media screen and (max-width: 992px) {
+      aspect-ratio: 328 / 420;
     }
+  }
+
+  .activeImage {
+    opacity: 1;
+    transform: scale(1);
   }
 }

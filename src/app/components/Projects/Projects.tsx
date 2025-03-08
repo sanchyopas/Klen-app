@@ -10,9 +10,7 @@ export default function Projects( props:any ) {
   return (
     <section id={`projects`} className={`${is_pc ? s.pc : ""}`}>
       <div className={"container"}>
-
-        {!!title && <Title title={title} />}
-
+        {!!title && <Title title={title} as={"h2"} />}
         <div className={s.projectsList}>
           {
             projects.map((project:any) => ((

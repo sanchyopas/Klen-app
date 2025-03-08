@@ -17,7 +17,8 @@ type SliderProps = {
   is_boolet?: boolean;
   name_btn?: string;
   link_btn?: string;
-  title?: ReactElement;
+  title?: string;
+  title_as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   class_name?: string;
 }
 
@@ -25,7 +26,7 @@ type Slide = {
   image: string;
 }
 
-export default function Slider({is_mobile, slides, is_boolet, name_btn, link_btn, title, class_name}: SliderProps) {
+export default function Slider({is_mobile, slides, is_boolet, name_btn, link_btn, title, title_as, class_name}: SliderProps) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const paginationRef = useRef(null);

@@ -1,5 +1,6 @@
 import he from "he";
 import s from "@/app/projects/[id]/project.module.scss";
+import AnimatedText from "@/app/AnimateWrapperComponents/AnimatedText/AnimatedText";
 
 type ProjectInfoProps = {
   description: string,
@@ -15,9 +16,6 @@ function decodeHTML(encodedString: string) {
 
 
 export default function ProjectInfo({description, details}: ProjectInfoProps) {
-  // Пока что пусть будет декодирует
-  // const decodedDetails = he.decode(details || "");
-  // const decodedDescription = he.decode(description || "");
   return (
     <section>
       <div className="container">
@@ -25,12 +23,12 @@ export default function ProjectInfo({description, details}: ProjectInfoProps) {
           <div className={`${s.row} row`}>
             <div className="col-12 col-md-6">
               <div className={s.text}>
-                <div className={s.noGapContent} dangerouslySetInnerHTML={{ __html: description }}></div>
+                <AnimatedText html={description} />
               </div>
             </div>
             <div className="col-12 col-md-6">
               <div className={s.text}>
-                <div className={s.noGapContent} dangerouslySetInnerHTML={{ __html: details }} ></div>
+                <AnimatedText html={details } />
               </div>
             </div>
           </div>

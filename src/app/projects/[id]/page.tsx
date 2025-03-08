@@ -1,23 +1,31 @@
 import {DynamicBlock} from "@/app/components/DynamicBlock/DynamicBlock";
 import Title from "@/app/components/Title/Title";
+import {notFound} from "next/navigation";
 
 type Params = {
   id: number
 }
 
 async function getProject(id: number) {
-  const res = await fetch(`https://dev.modx.fresco.bz/api/cases/${id}`, {
-    cache: "no-store",
-  });
+  try {
+    const res = await fetch(`https://dev.modx.fresco.bz/api/cases/${id}`, {
+      cache: "no-store",
+    });
 
-  if (!res.ok) {
-    throw new Error("Ошибка загрузки данных");
+    if (!res.ok) {
+      if (res.status === 404) {
+        return null;
+      }
+      throw new Error(`Ошибка загрузки данных: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error("Ошибка получения данных проекта:", error);
+    return null;
   }
-
-  return res.json();
 }
 
-// or Dynamic metadata
 export async function generateMetadata(props: { params: Promise<Params> }) {
   const params = await props.params
   const {id} = params;
@@ -40,6 +48,10 @@ export default async function ProjectPage(props: { params: Promise<Params> }) {
   const params = await props.params;
   const {id} = params;
   const project = await getProject(Number(id));
+
+  if(!project) {
+    notFound();
+  }
 
   return (
     <>

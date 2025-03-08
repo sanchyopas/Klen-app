@@ -1,6 +1,10 @@
 import {DynamicBlock} from "@/app/components/DynamicBlock/DynamicBlock";
 import Title from "@/app/components/Title/Title";
 
+type Params = {
+  id: number
+}
+
 async function getProject(id: number) {
   const res = await fetch(`https://dev.modx.fresco.bz/api/cases/${id}`, {
     cache: "no-store",
@@ -13,18 +17,39 @@ async function getProject(id: number) {
   return res.json();
 }
 
-export default async function ProjectPage({ params }: { params: { id: number } }) {
-  const project = await getProject(Number(params.id));
+// or Dynamic metadata
+export async function generateMetadata(props: { params: Promise<Params> }) {
+  const params = await props.params
+  const {id} = params;
+
+  const result = await getProject(id);
+
+  if (!result || !result.object.seo) {
+    return {
+      title: "Not found"
+    }
+  }
+
+  return {
+    title: result.title,
+    description: result.description  || `Описание проекта с айди ${id}`,
+  }
+}
+
+export default async function ProjectPage(props: { params: Promise<Params> }) {
+  const params = await props.params;
+  const {id} = params;
+  const project = await getProject(Number(id));
 
   return (
     <>
-      <>
+      <section>
         <div className="container"><Title title={project.object.main_screen.title} as={"h1"}/></div>
-      </>
+      </section>
 
       {
-        project.object.BlocksList.map((block:any, index:number)=> {
-          return <DynamicBlock block={block} key={index} />
+        project.object.BlocksList.map((block: any, index: number) => {
+          return <DynamicBlock block={block} key={index}/>
         })
       }
     </>

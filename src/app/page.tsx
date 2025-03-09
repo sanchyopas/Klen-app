@@ -37,8 +37,8 @@ export async function generateMetadata() {
   }
 
   return {
-    title: result.object.seo.title || "Тайтыл",
-    description: result.object.seo.description || "Дескрипшын",
+    title: result.object.seo.title,
+    description: result.object.seo.description,
   };
 }
 

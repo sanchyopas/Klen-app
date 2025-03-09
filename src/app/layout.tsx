@@ -21,12 +21,13 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
   return (
     <html lang="en">
     <body className={InterSans.variable}>
-      <Header/>
-        <main>
-          <SmoothScroll>{children}</SmoothScroll>
-        </main>
-      {/*<PreloaderWrapper><SmoothScroll>{children}</SmoothScroll></PreloaderWrapper>*/}
-      <Footer/>
+      <PreloaderWrapper>{children}</PreloaderWrapper>
+
+      {/*<Header/>*/}
+      {/*<main>*/}
+      {/*  <SmoothScroll>{children}</SmoothScroll>*/}
+      {/*</main>*/}
+      {/*<Footer/>*/}
     </body>
     </html>
   );

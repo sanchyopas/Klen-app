@@ -34,9 +34,7 @@ export default function PreloaderWrapper({children}: { children: React.ReactNode
       {isLoaded ? (
         <>
           <Header/>
-          <ReactLenis root>
           <main>{children}</main>
-          </ReactLenis>
           <Footer/>
         </>
       ) : (

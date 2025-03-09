@@ -51,8 +51,6 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   const { id } = await params;
   const project = await getProject(Number(id));
 
-  console.log(project.object.nextCases)
-
   if (!project) {
     notFound();
   }

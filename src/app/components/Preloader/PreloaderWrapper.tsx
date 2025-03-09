@@ -1,16 +1,18 @@
 "use client";
 
-import { useState, useEffect, createContext, useContext } from "react";
+import {useState, useEffect, createContext, useContext} from "react";
 import Preloader from "./Preloader";
 import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
-import { gsap } from "gsap";
+import {gsap} from "gsap";
+import {useSmoothScroll} from "@/app/hooks/useSmoothScroll";
 
-const LoadingContext = createContext<{ isLoaded: boolean }>({ isLoaded: false });
+const LoadingContext = createContext<{ isLoaded: boolean }>({isLoaded: false});
 
 export const useLoading = () => useContext(LoadingContext);
 
-export default function PreloaderWrapper({ children }: { children: React.ReactNode }) {
+export default function PreloaderWrapper({children}: { children: React.ReactNode }) {
+
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -21,22 +23,24 @@ export default function PreloaderWrapper({ children }: { children: React.ReactNo
     if (isLoaded) {
       gsap.fromTo(
         "main",
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+        {opacity: 0, y: 50},
+        {opacity: 1, y: 0, duration: 1, ease: "power3.out"}
       );
     }
   }, [isLoaded]);
 
   return (
-    <LoadingContext.Provider value={{ isLoaded }}>
+    <LoadingContext.Provider value={{isLoaded}}>
       {isLoaded ? (
         <>
-          <Header />
+          <Header/>
+          <ReactLenis root>
           <main>{children}</main>
-          <Footer />
+          </ReactLenis>
+          <Footer/>
         </>
       ) : (
-        <Preloader />
+        <Preloader/>
       )}
     </LoadingContext.Provider>
   );

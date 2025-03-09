@@ -1,4 +1,5 @@
 import s from "@/app/projects/[id]/project.module.scss";
+import AnimatedText from "@/app/components/AnimatedText/AnimatedText";
 
 type Props = {
   title: string,
@@ -17,7 +18,7 @@ export default function TitleTextLeftNumListRight({title, text, list}:Props) {
 
               <div className={s.text}>
                 <h2>{title}</h2>
-                <div className={s.noGapContent} dangerouslySetInnerHTML={{ __html: text }}></div>
+                <AnimatedText htmlContent={text} className={s.noGapContent} />
               </div>
 
             </div>
@@ -29,7 +30,7 @@ export default function TitleTextLeftNumListRight({title, text, list}:Props) {
                   {
                     list.map((item:any, i:number) => {
                       return (
-                        <li key={i}>{item.text}</li>
+                        <li key={i} dangerouslySetInnerHTML={{ __html: item.text }}></li>
                       )
                     })
                   }

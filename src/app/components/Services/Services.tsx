@@ -77,7 +77,7 @@ export default function Services() {
                 <div
                   className={`${s.item} ${activeIndex === index ? s.active : ""}`}
                   key={index}
-                  onClick={() => handleImageChange(index)}
+                  onMouseEnter={() => handleImageChange(index)}
                 >
                   <h3 className={s.name}>{slide.name}</h3>
                 </div>

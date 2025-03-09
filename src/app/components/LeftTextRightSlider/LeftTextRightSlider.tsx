@@ -1,5 +1,7 @@
 import s from "@/app/projects/[id]/project.module.scss";
 import MiniSlider from "@/app/components/MiniSlider/MiniSlider";
+import AnimatedText from "@/app/components/AnimatedText/AnimatedText";
+import Title from "@/app/components/Title/Title";
 
 type Props = {
   text: string,
@@ -16,7 +18,7 @@ export default function LeftTextRightSlider({slides, title, text}: Props) {
             <div className="col-12 col-md-6">
               <div className={s.text}>
                 <h3>{title}</h3>
-                <div className={s.noGapContent} dangerouslySetInnerHTML={{__html: text}}></div>
+                <AnimatedText htmlContent={text} className={s.noGapContent} />
               </div>
             </div>
             <div className="col-12 col-md-6">

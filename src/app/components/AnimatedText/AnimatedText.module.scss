@@ -1,0 +1,6 @@
+.defaultPosition {
+  @media (hover: hover) {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+}

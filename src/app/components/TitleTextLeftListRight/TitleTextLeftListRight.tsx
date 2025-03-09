@@ -1,3 +1,4 @@
+import AnimatedText from "@/app/components/AnimatedText/AnimatedText";
 
 type Props = {
   title?: string;
@@ -30,7 +31,7 @@ export default function TitleTextLeftListRight({ title, text, list }: Props) {
             <div className="col-12 col-md-6">
               <div className={s.text}>
                 <h2>{title}</h2>
-                  <div className={s.noGapContent} dangerouslySetInnerHTML={{ __html: text }} ></div>
+                <AnimatedText htmlContent={text} className={s.noGapContent} />
               </div>
             </div>
 
@@ -38,7 +39,7 @@ export default function TitleTextLeftListRight({ title, text, list }: Props) {
               <div className={s.text}>
                 <ul>
                   {
-                    list.map((item: any, i: number) => <li key={i}>{item.text}</li>)
+                    list.map((item: any, i: number) => <li key={i} dangerouslySetInnerHTML={{ __html: item.text }}></li>)
                   }
                 </ul>
               </div>

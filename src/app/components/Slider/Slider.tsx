@@ -100,7 +100,7 @@ export default function Slider({
         >
           {slides.map((item: Slide, i: number) => (
             <SwiperSlide className={s.slider__slide} key={i}>
-              <img src={`https://dev.modx.fresco.bz${item.image.desktop}`} alt=""/>
+              <img src={`https://dev.modx.fresco.bz${item.image}`} alt=""/>
             </SwiperSlide>
           ))}
         </Swiper>

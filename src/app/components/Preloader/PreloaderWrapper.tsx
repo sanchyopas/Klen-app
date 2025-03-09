@@ -5,7 +5,6 @@ import Preloader from "./Preloader";
 import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
 import {gsap} from "gsap";
-import {useSmoothScroll} from "@/app/hooks/useSmoothScroll";
 
 const LoadingContext = createContext<{ isLoaded: boolean }>({isLoaded: false});
 

@@ -73,7 +73,6 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       "title": "интерьер МОП"
     },
   ]
-
   return (
     <>
       <section>
@@ -83,13 +82,11 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           <Title title={project.object.main_screen.title} as="h1" />
         </div>
       </section>
-
       {
-        project.object.BlocksList.map((block: any, index: number) => {
+        project.object.BlocksList?.map((block: any, index: number) => {
           return <DynamicBlock block={block} key={index}/>
         })
       }
-
       <Projects title={"Следующий проект"} isNextProjects={true} projects={project.object.nextCases} />
     </>
   );

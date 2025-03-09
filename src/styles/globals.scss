@@ -51,6 +51,14 @@ img {
   }
 }
 
+#smooth-wrapper {
+  overflow: hidden;
+}
+
+#smooth-content {
+  will-change: transform;
+}
+
 .container,
 .container-lg,
 .container-md,

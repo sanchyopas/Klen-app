@@ -14,10 +14,10 @@ export default function Buro() {
     if (isTouchDevice) return;
     gsap.fromTo(
       `.${s.bg}`,
-      { scale: 1.2 },
+      { scale: 1.1 },
       {
         scale: 1,
-        duration: 1.2,
+        duration: 1.1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: `#${s.buro}`,

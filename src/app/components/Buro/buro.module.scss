@@ -13,14 +13,6 @@
     width: calc(100% - 24px);
   }
 
-  //@media(hover:hover){
-  //  &:hover{
-  //    .bg{
-  //      transform: scale(1.1) !important;
-  //    }
-  //  }
-  //}
-
   a {
     display: block;
     font-size: 0;
@@ -38,11 +30,14 @@
   .bg {
     position: relative;
     display: block;
-    margin: 0 auto;
-    height: 100%;
+    margin: 40px auto;
+    height: calc(100% - 80px);
     width: 100%;
     object-fit: cover;
-    transition: all 1s ease;
+
+    @media (hover: hover) {
+      transform: scale(1.1);
+    }
   }
 
   .title {
@@ -64,6 +59,7 @@
     margin: 0;
     font-size: 40px;
     line-height: 48px;
+
     &:before {
       content: '';
       display: block;
@@ -82,6 +78,7 @@
     & > a:hover {
       & + .title h2 {
         padding-left: 24px;
+
         &:before {
           left: 0;
         }

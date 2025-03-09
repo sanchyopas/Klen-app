@@ -20,9 +20,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
     <body className={InterSans.variable}>
-    {/*<Header />*/}
-    <PreloaderWrapper>{children}</PreloaderWrapper>
-    {/*<Footer />*/}
+    <Header />
+    <main>{children}</main>
+    {/*<PreloaderWrapper>{children}</PreloaderWrapper>*/}
+    <Footer />
     </body>
     </html>
   );

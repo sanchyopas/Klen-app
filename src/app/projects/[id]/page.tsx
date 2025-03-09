@@ -58,16 +58,24 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 
   const projects = [
     {
+      "id": 1,
       "link": "pr1",
-      "image": "/img/image-1.jpg",
+      "image": {
+        "desktop": "/img/image-1.jpg"
+      },
       "title": "brodsky"
     },
     {
+      "id": 2,
       "link": "pr2",
-      "image": "/img/image-2.jpg",
+      "image": {
+        "desktop": "/img/image-2.jpg"
+      },
       "title": "интерьер МОП"
     },
   ]
+
+  console.log(projects)
 
   return (
     <>

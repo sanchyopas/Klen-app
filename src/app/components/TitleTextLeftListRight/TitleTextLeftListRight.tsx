@@ -38,7 +38,7 @@ export default function TitleTextLeftListRight({ title, text, list }: Props) {
               <div className={s.text}>
                 <ul>
                   {
-                    list.map((item: any, i: number) => <li key={i}>{item}</li>)
+                    list.map((item: any, i: number) => <li key={i}>{item.text}</li>)
                   }
                 </ul>
               </div>

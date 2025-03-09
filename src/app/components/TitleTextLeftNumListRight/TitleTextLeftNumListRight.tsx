@@ -29,7 +29,7 @@ export default function TitleTextLeftNumListRight({title, text, list}:Props) {
                   {
                     list.map((item:any, i:number) => {
                       return (
-                        <li key={i}>{item}</li>
+                        <li key={i}>{item.text}</li>
                       )
                     })
                   }

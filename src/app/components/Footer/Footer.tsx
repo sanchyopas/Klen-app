@@ -59,7 +59,7 @@ export default function Footer () {
             </div>
 
             <div className="col-12 col-md-6">
-              <a href="#">политика конфиденциальности</a>
+              <Link href={"/policy"}>политика конфиденциальности</Link>
             </div>
           </div>
         </div>

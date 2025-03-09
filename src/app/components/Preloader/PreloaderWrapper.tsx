@@ -6,17 +6,15 @@ import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
 import { gsap } from "gsap";
 
-// Создаем контекст загрузки
 const LoadingContext = createContext<{ isLoaded: boolean }>({ isLoaded: false });
 
-// Хук для использования состояния загрузки в других компонентах
 export const useLoading = () => useContext(LoadingContext);
 
 export default function PreloaderWrapper({ children }: { children: React.ReactNode }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setIsLoaded(true), 3000); // Симуляция загрузки (замени на реальную)
+    setTimeout(() => setIsLoaded(true), 3000);
   }, []);
 
   useEffect(() => {

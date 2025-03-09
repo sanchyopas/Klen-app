@@ -5,13 +5,13 @@ import Preloader from "./Preloader";
 import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
 import {gsap} from "gsap";
+import {useLocomotiveScroll} from "@/app/hooks/useLocomotiveScroll";
 
 const LoadingContext = createContext<{ isLoaded: boolean }>({isLoaded: false});
 
 export const useLoading = () => useContext(LoadingContext);
 
 export default function PreloaderWrapper({children}: { children: React.ReactNode }) {
-
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {

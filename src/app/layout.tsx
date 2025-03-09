@@ -5,6 +5,7 @@ import "../styles/globals.scss";
 import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
 import PreloaderWrapper from "@/app/components/Preloader/PreloaderWrapper";
+import {useLocomotiveScroll} from "@/app/hooks/useLocomotiveScroll";
 
 
 const InterSans = Inter({
@@ -22,9 +23,9 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
   return (
     <html lang="en">
     <body className={InterSans.variable}>
-    <Header/>
+    {/*<Header/>*/}
     <PreloaderWrapper>{children}</PreloaderWrapper>
-    <Footer/>
+    {/*<Footer/>*/}
     </body>
     </html>
   );

@@ -19,9 +19,9 @@ export default function ParallaxImageBig({ image }: Props) {
 
     gsap.fromTo(
       el,
-      { y: 100 },
+      { y: 0 },
       {
-        y: -100,
+        y: -200,
         ease: "easeInOut",
         scrollTrigger: {
           trigger: el,

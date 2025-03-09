@@ -142,12 +142,14 @@
 }
 .containerImage{
   overflow: hidden;
+  width: 100%;
+  max-height: calc(100vh - 80px);
+  aspect-ratio: 16 / 9;
 }
 
 .fullScreenImage {
   position: relative;
   width: 100%;
-  height: 100vh;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -156,7 +158,7 @@
   img {
     display: block;
     width: 100%;
-    height: 100%;
+    height: 120%;
     object-fit: cover;
     transform: translateY(0px);
     will-change: transform;

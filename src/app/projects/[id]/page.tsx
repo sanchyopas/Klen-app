@@ -51,6 +51,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   const { id } = await params;
   const project = await getProject(Number(id));
 
+  console.log(project.object.nextCases)
 
   if (!project) {
     notFound();
@@ -75,8 +76,6 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     },
   ]
 
-  console.log(projects)
-
   return (
     <>
       <section>
@@ -93,7 +92,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         })
       }
 
-      <Projects title={"Следующий проект"} isNextProjects={true} projects={projects} />
+      <Projects title={"Следующий проект"} isNextProjects={true} projects={project.object.nextCases} />
     </>
   );
 }

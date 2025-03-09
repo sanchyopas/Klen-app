@@ -73,8 +73,9 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     <>
       <section>
         <div className="container">
-          <h1 className="sr-only">{project.object.main_screen.title}</h1> {/* 👀 SEO-заголовок */}
-          <AnimatedTitle title={project.object.main_screen.title} />
+          {/*<h1 className="sr-only">{project.object.main_screen.title}</h1>*/}
+          {/*<AnimatedTitle title={project.object.main_screen.title} />*/}
+          <Title title={project.object.main_screen.title} as="h1" />
         </div>
       </section>
 

@@ -38,7 +38,7 @@ export const DynamicBlock = ({block}: any) => {
     case "2 изображения широкое слева узкое справа":
       return <TwoImageLeftWideNarrow image_left={block.image_left} image_right={block.image_right}  />
     // case "Заголовок h2 и текст слева + список справа":
-    //   return <TitleTextLeftListRight text={block.text.text} title={block.title} list={block.list}/>
+      // return <TitleTextLeftListRight text={block.text} title={block.title} list={block.list}/>
     // case "Заголовок h3 и текст слева + нумерованный список справа":
     //   return <TitleTextLeftNumListRight textPage={block.text} title={block.title} list={block.list} />
     default:

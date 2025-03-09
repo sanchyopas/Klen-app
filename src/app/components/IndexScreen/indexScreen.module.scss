@@ -19,6 +19,10 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+
+    @media (hover: hover) and (pointer: fine) {
+      transform: scale(1.2);
+    }
   }
 
   .mask {

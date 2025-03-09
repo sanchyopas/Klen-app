@@ -5,6 +5,10 @@
     }
   }
 
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+
   .row {
     @media screen and (max-width: 992px) {
       flex-direction: column-reverse;

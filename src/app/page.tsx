@@ -5,6 +5,7 @@ import Services from "@/app/components/Services/Services";
 import Slider from "@/app/components/Slider/Slider";
 import React from "react";
 import { notFound } from "next/navigation";
+import ServiceMobile from "@/app/components/ServicesMobile.tsx/ServicesMobile";
 
 async function getData() {
   try {
@@ -78,6 +79,7 @@ export default async function Home() {
       )}
       <Buro />
       <Services />
+      <ServiceMobile is_mobile={true} title={"услуги"} slides={projectsList} is_boolet={false} name_btn={"все услуги"} link_btn={"/services"} />
     </>
   );
 }

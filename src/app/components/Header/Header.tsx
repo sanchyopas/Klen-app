@@ -16,19 +16,19 @@ export default function Header() {
 
     gsap.fromTo(
       ".logo",
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }
+      { opacity: 0, y: 60 },
+      { opacity: 1, y: 0, duration: 1.5, ease: "power2.out" }
     );
 
     gsap.fromTo(
       gsap.utils.toArray(".menu-item"),
-      { opacity: 0, y: 20 },
+      { opacity: 0, y: 30 },
       { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.4 }
     );
 
     gsap.fromTo(
       gsap.utils.toArray(".contact-item"),
-      { opacity: 0, y: 20 },
+      { opacity: 0, y: 30 },
       { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.6 }
     );
   }, []);

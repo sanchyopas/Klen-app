@@ -124,10 +124,10 @@ export default function YandexMap() {
                   </div>
                 </div>
               </div>
-              <div className={s["contact-info__actions"]}>
-                <LinkWithWrapper dotReverce={false} isWrapper={false} name={"отправить заявку"} link={"#"}/>
-                <LinkWithWrapper dotReverce={false} isWrapper={false} name={"пригласить в тендер"} link={"#"}/>
-              </div>
+              {/*<div className={s["contact-info__actions"]}>*/}
+              {/*  <LinkWithWrapper dotReverce={false} isWrapper={false} name={"отправить заявку"} link={"#"}/>*/}
+              {/*  <LinkWithWrapper dotReverce={false} isWrapper={false} name={"пригласить в тендер"} link={"#"}/>*/}
+              {/*</div>*/}
             </div>
           </div>
           <div

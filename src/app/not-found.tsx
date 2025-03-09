@@ -3,6 +3,12 @@ import s from './not-found.module.scss'
 import Image from "next/image";
 import LinkWithWrapper from "@/app/components/Link/Link";
 
+export async function generateMetadata() {
+  return {
+    title: "404 • KLËN — architectural bureau",
+  };
+}
+
 export default function NotFound () {
   return (
     <section className={s.page404}>

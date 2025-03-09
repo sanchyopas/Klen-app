@@ -22,9 +22,9 @@ export default function Footer () {
 
               <nav>
                 <ul>
-                  <li>
-                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Бюро"} link={"/buro"} />
-                  </li>
+                  {/*<li>*/}
+                  {/*  <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Бюро"} link={"/buro"} />*/}
+                  {/*</li>*/}
                   <li>
                     <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Проекты"} link={"/projects"} />
                   </li>
@@ -39,14 +39,14 @@ export default function Footer () {
             </div>
 
             <div className="col-12 col-md-6">
-              <Title title={"Давайте обсудим ваш проект"} as={"h2"}/>
+              {/*<Title title={"Давайте обсудим ваш проект"} as={"h2"}/>*/}
               <ul>
-                <li>
-                  <LinkWithWrapper className="" dotReverce={false} isWrapper={false} name={"Отправить заявку"} link={"#"} />
-                </li>
-                <li className={s.grayLink}>
-                  <LinkWithWrapper className="" dotReverce={false} isWrapper={false} name={"Пригласить в тендер"} link={"#"} />
-                </li>
+                {/*<li>*/}
+                {/*  <LinkWithWrapper className="" dotReverce={false} isWrapper={false} name={"Отправить заявку"} link={"#"} />*/}
+                {/*</li>*/}
+                {/*<li className={s.grayLink}>*/}
+                {/*  <LinkWithWrapper className="" dotReverce={false} isWrapper={false} name={"Пригласить в тендер"} link={"#"} />*/}
+                {/*</li>*/}
               </ul>
             </div>
           </div>

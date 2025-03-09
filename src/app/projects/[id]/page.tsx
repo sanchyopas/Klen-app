@@ -42,8 +42,8 @@ export async function generateMetadata(props: { params: Promise<Params> }) {
   }
 
   return {
-    title: result.title   || `Заголовок проекта с айди ${id}`,
-    description: result.description  || `Описание проекта с айди ${id}`,
+    title: result.object.seo.title   || `Заголовок проекта с айди ${id}`,
+    description: result.object.seo.description  || `Описание проекта с айди ${id}`,
   }
 }
 

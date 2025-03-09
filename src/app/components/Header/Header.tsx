@@ -33,11 +33,49 @@ export default function Header() {
     );
   }, []);
 
+
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [isFixMenu, setIsFixMenu] = useState(false);
+  const [isShow, setIsShow] = useState(false);
+  const [isHide, setIsHide] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+
+      if (currentScrollPos < prevScrollPos) {
+        setIsShow(true);
+      } else {
+        setIsShow(false);
+      }
+
+      if (currentScrollPos <= 300) {
+        setIsFixMenu(false);
+      } else {
+        setIsFixMenu(true);
+      }
+
+      if (currentScrollPos <= 150) {
+        setIsHide(false);
+      } else {
+        setIsHide(true);
+      }
+
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [prevScrollPos]);
+
 const menuItem = [
-  {
-    "name": "Бюро",
-    "link": "/buro"
-  },
+  // {
+  //   "name": "Бюро",
+  //   "link": "/buro"
+  // },
   {
     "name": "Проекты",
     "link": "/projects"
@@ -51,11 +89,16 @@ const menuItem = [
 ]
 
   return (
-    <header className={s.header}>
+    <header className={[
+      s.header,
+      isFixMenu ? s.fixMenu : '',
+      isShow ? s.show : '',
+      isHide ? s.hide : '',
+    ].filter(Boolean).join(' ')}>
       <div className={`${s.container} container`}>
         <div className={`${s.logo} logo`}>
           <Link href="/">KLЁN — architectural bureau</Link>
-          <Image src={"/img/Logo.svg"} alt={"KLЁN — architectural bureau"} width={117} height={40} layout="responsive" />
+          <Image src={"/img/Logo.svg"} alt={"KLЁN — architectural bureau"} width={117} height={40} layout="responsive"/>
         </div>
 
         <button className={menuOpen ? `${s.burger} ${s.open}` : s.burger} onClick={() => setMenuOpen(!menuOpen)}>
@@ -70,7 +113,7 @@ const menuItem = [
             <ul>
               {menuItem.map((item, index) => (
                 <li key={index} className="menu-item">
-                  <MenuLink clickEvent={() => setMenuOpen(false)} link={item.link} name={item.name} />
+                  <MenuLink clickEvent={() => setMenuOpen(false)} link={item.link} name={item.name}/>
                 </li>
               ))}
             </ul>
@@ -78,12 +121,12 @@ const menuItem = [
 
           <div className={s.contacts}>
             <a href="https://www.t.me/#" target="_blank" className="contact-item">
-              <img src="/img/icon/Telegram.svg" alt="Telegram" />
+              <img src="/img/icon/Telegram.svg" alt="Telegram"/>
             </a>
             <a href="tel:+79267617433" className="contact-item">+7 (926) 761-74-33</a>
           </div>
         </div>
       </div>
-    </header>
-  );
-}
+      </header>
+      );
+    }

@@ -1,5 +1,5 @@
 .header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -7,6 +7,21 @@
   background: #fff;
   z-index: 99;
   overflow: hidden;
+
+  &.hide {
+    top: -100px;
+    &.fixMenu {
+      position: fixed;
+      transition: all 0.2s;
+    }
+    &.show {
+      top: 0px;
+    }
+  }
+
+
+
+
 
   .container {
     display: flex;

@@ -3,10 +3,17 @@
   // height: 100svh;
   width: calc(100% - 80px);
   max-width: calc(1920px - 80px);
-  margin: 0 auto;
+  margin: 40px auto;
   padding: 0;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1173 / 580;
   overflow: hidden;
+
+  @media (hover: hover) {
+    transition: all 0.08s ease-in-out;
+    &:active {
+      transform: scale(0.98);
+    }
+  }
 
   @media (max-width: 767px) {
     height: 100svh;
@@ -20,18 +27,18 @@
     &::before {
       content: '';
       position: absolute;
-      top: 40px;
+      top: 0;
       left: 0;
       width: 100%;
-      height: calc(100% - 80px);
+      height: 100%;
     }
   }
 
   .bg {
     position: relative;
     display: block;
-    margin: 40px auto;
-    height: calc(100% - 80px);
+    margin: 0 auto;
+    height: 100%;
     width: 100%;
     object-fit: cover;
 

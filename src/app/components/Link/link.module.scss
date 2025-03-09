@@ -42,6 +42,11 @@
           left: -24px;
         }
       }
+
+      &:active {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
     }
   }
 
@@ -69,6 +74,14 @@
 
         &:before {
           left: 0;
+        }
+      }
+
+      &:active {
+        padding-left: 16px;
+        padding-right: 8px;
+        &:before {
+          left: 0px;
         }
       }
     }

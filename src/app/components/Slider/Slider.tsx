@@ -27,6 +27,7 @@ type SliderProps = {
 };
 
 type Slide = {
+  main_screen: any;
   image: any;
 };
 
@@ -100,7 +101,16 @@ export default function Slider({
         >
           {slides.map((item: Slide, i: number) => (
             <SwiperSlide className={s.slider__slide} key={i}>
-              <img src={ item.image.includes('/upload_resources/') ? `https://dev.modx.fresco.bz${item.image}` : `https://dev.modx.fresco.bz/upload_resources/${item.image}`} alt=""/>
+              {
+                item.hasOwnProperty("main_screen") ?
+                  <img
+                    src={item.main_screen.image.includes('/upload_resources/') ? `https://dev.modx.fresco.bz${item.main_screen.image}` : `https://dev.modx.fresco.bz/upload_resources/${item.main_screen.image}`}
+                    alt=""/>
+                  :
+                  <img
+                    src={item.image.includes('/upload_resources/') ? `https://dev.modx.fresco.bz${item.image}` : `https://dev.modx.fresco.bz/upload_resources/${item.image}`}
+                    alt=""/>
+              }
             </SwiperSlide>
           ))}
         </Swiper>

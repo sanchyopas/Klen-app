@@ -1,40 +1,52 @@
 import Projects from "@/app/components/Projects/Projects";
 import {useGetProjectByIdQuery} from "@/app/redux/caseApi";
+import {notFound} from "next/navigation";
 
-export default function ProjectsPage () {
+async function getData() {
+  try {
+    const res = await fetch(`https://dev.modx.fresco.bz/api/cases`, {
+      cache: "no-store",
+    });
 
-  const projects = [
-    {
-      "link": "pr1",
-      "image": "/img/image-1.jpg",
-      "title": "brodsky"
-    },
-    {
-      "link": "pr2",
-      "image": "/img/image-2.jpg",
-      "title": "интерьер МОП"
-    },
-    {
-      "link": "pr3",
-      "image": "/img/image-3.jpg",
-      "title": "реновация облика фасадов"
-    },
-    {
-      "link": "pr4",
-      "image": "/img/image-4.jpg",
-      "title": "жилой интерьер"
-    },
-    {
-      "link": "pr5",
-      "image": "/img/image-5.jpg",
-      "title": "концепция фасадных решений ЖК 'Порто-Ново'"
-    },
-    {
-      "link": "pr6",
-      "image": "/img/image-6.jpg",
-      "title": "концепция благоустройства ЖК Снегири"
-    },
-  ]
+    if (!res.ok) {
+      if (res.status === 404) {
+        return null;
+      }
+      throw new Error(`Error: ${res.status} ${res.statusText}`);
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error("Error:", error);
+    return null;
+  }
+}
+
+export async function generateMetadata() {
+  const result = await getData();
+
+  if (!result || !result.object?.page) {
+    return {
+      title: "Not found",
+    };
+  }
+
+  return {
+    title: result.object.page.SEO_TITLE,
+    description: result.object.page.SEO_DESCR,
+  };
+}
+
+export default async function ProjectsPage () {
+
+  const result = await getData();
+
+  if (!result || !result.object.cases) {
+    notFound();
+    return null;
+  }
+
+  const projects = result.object.cases || {};
 
   return (
     <>

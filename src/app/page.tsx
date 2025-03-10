@@ -78,8 +78,22 @@ export default async function Home() {
         </>
       )}
       {/*<Buro />*/}
-      <Services />
-      <ServiceMobile is_mobile={true} title={"услуги"} slides={projectsList} is_boolet={false} name_btn={"все услуги"} link_btn={"/services"} />
+      <Services
+        slides={result.object.services.list}
+        title={result.object.services.title_h2}
+        button_link={result.object.services.button_link}
+        button_name={result.object.services.button_name}
+        is_pc={true}
+      />
+      <ServiceMobile
+        is_mobile={true}
+        is_boolet={false}
+        slides={result.object.services.list}
+        title={result.object.services.title_h2}
+        link_btn={result.object.services.button_link}
+        name_btn={result.object.services.button_name}
+
+      />
     </>
   );
 }

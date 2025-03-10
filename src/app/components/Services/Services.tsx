@@ -6,34 +6,35 @@ import Title from "@/app/components/Title/Title";
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
-type SlideType = {
-  name: string;
-  image: string;
-  is_active: boolean;
-};
+type Slide = {
+  main_screen_title: string;
+  order?: 1
+  id?: number
+  main_screen: {image: string}
+}
 
-export default function Services() {
+type Props = {
+  slides: Slide[]
+  title?: string
+  button_name?: string
+  button_link?:string
+  button_icon?: string
+  is_pc: boolean
+}
+
+export default function Services({slides, title, button_name, button_link, is_pc}: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
+  console.log("activeIndex", activeIndex);
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const slides = [
-    { name: "Разработка продукта", image: "/img/image.jpg", is_active: true },
-    { name: "Мастерпланы", image: "/img/image-1.jpg", is_active: false },
-    { name: "Объемно-планировочные решения", image: "/img/image-2.jpg", is_active: false },
-    { name: "Фасадные решения", image: "/img/image-3.jpg", is_active: false },
-    { name: "Благоустройство", image: "/img/image-4.jpg", is_active: false },
-    { name: "Интерьерные решения", image: "/img/image-5.jpg", is_active: false },
-    { name: "Финансовые показатели проекта", image: "/img/image-6.jpg", is_active: false },
-  ];
 
   const handleImageChange = (index: number) => {
     if (index === activeIndex) return;
 
     const oldImage = document.querySelector(`.${s.activeImage}`) as HTMLImageElement | null;
     const newImage = document.createElement("img");
-
-    newImage.src = slides[index].image;
-    newImage.alt = slides[index].name;
+    newImage.src = `https://dev.modx.fresco.bz${slides[index].main_screen.image}`;
+    newImage.alt = slides[index].main_screen_title;
     newImage.className = s.animatedImage;
     newImage.style.opacity = "0";
     newImage.style.transform = "scale(1.2)";
@@ -62,24 +63,24 @@ export default function Services() {
         ease: "power3.out",
       });
     }
-
+    console.log("index", index);
     setActiveIndex(index);
   };
 
   return (
     <section id={s.services}>
       <div className="container">
-        <Title title={"Услуги"} as={"h2"} className={s.title} />
+        <Title title={"услуги"} as={"h2"} className={s.title} />
         <div className={`row ${s.row}`}>
           <div className={`col-12 col-lg-6 ${s.wrapper}`}>
             <div className={s.servicesList}>
-              {slides.map((slide, index) => (
+              {slides.map((slide: any, index: number) => (
                 <div
                   className={`${s.item} ${activeIndex === index ? s.active : ""}`}
                   key={index}
                   onMouseEnter={() => handleImageChange(index)}
                 >
-                  <h3 className={s.name}>{slide.name}</h3>
+                  <h3 className={s.name}>{slide.main_screen_title}</h3>
                 </div>
               ))}
             </div>
@@ -87,17 +88,17 @@ export default function Services() {
               dotReverce={false}
               className={s.linkWrapper}
               isWrapper={true}
-              name={"Все услуги"}
-              link={"/services"}
+              name={button_name}
+              link={button_link}
             />
           </div>
 
           <div className="col-12 col-lg-6">
             <div className={s.imageContainer} ref={imageContainerRef}>
               <img
-                src={slides[activeIndex].image}
-                alt={slides[activeIndex].name}
-                title={slides[activeIndex].name}
+                src={`https://dev.modx.fresco.bz${slides[activeIndex].main_screen.image}`}
+                alt={slides[activeIndex].main_screen_title}
+                title={slides[activeIndex].main_screen_title}
                 className={`${s.animatedImage} ${s.activeImage}`}
               />
             </div>

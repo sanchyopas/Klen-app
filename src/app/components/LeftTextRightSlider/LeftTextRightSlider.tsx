@@ -13,7 +13,7 @@ type Props = {
 }
 
 export default function LeftTextRightSlider({slides, title, text}: Props) {
-  const elemRef = useGsapFadeIn();
+  const elemRef = useGsapFadeIn<HTMLDivElement>();
   return (
     <section id={s.services}>
       <div className={s.two_columns_content}>

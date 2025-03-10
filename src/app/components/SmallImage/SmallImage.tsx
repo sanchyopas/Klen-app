@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function SmallImage({image}: Props) {
-  const imageRef = useGsapFadeIn();
+  const imageRef = useGsapFadeIn<HTMLDivElement>();
   return (
     <section className={s.halfScreenImage} ref={imageRef}>
       <div className="container">

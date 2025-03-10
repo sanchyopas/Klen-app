@@ -24,7 +24,7 @@ type ProjectInfoProps = {
 }
 
 export default function TitleTextLeftListRight({ title, text, list }: Props) {
-  const sectionRef = useGsapFadeIn();
+  const sectionRef = useGsapFadeIn<HTMLDivElement>();
   return (
     <div className={s.two_columns_content__wrapper} ref={sectionRef}>
       <div className={s.two_columns_content}>

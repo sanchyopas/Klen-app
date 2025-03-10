@@ -27,6 +27,7 @@ type SliderProps = {
 };
 
 type Slide = {
+  main_screen_title: any;
   main_screen: any;
   image: any;
 };
@@ -103,6 +104,7 @@ export default function ServiceMobile({ is_mobile, slides, is_boolet, name_btn,l
                     src={item.image.includes('/upload_resources/') ? `https://dev.modx.fresco.bz${item.image}` : `https://dev.modx.fresco.bz/upload_resources/${item.image}`}
                     alt=""/>
               }
+              <span>{item.main_screen_title}</span>
             </SwiperSlide>
           ))}
         </Swiper>

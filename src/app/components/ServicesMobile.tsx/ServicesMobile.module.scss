@@ -21,6 +21,16 @@
         aspect-ratio: 1360 / 720;
       }
     }
+
+    span {
+      display: block;
+      margin-top: 8px;
+      font-size: 20px;
+      opacity: .8;
+      line-height: 1.4;
+      font-weight: 400;
+      text-transform: lowercase;
+    }
   }
 
   &__actions {

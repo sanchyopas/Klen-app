@@ -19,9 +19,7 @@ export default function Projects( props:any ) {
             )))
           }
         </div>
-
         {!!link && <LinkWithWrapper className={s.linkWrapper} link={"/projects"} dotReverce={false} isWrapper={true} name={btn_name} />}
-
       </div>
     </section>
   );

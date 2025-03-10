@@ -12,11 +12,14 @@ import ThreeColumnImage from "@/app/components/ThreeColumnImage/ThreeColumnImage
 import TwoImageLeftWideNarrow from "@/app/components/TwoImageLeftWideNarrow/TwoImageLeftWideNarrow";
 import TitleTextLeftListRight from "@/app/components/TitleTextLeftListRight/TitleTextLeftListRight";
 import TitleTextLeftNumListRight from "@/app/components/TitleTextLeftNumListRight/TitleTextLeftNumListRight";
+import TextTwoColumn from "@/app/components/TextTwoColumn/TextTwoColumn";
 
 export const DynamicBlock = ({block}: any) => {
   switch (block.template) {
     case "Текстовый блок - 2 колонки без заголовков":
       return <ProjectInfo description={block.text_left} details={block.text_right}/>
+    case "текст в 2 колонки":
+      return <TextTwoColumn text={block.text} />
     case "Галлерея фото":
       return <Slider slides={Array.isArray(block.image) ? block.image : []} is_boolet={true}/>
     case "Текстовый блок - узкая колонка по центру":

@@ -1,15 +1,18 @@
+"use client"
 import s from "@/app/projects/[id]/project.module.scss";
 import AnimatedText from "@/app/components/AnimatedText/AnimatedText";
+import {useGsapFadeIn} from "@/app/hooks/AnimationHooks/useGsapFadeIn";
 
 type Props = {
   title: string,
-  text: any,
+  text: string,
   list: any;
 }
 
 export default function TitleTextLeftNumListRight({title, text, list}:Props) {
+  const sectionRef = useGsapFadeIn();
   return (
-    <div className={s.two_columns_content__wrapper}>
+    <div className={s.two_columns_content__wrapper} ref={sectionRef}>
       <div className={s.two_columns_content}>
 
         <div className="container">

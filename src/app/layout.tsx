@@ -22,14 +22,14 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
   return (
     <html lang="en">
     <body className={InterSans.variable}>
-      <PreloaderWrapper>{children}</PreloaderWrapper>
+      <PreloaderWrapper><SmoothScroll>{children}</SmoothScroll></PreloaderWrapper>
 
       {/*<Header/>*/}
       {/*<main>*/}
       {/*  <SmoothScroll>{children}</SmoothScroll>*/}
       {/*</main>*/}
       {/*<Footer/>*/}
-      <Cookie/>
+      {/*<Cookie/>*/}
     </body>
     </html>
   );

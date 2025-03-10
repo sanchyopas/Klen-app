@@ -1,18 +1,16 @@
-import { DynamicBlock } from "@/app/components/DynamicBlock/DynamicBlock";
-import { notFound } from "next/navigation";
-import AnimatedTitle from "@/app/AnimateWrapperComponents/AnimatedTitle";
 import Title from "@/app/components/Title/Title";
-import Projects from "@/app/components/Projects/Projects";
+import {DynamicBlock} from "@/app/components/DynamicBlock/DynamicBlock";
 import React from "react";
-import NextProjects from "@/app/components/NextProjects/NextProjects";
+import {notFound} from "next/navigation";
+
 
 type Params = {
   id: number
 }
 
-async function getProject(id: number) {
+async function getService(id: number) {
   try {
-    const res = await fetch(`https://dev.modx.fresco.bz/api/cases/${id}`, {
+    const res = await fetch(`https://dev.modx.fresco.bz/api/services/${id}`, {
       cache: "no-store",
     });
 
@@ -34,7 +32,7 @@ export async function generateMetadata(props: { params: Promise<Params> }) {
   const params = await props.params
   const {id} = params;
 
-  const result = await getProject(id);
+  const result = await getService(Number(id));
 
   if (!result || !result.object.seo) {
     return {
@@ -47,30 +45,27 @@ export async function generateMetadata(props: { params: Promise<Params> }) {
     description: result.object.seo.description  || `Описание проекта с айди ${id}`,
   }
 }
-
-export default async function ProjectPage({ params }: { params: Promise<Params> }) {
+export default async function Service({ params }: { params: Promise<Params> }) {
   const { id } = await params;
-  const project = await getProject(Number(id));
+  const service = await getService(id);
 
-  if (!project) {
+  if (!service) {
     notFound();
   }
-
   return (
     <>
       <section>
         <div className="container">
-          <Title title={project.object.main_screen.title} as="h1" />
+          <Title title={service.object.main_screen.title} as="h1" />
         </div>
       </section>
 
       {
-        project.object?.BlocksList.map((block: any, index: number) => {
+        service.object?.BlocksList.map((block: any, index: number) => {
           return <DynamicBlock block={block} key={index}/>
         })
       }
-      {/*<NextProjects projects={project.object.nextCases} />*/}
-      <Projects title={"Следующий проект"} isNextProjects={true} projects={project.object.nextCases} />
     </>
   );
-}
+};
+

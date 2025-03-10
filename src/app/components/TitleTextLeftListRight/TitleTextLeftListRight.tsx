@@ -1,3 +1,4 @@
+"use client"
 import AnimatedText from "@/app/components/AnimatedText/AnimatedText";
 
 type Props = {
@@ -15,6 +16,7 @@ function decodeHTML(encodedString: string) {
 
 import he from "he";
 import s from "@/app/projects/[id]/project.module.scss";
+import {useGsapFadeIn} from "@/app/hooks/AnimationHooks/useGsapFadeIn";
 
 type ProjectInfoProps = {
   description: string,
@@ -22,9 +24,9 @@ type ProjectInfoProps = {
 }
 
 export default function TitleTextLeftListRight({ title, text, list }: Props) {
-
+  const sectionRef = useGsapFadeIn();
   return (
-    <div className={s.two_columns_content__wrapper}>
+    <div className={s.two_columns_content__wrapper} ref={sectionRef}>
       <div className={s.two_columns_content}>
         <div className="container">
           <div className={`${s.row} row`}>

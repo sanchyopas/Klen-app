@@ -1,11 +1,7 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+"use client"
 import s from "./AnimatedText.module.scss"
+import {useGsapFadeIn} from "@/app/hooks/AnimationHooks/useGsapFadeIn";
 
-gsap.registerPlugin(ScrollTrigger);
 
 type AnimatedTextProps = {
   htmlContent: string;
@@ -13,28 +9,7 @@ type AnimatedTextProps = {
 };
 
 export default function AnimatedText({ htmlContent, className = "" }: AnimatedTextProps) {
-  const textRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!textRef.current) return;
-
-    gsap.fromTo(
-      textRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: textRef.current,
-          start: "top 90%",
-          end: "bottom 80%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-  }, []);
+  const textRef = useGsapFadeIn<HTMLDivElement>();
 
   return <div ref={textRef} className={`${className} ${s.defaultPosition}`} dangerouslySetInnerHTML={{ __html: htmlContent }} />;
 }

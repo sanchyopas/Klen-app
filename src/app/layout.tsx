@@ -6,6 +6,7 @@ import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
 import PreloaderWrapper from "@/app/components/Preloader/PreloaderWrapper";
 import SmoothScroll from "@/app/components/SmoothScroll/SmoothScroll";
+import Cookie from "@/app/components/Cookie/Cookie";
 
 const InterSans = Inter({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
       {/*  <SmoothScroll>{children}</SmoothScroll>*/}
       {/*</main>*/}
       {/*<Footer/>*/}
+      <Cookie/>
     </body>
     </html>
   );

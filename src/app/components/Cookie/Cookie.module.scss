@@ -1,0 +1,75 @@
+.cookie {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 100%;
+  max-width: 670px;
+  z-index: 99;
+  background: #fff;
+  border: 1px solid #42424233;
+  padding: 40px 40px 32px;
+  transform: scale(1);
+  opacity: 1;
+  transition: all .2s ease-in-out;
+  &.hide {
+    transform: scale(0) translate(-100%, 100%);
+    opacity: 0;
+  }
+  @media (max-width: 767px) {
+    max-width: 100%;
+    left: 0;
+    bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    padding: 20px 12px 12px;
+  }
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: row;
+    min-height: 36px;
+    margin-bottom: 40px;
+    @media (max-width: 767px) {
+      min-height: initial;
+      margin-bottom: 0;
+    }
+    .title {
+      font-size: 20px;
+      line-height: 1.4;
+      font-weight: 600;
+      padding-right: 40px;
+    }
+    .accept {
+      position: absolute;
+      top: 38px;
+      right: 32px;
+      font-size: 0;
+      width: 40px;
+      height: 40px;
+      z-index: 1;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      @media (max-width: 767px) {
+        top: 15px;
+        right: 0;
+      }
+      @media (hover: hover) {
+        transition: all 0.1s ease-in-out;
+        &:active {
+          transform: scale(0.9);
+        }
+      }
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}

@@ -49,7 +49,7 @@ export default function Header() {
         setIsShow(false);
       }
 
-      if (currentScrollPos <= 300) {
+      if (currentScrollPos <= 1000) {
         setIsFixMenu(false);
       } else {
         setIsFixMenu(true);

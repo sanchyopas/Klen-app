@@ -77,7 +77,7 @@ export default async function Home() {
           />
         </>
       )}
-      <Buro />
+      {/*<Buro />*/}
       <Services />
       <ServiceMobile is_mobile={true} title={"услуги"} slides={projectsList} is_boolet={false} name_btn={"все услуги"} link_btn={"/services"} />
     </>

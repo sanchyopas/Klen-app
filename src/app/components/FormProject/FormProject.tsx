@@ -2,15 +2,16 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useState } from 'react';
+import s from "./form-project.module.scss";
 
 // Схема валидации с использованием Zod
 const schema = z.object({
   name: z.string().optional(), // Имя не обязательно
   phone: z
   .string()
-  .min(1, { message: 'Номер телефона обязателен' }) // Телефон обязателен
+  .min(1, { message: 'поле обязательно для заполнения' }) // Телефон обязателен
   .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
-    message: 'Номер телефона должен быть в формате +7 (XXX) XXX-XX-XX',
+    message: 'Номер введен не корректно',
   }),
   message: z.string().optional(), // Сообщение не обязательно
 });
@@ -47,12 +48,22 @@ export default function FormProject() {
     }
 
     // Форматируем номер в +7 (XXX) XXX-XX-XX
+    let formattedValue = '+7';
     if (value.length > 1) {
-      value = `+7 (${value.slice(1, 4)}) ${value.slice(4, 7)}-${value.slice(7, 9)}-${value.slice(9, 11)}`;
+      formattedValue += ` (${value.slice(1, 4)}`;
+    }
+    if (value.length > 4) {
+      formattedValue += `) ${value.slice(4, 7)}`;
+    }
+    if (value.length > 7) {
+      formattedValue += `-${value.slice(7, 9)}`;
+    }
+    if (value.length > 9) {
+      formattedValue += `-${value.slice(9, 11)}`;
     }
 
     // Обновляем значение поля
-    setValue('phone', value, { shouldValidate: true });
+    setValue('phone', formattedValue, { shouldValidate: false }); // Отключаем валидацию при изменении
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -61,35 +72,33 @@ export default function FormProject() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form className={s.form} onSubmit={handleSubmit(onSubmit)} noValidate>
       <div>
-        <label htmlFor="name">Имя</label>
         <input
           id="name"
           {...register('name')} // Регистрируем поле "name"
-          placeholder="Введите ваше имя"
+          placeholder="имя"
         />
       </div>
 
       <div>
-        <label htmlFor="phone">Номер телефона</label>
         <input
           id="phone"
           type="tel"
           {...register('phone')} // Регистрируем поле "phone"
           value={phoneValue}
           onChange={handlePhoneChange} // Обрабатываем ввод
-          placeholder="+7 (XXX) XXX-XX-XX"
+          placeholder="телефон*"
+          className={!!errors.phone ? s.isInvalid : ''}
         />
         {errors.phone && <p>{errors.phone.message}</p>}
       </div>
 
       <div>
-        <label htmlFor="message">Сообщение</label>
         <textarea
           id="message"
           {...register('message')} // Регистрируем поле "message"
-          placeholder="Введите ваше сообщение"
+          placeholder="сообщение"
         />
       </div>
 

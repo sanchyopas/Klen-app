@@ -3,11 +3,28 @@ import s from "./footer.module.scss"
 import Link from "next/link";
 import LinkWithWrapper from "@/app/components/Link/Link";
 import Title from "@/app/components/Title/Title";
+import {useModal} from "@/app/components/Modal/ModalContext";
+import FormProject from "@/app/components/FormProject/FormProject";
 
 
 export default function Footer () {
+  const { openModal } = useModal();
+
+  const handleOpenModal = () => {
+    openModal({
+      title: 'Обсудить проект', // Передаем заголовок
+      content: (
+        <FormProject />
+      ),
+    });
+  };
+
   return (
     <>
+      <div>
+        <button onClick={handleOpenModal}>Открыть</button>
+      </div>
+
       <footer className={s.footer}>
         <div className="container">
           <div className={`${s.row} row`}>
@@ -26,13 +43,16 @@ export default function Footer () {
                   {/*  <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Бюро"} link={"/buro"} />*/}
                   {/*</li>*/}
                   <li>
-                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Проекты"} link={"/projects"} />
+                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Проекты"}
+                                     link={"/projects"}/>
                   </li>
                   <li>
-                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Услуги"} link={"/services"} />
+                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Услуги"}
+                                     link={"/services"}/>
                   </li>
                   <li>
-                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Контакты"} link={"/contacts"} />
+                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Контакты"}
+                                     link={"/contacts"}/>
                   </li>
                 </ul>
               </nav>

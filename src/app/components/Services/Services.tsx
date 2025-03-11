@@ -24,7 +24,6 @@ type Props = {
 
 export default function Services({slides, title, button_name, button_link, is_pc}: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
-  console.log("activeIndex", activeIndex);
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
 
 
@@ -63,7 +62,6 @@ export default function Services({slides, title, button_name, button_link, is_pc
         ease: "power3.out",
       });
     }
-    console.log("index", index);
     setActiveIndex(index);
   };
 

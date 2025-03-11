@@ -38,7 +38,7 @@ export default function MenuLink({clickEvent, link, name}: LinkProps) {
 
   return (
     <>
-      <Link onClick={clickEffect} href={link ?? "#"} className={''} >{name}</Link>
+      <Link onClick={clickEffect} href={link ?? "#"} className={''} prefetch={true}>{name}</Link>
       <div className={isActive ? `${s.clickEffect} ${s.active}` : s.clickEffect}>
         <div style={{ left: position[0], top: position[1] }} className={isActive ? s.active : ''} ></div>
       </div>

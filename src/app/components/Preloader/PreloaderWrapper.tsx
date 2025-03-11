@@ -6,6 +6,8 @@ import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
 import {gsap} from "gsap";
 import {useSmoothScroll} from "@/app/hooks/useSmoothScroll";
+import {ModalProvider} from "@/app/components/Modal/ModalContext";
+import {Modal} from "@/app/components/Modal/Modal";
 
 const LoadingContext = createContext<{ isLoaded: boolean }>({isLoaded: false});
 
@@ -33,9 +35,12 @@ export default function PreloaderWrapper({children}: { children: React.ReactNode
     <LoadingContext.Provider value={{isLoaded}}>
       {isLoaded ? (
         <>
-          <Header/>
-          <main>{children}</main>
-          <Footer/>
+          <ModalProvider>
+            <Header/>
+            <main>{children}</main>
+            <Footer/>
+            <Modal />
+          </ModalProvider>
         </>
       ) : (
         <Preloader/>

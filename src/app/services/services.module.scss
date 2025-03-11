@@ -184,3 +184,40 @@
     }
   }
 }
+
+.servicesLoading {
+  .skeletonText {
+    width: 30%;
+    height: 20px;
+    background: #e0e0e0;
+    margin-bottom: 10px;
+    animation: pulse 1.5s infinite;
+  }
+
+  .skeletonButton {
+    width: 80%;
+    height: 40px;
+    background: #d0d0d0;
+    margin-top: 10px;
+    animation: pulse 1.5s infinite;
+  }
+
+  .skeletonImage {
+    width: 100%;
+    height: 420px;
+    background: #e0e0e0;
+    animation: pulse 1.5s infinite;
+  }
+
+  .info{
+    display: inline-flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+}

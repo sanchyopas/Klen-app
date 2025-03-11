@@ -1,20 +1,18 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { IMaskInput } from 'react-imask';
 import { useState } from 'react';
 
 // Схема валидации с использованием Zod
 const schema = z.object({
-  name: z.string().min(1, { message: 'Имя обязательно' }),
-  email: z.string().email({ message: 'Некорректный email' }),
+  name: z.string().optional(), // Имя не обязательно
   phone: z
   .string()
-  .min(1, { message: 'Номер телефона обязателен' })
+  .min(1, { message: 'Номер телефона обязателен' }) // Телефон обязателен
   .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
     message: 'Номер телефона должен быть в формате +7 (XXX) XXX-XX-XX',
   }),
-  message: z.string().min(10, { message: 'Сообщение должно содержать минимум 10 символов' }),
+  message: z.string().optional(), // Сообщение не обязательно
 });
 
 // Тип данных формы на основе схемы
@@ -26,30 +24,35 @@ export default function FormProject() {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit', // Валидация только при отправке формы
   });
 
-  const [phoneValue, setPhoneValue] = useState('');
+  const phoneValue = watch('phone', ''); // Отслеживаем значение поля phone
 
-  const handlePhoneChange = (value: string) => {
-    // Убираем символы 8, 7, + в начале, если они есть
-    let cleanedValue = value.replace(/^[87+]/, '');
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, ''); // Убираем все нецифровые символы
 
-    // Если значение пустое, оставляем как есть
-    if (!cleanedValue) {
-      setPhoneValue('');
+    // Если значение пустое, сбрасываем поле
+    if (!value) {
       setValue('phone', '');
       return;
     }
 
-    // Добавляем +7 в начало
-    cleanedValue = `+7${cleanedValue}`;
+    // Если номер начинается с 8 или 7, заменяем на +7
+    if (value.startsWith('8') || value.startsWith('7')) {
+      value = `7${value.slice(1)}`; // Убираем первую цифру (8 или 7)
+    }
 
-    // Обновляем состояние и значение формы
-    setPhoneValue(cleanedValue);
-    setValue('phone', cleanedValue, { shouldValidate: true });
+    // Форматируем номер в +7 (XXX) XXX-XX-XX
+    if (value.length > 1) {
+      value = `+7 (${value.slice(1, 4)}) ${value.slice(4, 7)}-${value.slice(7, 9)}-${value.slice(9, 11)}`;
+    }
+
+    // Обновляем значение поля
+    setValue('phone', value, { shouldValidate: true });
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -58,66 +61,39 @@ export default function FormProject() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate style={{ maxWidth: '400px', margin: '0 auto' }}>
-      <div style={{ marginBottom: '1rem' }}>
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <div>
         <label htmlFor="name">Имя</label>
         <input
           id="name"
-          {...register('name')}
-          style={{ width: '100%', padding: '0.5rem' }}
+          {...register('name')} // Регистрируем поле "name"
+          placeholder="Введите ваше имя"
         />
-        {errors.name && <p style={{ color: 'red', fontSize: '0.875rem' }}>{errors.name.message}</p>}
       </div>
 
-      <div style={{ marginBottom: '1rem' }}>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          {...register('email')}
-          style={{ width: '100%', padding: '0.5rem' }}
-        />
-        {errors.email && <p style={{ color: 'red', fontSize: '0.875rem' }}>{errors.email.message}</p>}
-      </div>
-
-      <div style={{ marginBottom: '1rem' }}>
+      <div>
         <label htmlFor="phone">Номер телефона</label>
-        <IMaskInput
-          mask="+7 (000) 000-00-00"
+        <input
           id="phone"
+          type="tel"
+          {...register('phone')} // Регистрируем поле "phone"
           value={phoneValue}
-          onAccept={(value) => handlePhoneChange(value)}
+          onChange={handlePhoneChange} // Обрабатываем ввод
           placeholder="+7 (XXX) XXX-XX-XX"
-          style={{ width: '100%', padding: '0.5rem' }}
         />
-        {errors.phone && <p style={{ color: 'red', fontSize: '0.875rem' }}>{errors.phone.message}</p>}
+        {errors.phone && <p>{errors.phone.message}</p>}
       </div>
 
-      <div style={{ marginBottom: '1rem' }}>
+      <div>
         <label htmlFor="message">Сообщение</label>
         <textarea
           id="message"
-          {...register('message')}
-          style={{ width: '100%', padding: '0.5rem', minHeight: '100px' }}
+          {...register('message')} // Регистрируем поле "message"
+          placeholder="Введите ваше сообщение"
         />
-        {errors.message && (
-          <p style={{ color: 'red', fontSize: '0.875rem' }}>{errors.message.message}</p>
-        )}
       </div>
 
-      <button
-        type="submit"
-        style={{
-          padding: '0.5rem 1rem',
-          backgroundColor: '#0070f3',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
-      >
-        Отправить
-      </button>
+      <button type="submit">Отправить</button>
     </form>
   );
 }

@@ -3,6 +3,9 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  @media (max-width: 767px) {
+    gap: 20px;
+  }
   div {
     position: relative;
 
@@ -38,6 +41,62 @@
       font-size: 12px;
       line-height: 1.5;
       color: #F35C5C;
+    }
+
+    span {
+      display: block;
+      margin-bottom: 24px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #424242;
+      opacity: .5;
+      text-transform: lowercase;
+    }
+
+    button {
+      display: inline-block;
+      position: relative;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+      color: #424242;
+      text-transform: lowercase;
+      transition: all 0.25s;
+      overflow: hidden;
+
+      &.dot {
+        padding-left: 24px;
+        padding-right: 0;
+
+        &:before {
+          content: '';
+          display: block;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #424242;
+          position: absolute;
+          left: 0;
+          top: 9px;
+          transition: all 0.25s;
+        }
+
+        @media (hover: hover) {
+          &:hover {
+            padding-left: 0;
+            padding-right: 24px;
+
+            &:before {
+              left: -24px;
+            }
+
+            &:active {
+              padding-left: 12px;
+              padding-right: 12px;
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -1,8 +1,9 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import s from "./form-project.module.scss";
+import ButtonWithWrapper from "@/app/components/Button/Button";
 
 // Схема валидации с использованием Zod
 const schema = z.object({
@@ -102,7 +103,11 @@ export default function FormProject() {
         />
       </div>
 
-      <button type="submit">Отправить</button>
+      <div>
+        <span>Нажимая на кнопку «Отправить», вы соглашаетесь на обработку персональных данных</span>
+        <ButtonWithWrapper className="" dotReverce={false} isWrapper={false} name={"Отправить"} />
+      </div>
+
     </form>
   );
 }

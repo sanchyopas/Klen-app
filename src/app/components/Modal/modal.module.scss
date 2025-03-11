@@ -1,28 +1,36 @@
 .modalWrapper {
   position: fixed;
-  padding: 40px;
+  padding: 0;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.3);
-  z-index: 1;
+  z-index: 999;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  overflow: auto;
+  @media (max-width: 767px) {
+    align-items: end;
+  }
 }
 
 .modal {
+  margin: 40px 0;
   width: 100%;
   max-width: 670px;
   z-index: 99;
   background: #fff;
-  border: 1px solid #42424233;
-  padding: 40px 40px 32px;
+  padding: 40px;
   transform: scale(1);
   opacity: 1;
   transition: all .2s ease-in-out;
+  @media (max-width: 767px) {
+    padding: 16px;
+    margin: 0;
+  }
   &.hide {
     transform: scale(0) translate(-100%, 100%);
     opacity: 0;
@@ -45,7 +53,7 @@
     margin-bottom: 40px;
     @media (max-width: 767px) {
       min-height: initial;
-      margin-bottom: 0;
+      margin-bottom: 20px;
     }
     .title {
       font-size: 24px;

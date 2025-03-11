@@ -1,5 +1,5 @@
 import {notFound} from "next/navigation";
-import {ClientServices} from "@/app/pageComponents/ClientServices";
+import {ClientServices} from "@/app/pageClientComponents/ClientServices";
 
 async function getServiceData() {
   try {

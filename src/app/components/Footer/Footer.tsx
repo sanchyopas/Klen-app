@@ -5,6 +5,7 @@ import LinkWithWrapper from "@/app/components/Link/Link";
 import Title from "@/app/components/Title/Title";
 import {useModal} from "@/app/components/Modal/ModalContext";
 import FormProject from "@/app/components/FormProject/FormProject";
+import ButtonWithWrapper from "@/app/components/Button/Button";
 
 
 export default function Footer () {
@@ -21,10 +22,6 @@ export default function Footer () {
 
   return (
     <>
-      <div>
-        <button onClick={handleOpenModal}>Открыть</button>
-      </div>
-
       <footer className={s.footer}>
         <div className="container">
           <div className={`${s.row} row`}>
@@ -59,14 +56,14 @@ export default function Footer () {
             </div>
 
             <div className="col-12 col-md-6">
-              {/*<Title title={"Давайте обсудим ваш проект"} as={"h2"}/>*/}
+              <Title title={"Давайте обсудим ваш проект"} as={"h2"}/>
               <ul>
-                {/*<li>*/}
-                {/*  <LinkWithWrapper className="" dotReverce={false} isWrapper={false} name={"Отправить заявку"} link={"#"} />*/}
-                {/*</li>*/}
-                {/*<li className={s.grayLink}>*/}
-                {/*  <LinkWithWrapper className="" dotReverce={false} isWrapper={false} name={"Пригласить в тендер"} link={"#"} />*/}
-                {/*</li>*/}
+                <li>
+                  <ButtonWithWrapper onClick={handleOpenModal} className="" dotReverce={false} isWrapper={false} name={"Отправить заявку"} />
+                </li>
+                <li className={s.grayLink}>
+                  <ButtonWithWrapper onClick={handleOpenModal} className="" dotReverce={false} isWrapper={false} name={"Пригласить в тендер"} />
+                </li>
               </ul>
             </div>
           </div>

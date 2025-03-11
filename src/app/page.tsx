@@ -9,7 +9,7 @@ import ServiceMobile from "@/app/components/ServicesMobile.tsx/ServicesMobile";
 
 async function getData() {
   try {
-    const res = await fetch(`https://dev.modx.fresco.bz/api/main`, {
+    const res = await fetch(`https://test-6600.fg.onl/api/main`, {
       cache: "no-store",
     });
 

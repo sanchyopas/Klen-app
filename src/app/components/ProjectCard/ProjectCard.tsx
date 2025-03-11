@@ -11,7 +11,7 @@ export default function ProjectCard(  { title, image, id }:Props ) {
   return (
     <div className={s.item} key={id}>
       <img
-        src={`https://dev.modx.fresco.bz${image}`}
+        src={`https://test-6600.fg.onl${image}`}
         alt={title}
       />
       <Link href={`/projects/${id}`}></Link>

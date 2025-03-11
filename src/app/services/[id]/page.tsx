@@ -10,7 +10,7 @@ type Params = {
 
 async function getService(id: number) {
   try {
-    const res = await fetch(`https://dev.modx.fresco.bz/api/services/${id}`, {
+    const res = await fetch(`https://test-6600.fg.onl/api/services/${id}`, {
       cache: "no-store",
     });
 
@@ -61,7 +61,7 @@ export default async function Service({ params }: { params: Promise<Params> }) {
       </section>
 
       {
-        service.object?.BlocksList.map((block: any, index: number) => {
+        service?.object?.BlocksList?.map((block: any, index: number) => {
           return <DynamicBlock block={block} key={index}/>
         })
       }

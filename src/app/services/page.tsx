@@ -8,7 +8,7 @@ import {notFound} from "next/navigation";
 
 async function getServiceData() {
   try {
-    const res = await fetch(`https://dev.modx.fresco.bz/api/services`, {
+    const res = await fetch(`https://test-6600.fg.onl/api/services`, {
       cache: "no-store",
     });
 
@@ -78,7 +78,7 @@ export default async function ServicesPage () {
                   </div>
                   <div className="col-12 col-md-6">
                     <div className={s.img}>
-                      <img src={`https://dev.modx.fresco.bz${item.main_screen.image}`} alt={item.main_screen.title}/>
+                      <img src={`https://test-6600.fg.onl${item.main_screen.image}`} alt={item.main_screen.title}/>
                     </div>
                   </div>
                 </div>

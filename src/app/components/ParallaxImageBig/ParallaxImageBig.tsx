@@ -38,7 +38,7 @@ export default function ParallaxImageBig({ image }: Props) {
       <div className={`container ${s.containerImage}`}>
         <img
           ref={imageRef}
-          src={`https://dev.modx.fresco.bz/upload_resources/${image}`}
+          src={`https://test-6600.fg.onl/upload_resources/${image}`}
           alt=""
           className={s.parallaxImage}
         />

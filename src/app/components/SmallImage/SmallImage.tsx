@@ -14,7 +14,7 @@ export default function SmallImage({image}: Props) {
     <section className={s.halfScreenImage} ref={imageRef}>
       <div className="container">
         {/*<Image src={image} alt={image} width={900} height={600} />*/}
-        <img src={`https://dev.modx.fresco.bz/upload_resources/${image}`} alt="" />
+        <img src={`https://test-6600.fg.onl/upload_resources/${image}`} alt="" />
       </div>
     </section>
   )

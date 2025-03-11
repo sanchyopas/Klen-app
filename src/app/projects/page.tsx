@@ -4,7 +4,7 @@ import {notFound} from "next/navigation";
 
 async function getData() {
   try {
-    const res = await fetch(`https://dev.modx.fresco.bz/api/cases`, {
+    const res = await fetch(`https://test-6600.fg.onl/api/cases`, {
       cache: "no-store",
     });
 

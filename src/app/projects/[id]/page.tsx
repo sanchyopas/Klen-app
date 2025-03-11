@@ -12,7 +12,7 @@ type Params = {
 
 async function getProject(id: number) {
   try {
-    const res = await fetch(`https://dev.modx.fresco.bz/api/cases/${id}`, {
+    const res = await fetch(`https://test-6600.fg.onl/api/cases/${id}`, {
       cache: "no-store",
     });
 
@@ -60,17 +60,17 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     <>
       <section>
         <div className="container">
-          <Title title={project.object.main_screen.title} as="h1" />
+          <Title title={project?.object?.main_screen?.title} as="h1" />
         </div>
       </section>
 
       {
-        project.object?.BlocksList.map((block: any, index: number) => {
+        project?.object?.BlocksList?.map((block: any, index: number) => {
           return <DynamicBlock block={block} key={index}/>
         })
       }
       {/*<NextProjects projects={project.object.nextCases} />*/}
-      <Projects title={"Следующий проект"} isNextProjects={true} projects={project.object.nextCases} />
+      <Projects title={"Следующий проект"} isNextProjects={true} projects={project?.object?.nextCases} />
     </>
   );
 }

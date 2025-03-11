@@ -104,11 +104,11 @@ export default function Slider({
               {
                 item.hasOwnProperty("main_screen") ?
                   <img
-                    src={item.main_screen.image.includes('/upload_resources/') ? `https://dev.modx.fresco.bz${item.main_screen.image}` : `https://dev.modx.fresco.bz/upload_resources/${item.main_screen.image}`}
+                    src={item.main_screen.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.main_screen.image}` : `https://test-6600.fg.onl/upload_resources/${item.main_screen.image}`}
                     alt=""/>
                   :
                   <img
-                    src={item.image.includes('/upload_resources/') ? `https://dev.modx.fresco.bz${item.image}` : `https://dev.modx.fresco.bz/upload_resources/${item.image}`}
+                    src={item.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.image}` : `https://test-6600.fg.onl/upload_resources/${item.image}`}
                     alt=""/>
               }
             </SwiperSlide>

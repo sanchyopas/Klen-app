@@ -32,7 +32,7 @@ export default function Services({slides, title, button_name, button_link, is_pc
 
     const oldImage = document.querySelector(`.${s.activeImage}`) as HTMLImageElement | null;
     const newImage = document.createElement("img");
-    newImage.src = `https://dev.modx.fresco.bz${slides[index].main_screen.image}`;
+    newImage.src = `https://test-6600.fg.onl${slides[index].main_screen.image}`;
     newImage.alt = slides[index].main_screen_title;
     newImage.className = s.animatedImage;
     newImage.style.opacity = "0";
@@ -94,7 +94,7 @@ export default function Services({slides, title, button_name, button_link, is_pc
           <div className="col-12 col-lg-6">
             <div className={s.imageContainer} ref={imageContainerRef}>
               <img
-                src={`https://dev.modx.fresco.bz${slides[activeIndex].main_screen.image}`}
+                src={`https://test-6600.fg.onl${slides[activeIndex].main_screen.image}`}
                 alt={slides[activeIndex].main_screen_title}
                 title={slides[activeIndex].main_screen_title}
                 className={`${s.animatedImage} ${s.activeImage}`}

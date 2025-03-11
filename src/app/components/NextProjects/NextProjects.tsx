@@ -17,7 +17,7 @@ export default function NextProjects( props:any ) {
             projects.map((project:any) => ((
               <div className={s.item} key={project.id}>
                 <img
-                  src={`https://dev.modx.fresco.bz${project.main_screen.image}`}
+                  src={`https://test-6600.fg.onl${project.main_screen.image}`}
                   alt={project.title}
                 />
                 <Link href={`/projects/${project.id}`}></Link>

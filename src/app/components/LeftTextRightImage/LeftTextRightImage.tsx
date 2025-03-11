@@ -32,7 +32,7 @@ export default function LeftTextRightImage({ image, text, title }: Props) {
               <div className={s.img}>
                 <img
                   ref={imageRef}
-                  src={`https://dev.modx.fresco.bz/upload_resources/${image}`}
+                  src={`https://test-6600.fg.onl/upload_resources/${image}`}
                   alt=""
                 />
               </div>

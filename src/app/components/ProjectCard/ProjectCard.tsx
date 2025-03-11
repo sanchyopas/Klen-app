@@ -1,5 +1,6 @@
 import s from "./projectCard.module.scss"
 import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
   title: string;
@@ -10,8 +11,10 @@ type Props = {
 export default function ProjectCard(  { title, image, id }:Props ) {
   return (
     <div className={s.item} key={id}>
-      <img
+      <Image
         src={`https://test-6600.fg.onl${image}`}
+        width={800}
+        height={400}
         alt={title}
       />
       <Link href={`/projects/${id}`}></Link>

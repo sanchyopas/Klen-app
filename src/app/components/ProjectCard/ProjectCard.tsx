@@ -13,9 +13,10 @@ export default function ProjectCard(  { title, image, id }:Props ) {
     <div className={s.item} key={id}>
       <Image
         src={`https://test-6600.fg.onl${image}`}
+        alt={title}
         width={800}
         height={400}
-        alt={title}
+        priority
       />
       <Link href={`/projects/${id}`}></Link>
       <h3 className={s.name}>{title}</h3>

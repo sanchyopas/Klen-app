@@ -2,7 +2,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import React, { useState } from 'react';
-import s from "./form-project.module.scss";
+import s from "./form-tender.module.scss";
 import ButtonWithWrapper from "@/app/components/Button/Button";
 import {useModal} from "@/app/components/Modal/ModalContext";
 import ThankYou from "@/app/components/ThankYou/ThankYou";
@@ -16,14 +16,16 @@ const schema = z.object({
   .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
     message: 'Номер введен не корректно',
   }),
-  message: z.string().optional(), // Сообщение не обязательно
+  email: z.string().email({ message: 'поле обязательно для заполнения' }), // Email обязателен
+  city: z.string().optional(), // Город/регион не обязателен
+  type: z.enum(['tender', 'contest'], { message: 'Выберите тип' }), // Тип (тендер или конкурс) обязателен
+  message: z.string().min(1, { message: 'поле обязательно для заполнения' }), // Сообщение обязательно
 });
 
 // Тип данных формы на основе схемы
 type FormData = z.infer<typeof schema>;
 
-export default function FormProject() {
-
+export default function FormTender() {
   const { openModal } = useModal();
 
   const {
@@ -35,6 +37,9 @@ export default function FormProject() {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit', // Валидация только при отправке формы
+    defaultValues: {
+      type: 'tender', // Устанавливаем значение по умолчанию для радиокнопки "Тендер"
+    },
   });
 
   const phoneValue = watch('phone', ''); // Отслеживаем значение поля phone
@@ -84,12 +89,46 @@ export default function FormProject() {
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+
+      <div className={s.radioGroup}>
+        <label>
+          <input
+            type="radio"
+            value="tender"
+            {...register('type')} // Регистрируем поле "type"
+          />
+          <div className={s.radio}></div>
+          Тендер
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="contest"
+            {...register('type')} // Регистрируем поле "type"
+          />
+          <div className={s.radio}></div>
+          Конкурс
+        </label>
+        {errors.type && <p>{errors.type.message}</p>}
+      </div>
+
       <div>
         <input
           id="name"
           {...register('name')} // Регистрируем поле "name"
           placeholder="имя"
         />
+      </div>
+
+      <div>
+        <input
+          id="email"
+          type="email"
+          {...register('email')} // Регистрируем поле "email"
+          placeholder="email*"
+          className={!!errors.email ? s.isInvalid : ''}
+        />
+        {errors.email && <p>{errors.email.message}</p>}
       </div>
 
       <div>
@@ -106,18 +145,27 @@ export default function FormProject() {
       </div>
 
       <div>
-        <textarea
-          id="message"
-          {...register('message')} // Регистрируем поле "message"
-          placeholder="сообщение"
+        <input
+          id="city"
+          {...register('city')} // Регистрируем поле "city"
+          placeholder="город/регион"
         />
       </div>
 
       <div>
-        <span>Нажимая на кнопку «Отправить», вы соглашаетесь на обработку персональных данных</span>
-        <ButtonWithWrapper className="" dotReverce={false} isWrapper={false} name={"Отправить"} />
+        <textarea
+          id="message"
+          {...register('message')} // Регистрируем поле "message"
+          placeholder="сообщение*"
+          className={!!errors.message ? s.isInvalid : ''}
+        />
+        {errors.message && <p>{errors.message.message}</p>}
       </div>
 
+      <div>
+        <span>Нажимая на кнопку «Отправить», вы соглашаетесь на обработку персональных данных</span>
+        <ButtonWithWrapper className="" dotReverce={false} isWrapper={false} name={"Отправить"}/>
+      </div>
     </form>
   );
 }

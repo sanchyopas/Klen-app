@@ -10,7 +10,7 @@ import ServiceMobile from "@/app/components/ServicesMobile.tsx/ServicesMobile";
 async function getData() {
   try {
     const res = await fetch(`https://test-6600.fg.onl/api/main`, {
-      cache: "no-store",
+      cache: "force-cache", // Используем force-cache для статической генерации
     });
 
     if (!res.ok) {
@@ -92,7 +92,6 @@ export default async function Home() {
         title={result.object.services.title_h2}
         link_btn={result.object.services.button_link}
         name_btn={result.object.services.button_name}
-
       />
     </>
   );

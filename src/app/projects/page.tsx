@@ -1,11 +1,10 @@
 import Projects from "@/app/components/Projects/Projects";
-import {useGetProjectByIdQuery} from "@/app/redux/caseApi";
-import {notFound} from "next/navigation";
+import { notFound } from "next/navigation";
 
 async function getData() {
   try {
     const res = await fetch(`https://test-6600.fg.onl/api/cases`, {
-      cache: "no-store",
+      cache: "force-cache", // Используем force-cache для статической генерации
     });
 
     if (!res.ok) {
@@ -37,8 +36,7 @@ export async function generateMetadata() {
   };
 }
 
-export default async function ProjectsPage () {
-
+export default async function ProjectsPage() {
   const result = await getData();
 
   if (!result || !result.object.cases) {
@@ -50,7 +48,7 @@ export default async function ProjectsPage () {
 
   return (
     <>
-      <Projects projects={projects}/>
+      <Projects projects={projects} />
     </>
   );
-};
+}

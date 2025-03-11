@@ -1,0 +1,10 @@
+.thText {
+  opacity: .8;
+  color: #424242;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 40px;
+  @media (max-width: 767px) {
+    margin-bottom: 20px;
+  }
+}

@@ -1,0 +1,174 @@
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  @media (max-width: 767px) {
+    gap: 20px;
+  }
+
+  .radioGroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px;
+    label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: relative;
+      text-transform: lowercase;
+      font-size: 16px;
+      line-height: 1.5;
+      cursor: pointer;
+      gap: 14px;
+
+      input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .radio {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 2px solid #424242;
+        opacity: .6;
+        transition: all 0.2s ease-in-out;
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: scale(1) translate(-50%, -50%);
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #424242;
+          opacity: 0;
+          transition: all 0.2s ease-in-out;
+        }
+      }
+
+      input:checked + .radio {
+        opacity: 1;
+        transform: scale(1) !important;
+        &:before {
+          opacity: 1;
+        }
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          .radio {
+            opacity: .8;
+          }
+
+          &:active {
+            .radio{
+              transform: scale(.8);
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+  div {
+    position: relative;
+
+    input {
+
+    }
+
+    textarea {
+      resize: none;
+      height: 112px;
+    }
+
+    input, textarea {
+      display: block;
+      width: 100%;
+      padding: 8px 16px;
+      font-size: 16px;
+      line-height: 1.5;
+      border: 1px solid #42424280;
+      &.isInvalid {
+        border-color: #EC000080;
+        color: #F35C5C;
+        &::placeholder {
+          color: #F35C5C;
+        }
+      }
+    }
+
+    p {
+      position: absolute;
+      left: 0;
+      bottom: -20px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #F35C5C;
+      text-transform: lowercase;
+    }
+
+    span {
+      display: block;
+      margin-bottom: 24px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #424242;
+      opacity: .5;
+      text-transform: lowercase;
+    }
+
+    button {
+      display: inline-block;
+      position: relative;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+      color: #424242;
+      text-transform: lowercase;
+      transition: all 0.25s;
+      overflow: hidden;
+
+      &.dot {
+        padding-left: 24px;
+        padding-right: 0;
+
+        &:before {
+          content: '';
+          display: block;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #424242;
+          position: absolute;
+          left: 0;
+          top: 9px;
+          transition: all 0.25s;
+        }
+
+        @media (hover: hover) {
+          &:hover {
+            padding-left: 0;
+            padding-right: 24px;
+
+            &:before {
+              left: -24px;
+            }
+
+            &:active {
+              padding-left: 12px;
+              padding-right: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

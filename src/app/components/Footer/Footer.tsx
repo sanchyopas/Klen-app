@@ -6,16 +6,26 @@ import Title from "@/app/components/Title/Title";
 import {useModal} from "@/app/components/Modal/ModalContext";
 import FormProject from "@/app/components/FormProject/FormProject";
 import ButtonWithWrapper from "@/app/components/Button/Button";
+import FormTender from "@/app/components/FormTender/FormTender";
 
 
 export default function Footer () {
   const { openModal } = useModal();
 
-  const handleOpenModal = () => {
+  const handleOpenModalBid = () => {
     openModal({
       title: 'Обсудить проект', // Передаем заголовок
       content: (
         <FormProject />
+      ),
+    });
+  };
+
+  const handleOpenModalTender = () => {
+    openModal({
+      title: 'Пригласить в тендер/конкурс', // Передаем заголовок
+      content: (
+        <FormTender />
       ),
     });
   };
@@ -59,10 +69,10 @@ export default function Footer () {
               <Title title={"Давайте обсудим ваш проект"} as={"h2"}/>
               <ul>
                 <li>
-                  <ButtonWithWrapper onClick={handleOpenModal} className="" dotReverce={false} isWrapper={false} name={"Отправить заявку"} />
+                  <ButtonWithWrapper onClick={handleOpenModalBid} className="" dotReverce={false} isWrapper={false} name={"Отправить заявку"} />
                 </li>
                 <li className={s.grayLink}>
-                  <ButtonWithWrapper onClick={handleOpenModal} className="" dotReverce={false} isWrapper={false} name={"Пригласить в тендер"} />
+                  <ButtonWithWrapper onClick={handleOpenModalTender} className="" dotReverce={false} isWrapper={false} name={"Пригласить в тендер"} />
                 </li>
               </ul>
             </div>

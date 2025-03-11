@@ -1,10 +1,10 @@
-import {notFound} from "next/navigation";
-import {ClientServices} from "@/app/pageClientComponents/ClientServices";
+import { notFound } from "next/navigation";
+import { ClientServices } from "@/app/pageClientComponents/ClientServices";
 
 async function getServiceData() {
   try {
     const res = await fetch(`https://test-6600.fg.onl/api/services`, {
-      cache: "no-store",
+      cache: "force-cache", // Используем force-cache для статической генерации
     });
 
     if (!res.ok) {
@@ -36,11 +36,11 @@ export async function generateMetadata() {
   };
 }
 
-export default async function ServicesPage () {
+export default async function ServicesPage() {
   const result = await getServiceData();
   if (!result || !result.object.cases) {
     notFound();
     return null;
   }
-  return <ClientServices cases={result.object.cases}/>
-};
+  return <ClientServices cases={result.object.cases} />;
+}

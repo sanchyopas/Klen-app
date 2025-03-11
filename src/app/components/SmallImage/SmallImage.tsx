@@ -13,8 +13,12 @@ export default function SmallImage({image}: Props) {
   return (
     <section className={s.halfScreenImage} ref={imageRef}>
       <div className="container">
-        {/*<Image src={image} alt={image} width={900} height={600} />*/}
-        <img src={`https://test-6600.fg.onl/upload_resources/${image}`} alt="" />
+        <Image
+          src={`https://test-6600.fg.onl/upload_resources/${image}`}
+          alt=""
+          width={900}
+          height={600}
+        />
       </div>
     </section>
   )

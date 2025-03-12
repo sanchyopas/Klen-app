@@ -5,6 +5,7 @@ import LinkWithWrapper from "@/app/components/Link/Link";
 import Title from "@/app/components/Title/Title";
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import Link from "next/link";
 
 type Slide = {
   main_screen_title: string;
@@ -78,7 +79,9 @@ export default function Services({slides, title, button_name, button_link, is_pc
                   key={index}
                   onMouseEnter={() => handleImageChange(index)}
                 >
-                  <h3 className={s.name}>{slide.main_screen_title}</h3>
+                  <Link href={`/services/${slide.alias}`} className={''} prefetch={true}>
+                    <h3 className={s.name}>{slide.main_screen_title}</h3>
+                  </Link>
                 </div>
               ))}
             </div>

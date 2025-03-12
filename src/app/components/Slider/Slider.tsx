@@ -13,6 +13,7 @@ import {NavigationOptions} from "swiper/types";
 import LinkWithWrapper from "@/app/components/Link/Link";
 import Title from "@/app/components/Title/Title";
 import Image from "next/image";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,6 +29,7 @@ type SliderProps = {
 };
 
 type Slide = {
+  alias: string;
   main_screen: any;
   image: any;
 };
@@ -101,24 +103,47 @@ export default function Slider({
           }}
         >
           {slides.map((item: Slide, i: number) => (
-            <SwiperSlide className={s.slider__slide} key={i}>
-              {
-                item.hasOwnProperty("main_screen") ?
-                  <Image
-                    src={item.main_screen.image.includes('/upload_resources/') ?
-                      `https://test-6600.fg.onl${item.main_screen.image}` :
-                      `https://test-6600.fg.onl/upload_resources/${item.main_screen.image}`}
-                    alt="" width={1360} height={720}
-                  />
-                  :
-                  <Image src={item.image.includes('/upload_resources/') ?
-                    `https://test-6600.fg.onl${item.image}` :
-                    `https://test-6600.fg.onl/upload_resources/${item.image}`}
-                    alt="" width={1360} height={720}
 
-                  />
-              }
-            </SwiperSlide>
+            item.hasOwnProperty("alias") ?
+              <SwiperSlide className={s.slider__slide} key={i}>
+                <Link href={`/projects/${item.alias}`} className={s.linkSlide} prefetch={true}>
+                {
+                  item.hasOwnProperty("main_screen") ?
+                    <Image
+                      src={item.main_screen.image.includes('/upload_resources/') ?
+                        `https://test-6600.fg.onl${item.main_screen.image}` :
+                        `https://test-6600.fg.onl/upload_resources/${item.main_screen.image}`}
+                      alt="" width={1360} height={720}
+                    />
+                    :
+                    <Image src={item.image.includes('/upload_resources/') ?
+                      `https://test-6600.fg.onl${item.image}` :
+                      `https://test-6600.fg.onl/upload_resources/${item.image}`}
+                      alt="" width={1360} height={720}
+
+                    />
+                }
+                </Link>
+              </SwiperSlide>
+            :
+              <SwiperSlide className={s.slider__slide} key={i}>
+                {
+                  item.hasOwnProperty("main_screen") ?
+                    <Image
+                      src={item.main_screen.image.includes('/upload_resources/') ?
+                        `https://test-6600.fg.onl${item.main_screen.image}` :
+                        `https://test-6600.fg.onl/upload_resources/${item.main_screen.image}`}
+                      alt="" width={1360} height={720}
+                    />
+                    :
+                    <Image src={item.image.includes('/upload_resources/') ?
+                      `https://test-6600.fg.onl${item.image}` :
+                      `https://test-6600.fg.onl/upload_resources/${item.image}`}
+                           alt="" width={1360} height={720}
+
+                    />
+                }
+              </SwiperSlide>
           ))}
         </Swiper>
 

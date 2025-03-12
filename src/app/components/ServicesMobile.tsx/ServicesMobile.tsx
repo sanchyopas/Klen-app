@@ -12,6 +12,7 @@ import "swiper/css/pagination";
 import {NavigationOptions} from "swiper/types";
 import LinkWithWrapper from "@/app/components/Link/Link";
 import Title from "@/app/components/Title/Title";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,6 +28,7 @@ type SliderProps = {
 };
 
 type Slide = {
+  alias: string;
   main_screen_title: any;
   main_screen: any;
   image: any;
@@ -93,19 +95,23 @@ export default function ServiceMobile({ is_mobile, slides, is_boolet, name_btn,l
           }}
         >
           {slides.map((item: Slide, i: number) => (
-            <SwiperSlide className={s.slider__slide} key={i}>
-              {
-                item.hasOwnProperty("main_screen") ?
-                  <img
-                    src={item.main_screen.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.main_screen.image}` : `https://test-6600.fg.onl/upload_resources/${item.main_screen.image}`}
-                    alt=""/>
-                  :
-                  <img
-                    src={item.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.image}` : `https://test-6600.fg.onl/upload_resources/${item.image}`}
-                    alt=""/>
-              }
-              <span>{item.main_screen_title}</span>
-            </SwiperSlide>
+
+              <SwiperSlide className={s.slider__slide} key={i}>
+                <Link href={`/services/${item.alias}`} className={''} prefetch={true}>
+                  {
+                    item.hasOwnProperty("main_screen") ?
+                      <img
+                        src={item.main_screen.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.main_screen.image}` : `https://test-6600.fg.onl/upload_resources/${item.main_screen.image}`}
+                        alt=""/>
+                      :
+                      <img
+                        src={item.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.image}` : `https://test-6600.fg.onl/upload_resources/${item.image}`}
+                        alt=""/>
+                  }
+                  <span>{item.main_screen_title}</span>
+                </Link>
+              </SwiperSlide>
+
           ))}
         </Swiper>
 

@@ -1,7 +1,9 @@
 "use client";
+import { useLoading } from "@/app/components/Preloader/PreloaderWrapper";
 import s from "./project.module.scss";
 
 export default function Loading() {
+
   return (
     <section>
       <div className="container">

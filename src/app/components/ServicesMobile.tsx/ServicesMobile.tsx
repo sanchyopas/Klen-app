@@ -71,7 +71,7 @@ export default function ServiceMobile({ is_mobile, slides, is_boolet, name_btn,l
 
     >
       <div className="container">
-        {!!title && <Title title={"услуги"} is_mobile={true} />}
+        {!!title && <Title title={"услуги"} is_mobile={false} />}
         <Swiper
           modules={[Pagination, Navigation]}
           pagination={{

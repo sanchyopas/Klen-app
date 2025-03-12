@@ -2,6 +2,7 @@ import Title from "@/app/components/Title/Title";
 import {DynamicBlock} from "@/app/components/DynamicBlock/DynamicBlock";
 import React from "react";
 import {notFound} from "next/navigation";
+import Breadcrumbs from "@/app/components/Breadcrumbs/Breadcrumbs";
 
 
 type Params = {
@@ -52,13 +53,20 @@ export default async function Service({ params }: { params: Promise<Params> }) {
   if (!service) {
     notFound();
   }
+
+
+  const pathNames = [
+    { link: '/services', name: 'услуги' },
+  ];
+
   return (
     <>
-      <section>
+      <div>
         <div className="container">
-          <Title title={service.object.main_screen.title} as="h1" />
+          <Breadcrumbs pathNames={pathNames}/>
+          <Title title={service?.object?.main_screen?.title} as="h1" />
         </div>
-      </section>
+      </div>
 
       {
         service?.object?.BlocksList?.map((block: any, index: number) => {

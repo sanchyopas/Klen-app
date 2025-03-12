@@ -60,9 +60,10 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   }
 
   const pathNames = [
-    { link: '/', name: 'Главная' },
+    // { link: '/', name: 'Главная' },
     { link: '/projects', name: 'Проекты' },
-    { link: '/projects/1', name: project?.object?.main_screen?.title },
+    { link: `/projects?type=${project?.object?.getTypes}`, name: project?.object?.getTypes },
+    { link: `/projects?year=${project?.object?.getYears}`, name: project?.object?.getYears },
   ];
 
   return (

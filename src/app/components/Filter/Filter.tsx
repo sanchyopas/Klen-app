@@ -8,12 +8,24 @@ type FilterProps = {
     years: string[];
   };
   onFilterChange: (filters: { type: string | null; year: string | null }) => void;
+  initialType?: string | null; // Начальное значение type
+  initialYear?: string | null; // Начальное значение year
 };
 
-const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange }) => {
-  const [selectedType, setSelectedType] = useState<string | null>(null);
-  const [selectedYear, setSelectedYear] = useState<string | null>(null);
+const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange, initialType, initialYear }) => {
+  const [selectedType, setSelectedType] = useState<string | null>(initialType || null);
+  const [selectedYear, setSelectedYear] = useState<string | null>(initialYear || null);
   const [openFilter, setOpenFilter] = useState<"type" | "year" | null>(null);
+
+  // Обновляем состояние при изменении initialType или initialYear
+  useEffect(() => {
+    if (initialType !== undefined) {
+      setSelectedType(initialType);
+    }
+    if (initialYear !== undefined) {
+      setSelectedYear(initialYear);
+    }
+  }, [initialType, initialYear]);
 
   useEffect(() => {
     onFilterChange({ type: selectedType, year: selectedYear });
@@ -65,35 +77,33 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange }) => {
           <div
             className={`${s.filterDropList} ${openFilter === "type" ? s.open : ""}`}
           >
-            {openFilter === "type" &&
-              filtersData.types.map((type) => (
-                <label key={type} className={s.filterItem}>
-                  <input
-                    type="checkbox"
-                    name="type"
-                    checked={selectedType === type}
-                    onChange={() => handleTypeClick(type)}
-                  />
-                  <div>{type}</div>
-                </label>
-              ))}
+            {filtersData.types.map((type) => (
+              <label key={type} className={s.filterItem}>
+                <input
+                  type="checkbox"
+                  name="type"
+                  checked={selectedType === type}
+                  onChange={() => handleTypeClick(type)}
+                />
+                <div>{type}</div>
+              </label>
+            ))}
           </div>
 
           <div
             className={`${s.filterDropList} ${openFilter === "year" ? s.open : ""}`}
           >
-            {openFilter === "year" &&
-              filtersData.years.map((year) => (
-                <label key={year} className={s.filterItem}>
-                  <input
-                    type="checkbox"
-                    name="year"
-                    checked={selectedYear === year}
-                    onChange={() => handleYearClick(year)}
-                  />
-                  <div>{year}</div>
-                </label>
-              ))}
+            {filtersData.years.map((year) => (
+              <label key={year} className={s.filterItem}>
+                <input
+                  type="checkbox"
+                  name="year"
+                  checked={selectedYear === year}
+                  onChange={() => handleYearClick(year)}
+                />
+                <div>{year}</div>
+              </label>
+            ))}
           </div>
         </div>
       </div>

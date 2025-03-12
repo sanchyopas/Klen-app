@@ -23,6 +23,7 @@
     color: #424242;
     opacity: .6;
     overflow: hidden;
+    z-index: 2;
     &.open {
       opacity: 1;
     }
@@ -62,17 +63,28 @@
   }
 
   .filterDropList {
-    display: none;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     padding: 24px 0 8px;
     background: #ffffff;
-    //display: flex;
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 12px 24px;
+    transition: all .2s ease-in-out;
+    opacity: 0;
+    transform: translateY(-20px);
+
+    pointer-events: none;
+    z-index: 1;
+
+    &.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
 
     @media (max-width: 767px) {
       flex-direction: column;

@@ -24,15 +24,15 @@ async function getServiceData() {
 export async function generateMetadata() {
   const result = await getServiceData();
 
-  if (!result || !result.object?.page) {
+  if (!result || !result.page?.seo) {
     return {
       title: "Not found",
     };
   }
 
   return {
-    title: result.object.page.SEO_TITLE,
-    description: result.object.page.SEO_DESCR,
+    title: result?.page?.seo?.title,
+    description: result?.page?.seo?.description,
   };
 }
 

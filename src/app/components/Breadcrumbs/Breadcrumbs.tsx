@@ -1,6 +1,7 @@
 "use client";
 import LinkWithWrapper from "@/app/components/Link/Link";
 import s from "./breadcrumbs.module.scss";
+import Link from "next/link";
 
 interface BreadcrumbItem {
   link: string;
@@ -16,10 +17,25 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ pathNames }) => {
     <ul className={s.breadcrumbs}>
       {pathNames.map((pathName, index) => {
         const isLast = index === pathNames.length - 1;
+        const isMoreItems = pathNames.length > 1;
 
         return (
           <li key={pathName.link} className={`${s.breadcrumbItem} ${isLast ? s.active : ""}`}>
-            {!isLast ? (
+            { isMoreItems ?
+              !isLast ? (
+                <LinkWithWrapper
+                  isWrapper={false}
+                  className={s.breadcrumbLink}
+                  link={pathName.link}
+                  name={pathName.name}
+                  dotReverce={false}
+                />
+              ) : (
+                <Link href={pathName.link}>
+                  <span className={s.current}>{pathName.name}</span>
+                </Link>
+              )
+            :
               <LinkWithWrapper
                 isWrapper={false}
                 className={s.breadcrumbLink}
@@ -27,9 +43,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ pathNames }) => {
                 name={pathName.name}
                 dotReverce={false}
               />
-            ) : (
-              <span className={s.current}>{pathName.name}</span>
-            )}
+            }
           </li>
         );
       })}

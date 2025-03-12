@@ -9,8 +9,8 @@ export default function Preloader() {
   useEffect(() => {
     gsap.to(`.${s.preloader}`, {
       opacity: 0,
-      duration: 3,
-      delay: 2,
+      duration: 2,
+      delay: 3,
     });
   }, []);
 

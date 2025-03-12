@@ -1,5 +1,6 @@
 import Projects from "@/app/components/Projects/Projects";
 import { notFound } from "next/navigation";
+import Filter from "@/app/components/Filter/Filter";
 
 async function getData() {
   try {
@@ -48,6 +49,7 @@ export default async function ProjectsPage() {
 
   return (
     <>
+      <Filter />
       <Projects projects={projects} />
     </>
   );

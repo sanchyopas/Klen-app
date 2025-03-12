@@ -16,8 +16,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
     object-fit: cover;
 
     @media (hover: hover) and (pointer: fine) {
@@ -27,43 +27,37 @@
 
   .mask {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
     bottom: 145px;
-    overflow: hidden;
-    @media (max-width: 767px) {
-      bottom: 0;
-    }
+    background-image: url('/img/klen.svg');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: cover;
+    background-color: initial;
+    aspect-ratio: 1360 / 463;
+    pointer-events: none;
     &:before {
       content: '';
       position: absolute;
-      top: 0;
+      display: block;
       left: 0;
-      right: 0;
-      bottom: -1px;
-      mask: url('/img/Logo_Mask.svg') bottom/contain no-repeat,
-      linear-gradient(#424242 0 0); /* we need this extra layer for mask-composite */
-      mask-composite: exclude;
-      background: #fff;
-      @media (max-width: 767px) {
-        top: initial;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        aspect-ratio: 118 / 40;
-        mask: initial;
-        mask-composite: initial;
-        background-image: url('/img/Hero_Mobile.svg');
-        background-repeat: no-repeat;
-        background-position: center bottom;
-        background-size: contain;
-        background-color: initial;
+      bottom: 100%;
+      width: 100%;
+      height: 100svh;
+      background: #ffffff;
+    }
+    @media (max-width: 767px) {
+      bottom: 0;
+      aspect-ratio: 118 / 40;
+      background-image: url('/img/Hero_Mobile.svg');
+      &:before {
+        display: none;
       }
     }
   }
 
   .container {
+    position: relative;
     height: 100%;
     display: flex;
     flex-wrap: nowrap;

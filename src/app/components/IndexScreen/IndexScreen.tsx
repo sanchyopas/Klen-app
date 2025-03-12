@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { gsap } from "gsap";
 import s from "./indexScreen.module.scss";
+import Image from "next/image";
 
 export default function IndexScreen() {
   useEffect(() => {
@@ -20,7 +21,14 @@ export default function IndexScreen() {
 
   return (
     <section id={s.hello}>
-      <img src="/img/image.jpg" alt="" className={`${s.helloImage} helloImage`} />
+      <Image
+        src={`/img/image.jpg`}
+        alt={'KLËN — architectural bureau'}
+        width={800}
+        height={400}
+        priority
+        className={`${s.helloImage} helloImage`}
+      />
       <div className={`${s.mask} mask`}></div>
       <div className={s.container}>
         <h1>architectural bureau</h1>

@@ -62,13 +62,14 @@
   }
 
   .filterDropList {
+    display: none;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     padding: 24px 0 8px;
     background: #ffffff;
-    display: flex;
+    //display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 12px 24px;
@@ -100,6 +101,7 @@
         font-weight: 600;
         text-transform: lowercase;
         color: #424242;
+        transition: all 0.1s;
 
         @media (max-width: 767px) {
           padding: 8px 24px;
@@ -118,6 +120,14 @@
           transition: all 0.25s;
           @media (max-width: 767px) {
             top: 17px;
+          }
+        }
+
+        @media (hover: hover) {
+          &:hover {
+            &:active {
+              transform: scale(0.95);
+            }
           }
         }
       }

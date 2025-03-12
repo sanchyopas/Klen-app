@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from "react";
 import s from "./filter.module.scss";
 
-type FilterProps  = {
+type FilterProps = {
   filtersData: {
     types: string[];
     years: string[];
   };
   onFilterChange: (filters: { type: string | null; year: string | null }) => void;
-}
+};
 
 const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange }) => {
   const [selectedType, setSelectedType] = useState<string | null>(null);
@@ -62,9 +62,11 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange }) => {
             Период
           </button>
 
-          {openFilter === "type" && (
-            <div className={s.filterDropList}>
-              {filtersData.types.map((type) => (
+          <div
+            className={`${s.filterDropList} ${openFilter === "type" ? s.open : ""}`}
+          >
+            {openFilter === "type" &&
+              filtersData.types.map((type) => (
                 <label key={type} className={s.filterItem}>
                   <input
                     type="checkbox"
@@ -75,12 +77,13 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange }) => {
                   <div>{type}</div>
                 </label>
               ))}
-            </div>
-          )}
+          </div>
 
-          {openFilter === "year" && (
-            <div className={s.filterDropList}>
-              {filtersData.years.map((year) => (
+          <div
+            className={`${s.filterDropList} ${openFilter === "year" ? s.open : ""}`}
+          >
+            {openFilter === "year" &&
+              filtersData.years.map((year) => (
                 <label key={year} className={s.filterItem}>
                   <input
                     type="checkbox"
@@ -91,8 +94,7 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange }) => {
                   <div>{year}</div>
                 </label>
               ))}
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

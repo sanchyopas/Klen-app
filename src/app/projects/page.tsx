@@ -31,8 +31,8 @@ export async function generateMetadata() {
   }
 
   return {
-    title: result.object.page.SEO_TITLE,
-    description: result.object.page.SEO_DESCR,
+    title: result.object.page.seo.title,
+    description: result.object.page.seo.description,
   };
 }
 

@@ -15,7 +15,7 @@ export default function Projects( props:any ) {
         <div className={isNextProjects ? `${s.projectsList} ${s.nextProjects}` : s.projectsList}>
           {
             projects.map((project:any) => ((
-              <ProjectCard key={project.id} id={project.id} title={project.main_screen.title} image={project.main_screen.image} />
+              <ProjectCard key={project.id} id={project.id} title={project.main_screen.preview_text} image={project.main_screen.image} />
             )))
           }
         </div>

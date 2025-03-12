@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export const useGsapStaggerAnimation = (
-  {start = "top 90%", end="bottom 80%", duration = 1.2, delay = 0, ease = "power3.out"} = {}
+  {start = "top 90%", end="bottom 80%", duration = 1.2, delay = 0, ease = "power3.out", stagger = 0.3} = {}
 ) => {
   const ref = useRef<HTMLImageElement[]>([]);
 
@@ -23,7 +23,7 @@ export const useGsapStaggerAnimation = (
         duration: duration,
         delay: delay,
         ease: ease,
-        stagger: 0.3,
+        stagger: stagger,
         scrollTrigger: {
           trigger: ref.current[0],
           start: start,

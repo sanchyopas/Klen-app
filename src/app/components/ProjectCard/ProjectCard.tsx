@@ -6,9 +6,10 @@ type Props = {
   title: string;
   image: string;
   id: number;
+  slug: string;
 }
 
-export default function ProjectCard(  { title, image, id }:Props ) {
+export default function ProjectCard(  { title, image, id, slug }:Props ) {
   return (
     <div className={s.item} key={id}>
       <Image
@@ -18,7 +19,7 @@ export default function ProjectCard(  { title, image, id }:Props ) {
         height={400}
         priority
       />
-      <Link href={`/projects/${id}`}></Link>
+      <Link href={`/projects/${slug}`}></Link>
       <h3 className={s.name}>{title}</h3>
     </div>
   );

@@ -1,5 +1,5 @@
 "use client"
-import s from "@/app/projects/[id]/project.module.scss";
+import s from "@/app/projects/[slug]/project.module.scss";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

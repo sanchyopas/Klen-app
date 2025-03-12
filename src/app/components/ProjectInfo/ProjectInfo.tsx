@@ -1,5 +1,5 @@
 import he from "he";
-import s from "@/app/projects/[id]/project.module.scss";
+import s from "@/app/projects/[slug]/project.module.scss";
 import AnimatedText from "@/app/components/AnimatedText/AnimatedText";
 
 type ProjectInfoProps = {

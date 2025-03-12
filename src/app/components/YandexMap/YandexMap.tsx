@@ -1,8 +1,11 @@
 "use client";
 import s from "./map.module.scss";
-import {useEffect, useRef} from "react";
+import { useEffect, useRef } from "react";
 import LinkWithWrapper from "@/app/components/Link/Link";
-import TextSection from "@/app/components/TextSection/TextSection";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 declare global {
   interface Window {
@@ -12,6 +15,8 @@ declare global {
 
 export default function YandexMap() {
   const mapContainer = useRef<HTMLDivElement | null>(null);
+  const contactInfoRef = useRef<HTMLDivElement | null>(null);
+  const listItemsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     let map: any;
@@ -27,9 +32,9 @@ export default function YandexMap() {
           scaleble: false,
         });
 
-        const isTouch =  window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+        const isTouch = window.matchMedia && window.matchMedia("(pointer:coarse)").matches;
 
-        if(isTouch) {
+        if (isTouch) {
           map.behaviors.disable("drag");
           map.behaviors.disable("multiTouch");
           map.behaviors.disable("scrollZoom");
@@ -67,11 +72,12 @@ export default function YandexMap() {
             iconLayout: "default#image",
             iconImageHref: "/img/icon/Pin.png",
             iconImageSize: [40, 40],
-            iconImageOffset: [-20, -20]
+            iconImageOffset: [-20, -20],
           }
         );
 
         map.geoObjects.add(placemark);
+
       });
     };
 
@@ -85,57 +91,120 @@ export default function YandexMap() {
     } else {
       loadMap();
     }
+
     return () => {
       if (map) map.destroy();
     };
+  }, []);
+
+  useEffect(() => {
+
+
+
+    gsap.fromTo(
+      mapContainer.current,
+      { opacity: 0, y: 100 },
+      {
+        opacity: 1,
+        y: 0,
+        delay: 0.5,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: mapContainer.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      contactInfoRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: contactInfoRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      listItemsRef.current,
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        delay: 0.8,
+        duration: 0.8,
+        ease: "power3.out",
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: contactInfoRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
   }, []);
 
   return (
     <div className={s.map}>
       <div className="container">
         <div className={s["map__inner"]}>
-          <div className={s["contact-info"]}>
+          <div ref={contactInfoRef} className={s["contact-info"]}>
             <div className={s["contact-info__body"]}>
               <h2>KLЁN — architectural bureau</h2>
               <div className={s["contact-info__list"]}>
-                <div className={s["contact-info__list-item"]}>
-                  <div className={s["contact-info__list-icon"]}>
-                    <img src="/img/icon/tg.svg" alt="Klen telegramm"/>
+                {[
+                  {
+                    icon: "/img/icon/tg.svg",
+                    alt: "Klen telegramm",
+                    link: "tel:+7 (926) 761-74-33",
+                    text: "+7 (926) 761-74-33",
+                    subtext: "пн–пт 09:00–18:00",
+                  },
+                  {
+                    icon: "/img/icon/mail.svg",
+                    alt: "Klen email",
+                    link: "mailto:info@abklen.com",
+                    text: "info@abklen.com",
+                  },
+                  {
+                    icon: "/img/icon/location.svg",
+                    alt: "Klen местоположение",
+                    link: "#",
+                    text: "123022, Москва, ул. Рочдельская, 15, стр.23",
+                  },
+                ].map((item, index) => (
+                  <div
+                    key={index}
+                    ref={(el) => {
+                      if (el) listItemsRef.current[index] = el;
+                    }}
+                    className={s["contact-info__list-item"]}
+                  >
+                    <div className={s["contact-info__list-icon"]}>
+                      <img src={item.icon} alt={item.alt} />
+                    </div>
+                    <div className={s["contact-info__list-text"]}>
+                      <a href={item.link}>{item.text}</a>
+                      {item.subtext && <p>{item.subtext}</p>}
+                    </div>
                   </div>
-                  <div className={s["contact-info__list-text"]}>
-                    <a href="tel:+7 (926) 761-74-33">+7 (926) 761-74-33</a>
-                    <p>пн–пт 09:00–18:00</p>
-                  </div>
-                </div>
-                <div className={s["contact-info__list-item"]}>
-                  <div className={s["contact-info__list-icon"]}>
-                    <img src="/img/icon/mail.svg" alt="Klen email"/>
-                  </div>
-                  <div className={s["contact-info__list-text"]}>
-                    <a href="mailto:info@abklen.com">info@abklen.com</a>
-                  </div>
-                </div>
-                <div className={s["contact-info__list-item"]}>
-                  <div className={s["contact-info__list-icon"]}>
-                    <img src="/img/icon/location.svg" alt="Klen местоположение"/>
-                  </div>
-                  <div className={s["contact-info__list-text"]}>
-                    <a href="#">123022, Москва, ул. Рочдельская, 15, стр.23</a>
-                  </div>
-                </div>
+                ))}
               </div>
-              {/*<div className={s["contact-info__actions"]}>*/}
-              {/*  <LinkWithWrapper dotReverce={false} isWrapper={false} name={"отправить заявку"} link={"#"}/>*/}
-              {/*  <LinkWithWrapper dotReverce={false} isWrapper={false} name={"пригласить в тендер"} link={"#"}/>*/}
-              {/*</div>*/}
             </div>
           </div>
-          <div
-            ref={mapContainer}
-            className={s["map-container"]}
-          ></div>
+          <div ref={mapContainer} className={s["map-container"]}></div>
         </div>
       </div>
     </div>
   );
-};
+}

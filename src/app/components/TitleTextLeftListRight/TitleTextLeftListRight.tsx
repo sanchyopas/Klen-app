@@ -15,7 +15,7 @@ function decodeHTML(encodedString: string) {
 }
 
 import he from "he";
-import s from "@/app/projects/[id]/project.module.scss";
+import s from "@/app/projects/[slug]/project.module.scss";
 import {useGsapFadeIn} from "@/app/hooks/AnimationHooks/useGsapFadeIn";
 
 type ProjectInfoProps = {

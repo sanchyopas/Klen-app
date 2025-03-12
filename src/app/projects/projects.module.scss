@@ -96,6 +96,19 @@
 
 }
 
+
+.noProjectsMessage {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #888;
+  margin-top: 20px;
+  min-height: 800px;
+  display: flex;
+  align-items: center;
+}
+
+
 .imageSkeleton {
   position: absolute;
   top: 0;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import s from "@/app/projects/[id]/project.module.scss";
+import s from "@/app/projects/[slug]/project.module.scss";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";

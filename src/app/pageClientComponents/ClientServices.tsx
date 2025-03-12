@@ -10,7 +10,6 @@ type Props = {
 
 export const ClientServices = ({cases}:Props) => {
   const elRef = useGsapFadeIn<HTMLDivElement>()
-  console.log(cases);
   return (
     <>
       {
@@ -29,7 +28,7 @@ export const ClientServices = ({cases}:Props) => {
                             <LinkWithWrapper
                               key={i}
                               className={s.linkWrapper}
-                              link={`/services/${item.id}`}
+                              link={`/services/${item.alias}`}
                               dotReverce={false}
                               isWrapper={false}
                               name={item.pagetitle}

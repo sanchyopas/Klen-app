@@ -1,6 +1,6 @@
 "use client"
 
-import s from "@/app/projects/[id]/project.module.scss";
+import s from "@/app/projects/[slug]/project.module.scss";
 import MiniSlider from "@/app/components/MiniSlider/MiniSlider";
 import AnimatedText from "@/app/components/AnimatedText/AnimatedText";
 import Title from "@/app/components/Title/Title";

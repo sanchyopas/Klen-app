@@ -1,12 +1,11 @@
-import Projects from "@/app/components/Projects/Projects";
+import ProjectsPageClient from "@/app/projects/ProjectsPageClient";
 import { notFound } from "next/navigation";
-import Filter from "@/app/components/Filter/Filter";
-import s from "./projects.module.scss";
+import {log} from "node:util";
 
 async function getData() {
   try {
-    const res = await fetch(`https://test-6600.fg.onl/api/cases`, {
-      cache: "force-cache", // Используем force-cache для статической генерации
+    const res = await fetch("https://test-6600.fg.onl/api/cases", {
+      cache: "no-store",
     });
 
     if (!res.ok) {
@@ -16,7 +15,8 @@ async function getData() {
       throw new Error(`Error: ${res.status} ${res.statusText}`);
     }
 
-    return res.json();
+    const data = await res.json();
+    return data?.object || null;
   } catch (error) {
     console.error("Error:", error);
     return null;
@@ -26,32 +26,32 @@ async function getData() {
 export async function generateMetadata() {
   const result = await getData();
 
-  if (!result || !result.object.page?.seo) {
+  if (!result || !result.page?.seo) {
     return {
       title: "Not found",
     };
   }
 
   return {
-    title: result.object.page.seo.title,
-    description: result.object.page.seo.description,
+    title: result?.page?.seo?.title,
+    description: result?.page?.seo?.description,
   };
 }
 
 export default async function ProjectsPage() {
   const result = await getData();
 
-  if (!result || !result.object.cases) {
+  if (!result || !result.cases) {
     notFound();
     return null;
   }
 
-  const projects = result.object.cases || {};
+  const projects = result.cases;
 
-  return (
-    <>
-      <Filter />
-      <Projects classes={s.projectsPage} projects={projects} />
-    </>
-  );
+  const filtersData = {
+    types: result.page?.filter_projects || [],
+    years: result.page?.filter_period || [],
+  };
+
+  return <ProjectsPageClient projects={projects} filtersData={filtersData} />;
 }

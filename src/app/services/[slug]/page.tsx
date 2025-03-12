@@ -5,12 +5,12 @@ import {notFound} from "next/navigation";
 
 
 type Params = {
-  id: number
+  slug: string;
 }
 
-async function getService(id: number) {
+async function getService(slug: string) {
   try {
-    const res = await fetch(`https://test-6600.fg.onl/api/services/${id}`, {
+    const res = await fetch(`https://test-6600.fg.onl/api/services/${slug}`, {
       cache: "no-store",
     });
 
@@ -30,9 +30,9 @@ async function getService(id: number) {
 
 export async function generateMetadata(props: { params: Promise<Params> }) {
   const params = await props.params
-  const {id} = params;
+  const {slug} = params;
 
-  const result = await getService(Number(id));
+  const result = await getService(slug);
 
   if (!result || !result.object.seo) {
     return {
@@ -41,13 +41,13 @@ export async function generateMetadata(props: { params: Promise<Params> }) {
   }
 
   return {
-    title: result.object.seo.title   || `Заголовок проекта с айди ${id}`,
-    description: result.object.seo.description  || `Описание проекта с айди ${id}`,
+    title: result.object.seo.title   || `Заголовок проекта с айди ${slug}`,
+    description: result.object.seo.description  || `Описание проекта с айди ${slug}`,
   }
 }
 export default async function Service({ params }: { params: Promise<Params> }) {
-  const { id } = await params;
-  const service = await getService(id);
+  const { slug } = await params;
+  const service = await getService(slug);
 
   if (!service) {
     notFound();

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import s from "@/app/projects/[id]/project.module.scss";
+import s from "@/app/projects/[slug]/project.module.scss";
 import {useGsapStaggerAnimation} from "@/app/hooks/AnimationHooks/useGsapStaggerAnimation";
 
 gsap.registerPlugin(ScrollTrigger);

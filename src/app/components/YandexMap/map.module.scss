@@ -23,6 +23,11 @@
     z-index: 1;
   }
 
+  @media (hover: hover) {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
   &__body {
     display: grid;
     gap: 40px;

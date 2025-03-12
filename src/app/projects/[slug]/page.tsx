@@ -7,12 +7,12 @@ import React from "react";
 import NextProjects from "@/app/components/NextProjects/NextProjects";
 
 type Params = {
-  id: number
+  slug: string
 }
 
-async function getProject(id: number) {
+async function getProject(slug: string) {
   try {
-    const res = await fetch(`https://test-6600.fg.onl/api/cases/${id}`, {
+    const res = await fetch(`https://test-6600.fg.onl/api/cases/${slug}`, {
       cache: "no-store",
     });
 
@@ -32,9 +32,9 @@ async function getProject(id: number) {
 
 export async function generateMetadata(props: { params: Promise<Params> }) {
   const params = await props.params
-  const {id} = params;
+  const {slug} = params;
 
-  const result = await getProject(id);
+  const result = await getProject(slug);
 
   if (!result || !result.object.seo) {
     return {
@@ -43,14 +43,14 @@ export async function generateMetadata(props: { params: Promise<Params> }) {
   }
 
   return {
-    title: result.object.seo.title   || `Заголовок проекта с айди ${id}`,
-    description: result.object.seo.description  || `Описание проекта с айди ${id}`,
+    title: result.object.seo.title   || `Заголовок проекта с айди ${slug}`,
+    description: result.object.seo.description  || `Описание проекта с айди ${slug}`,
   }
 }
 
 export default async function ProjectPage({ params }: { params: Promise<Params> }) {
-  const { id } = await params;
-  const project = await getProject(Number(id));
+  const { slug } = await params;
+  const project = await getProject(slug);
 
   if (!project) {
     notFound();

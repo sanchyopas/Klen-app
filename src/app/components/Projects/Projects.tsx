@@ -6,10 +6,10 @@ import {log} from "node:util";
 
 export default function Projects( props:any ) {
 
-  const {title, link, projects, is_pc, isNextProjects, btn_name} = props
+  const {classes, title, link, projects, is_pc, isNextProjects, btn_name} = props
 
   return (
-    <section id={`projects`} className={`${is_pc ? s.pc : ""}`}>
+    <section id={`projects`} className={`${is_pc ? s.pc : ""} ${classes}`}>
       <div className={"container"}>
         {!!title && <Title title={title} as={"h2"} />}
         <div className={isNextProjects ? `${s.projectsList} ${s.nextProjects}` : s.projectsList}>

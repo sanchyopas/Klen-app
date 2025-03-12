@@ -77,7 +77,7 @@ const Filter = () => {
 
             {/* Список фильтров по типу проекта */}
             {openFilter === "type" && (
-              <div className={s.filterList}>
+              <div className={s.filterDropList}>
                 {types.map((type) => (
                   <label key={type} className={s.filterItem}>
                     <input
@@ -86,7 +86,9 @@ const Filter = () => {
                       checked={selectedType === type}
                       onChange={() => handleTypeClick(type)}
                     />
-                    {type}
+                    <div>
+                      {type}
+                    </div>
                   </label>
                 ))}
               </div>
@@ -94,7 +96,7 @@ const Filter = () => {
 
             {/* Список фильтров по периоду */}
             {openFilter === "year" && (
-              <div className={s.filterList}>
+              <div className={s.filterDropList}>
                 {years.map((year) => (
                   <label key={year} className={s.filterItem}>
                     <input
@@ -103,7 +105,9 @@ const Filter = () => {
                       checked={selectedYear === year}
                       onChange={() => handleYearClick(year)}
                     />
-                    {year}
+                    <div>
+                      {year}
+                    </div>
                   </label>
                 ))}
               </div>
@@ -112,15 +116,15 @@ const Filter = () => {
         </div>
       </div>
 
-        {/* Отображение выбранных фильтров */}
-      <div className={s.selectedFilters}>
-        <p>
-          Тип проекта: {selectedType || "Не выбрано"}
-        </p>
-        <p>
-          Период: {selectedYear || "Не выбрано"}
-        </p>
-      </div>
+      {/* Отображение выбранных фильтров */}
+      {/*<div className={s.selectedFilters}>*/}
+      {/*  <p>*/}
+      {/*    Тип проекта: {selectedType || "Не выбрано"}*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    Период: {selectedYear || "Не выбрано"}*/}
+      {/*  </p>*/}
+      {/*</div>*/}
     </>
   );
 };

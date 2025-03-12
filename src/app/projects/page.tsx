@@ -1,6 +1,7 @@
 import Projects from "@/app/components/Projects/Projects";
 import { notFound } from "next/navigation";
 import Filter from "@/app/components/Filter/Filter";
+import s from "./projects.module.scss";
 
 async function getData() {
   try {
@@ -25,7 +26,7 @@ async function getData() {
 export async function generateMetadata() {
   const result = await getData();
 
-  if (!result || !result.object?.page) {
+  if (!result || !result.object.page?.seo) {
     return {
       title: "Not found",
     };
@@ -50,7 +51,7 @@ export default async function ProjectsPage() {
   return (
     <>
       <Filter />
-      <Projects projects={projects} />
+      <Projects classes={s.projectsPage} projects={projects} />
     </>
   );
 }

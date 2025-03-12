@@ -5,6 +5,7 @@ import Title from "@/app/components/Title/Title";
 import Projects from "@/app/components/Projects/Projects";
 import React from "react";
 import NextProjects from "@/app/components/NextProjects/NextProjects";
+import Breadcrumbs from "@/app/components/Breadcrumbs/Breadcrumbs";
 
 type Params = {
   slug: string
@@ -56,13 +57,20 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     notFound();
   }
 
+  const pathNames = [
+    { link: '/', name: 'Главная' },
+    { link: '/projects', name: 'Проекты' },
+    { link: '/projects/1', name: project?.object?.main_screen?.title },
+  ];
+
   return (
     <>
-      <section>
+      <div>
         <div className="container">
+          <Breadcrumbs pathNames={pathNames}/>
           <Title title={project?.object?.main_screen?.title} as="h1" />
         </div>
-      </section>
+      </div>
 
       {
         project?.object?.BlocksList?.map((block: any, index: number) => {

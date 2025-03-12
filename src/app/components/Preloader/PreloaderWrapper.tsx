@@ -18,7 +18,7 @@ export default function PreloaderWrapper({children}: { children: React.ReactNode
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setIsLoaded(true), 0);
+    setTimeout(() => setIsLoaded(true), 3000);
   }, []);
 
   useEffect(() => {

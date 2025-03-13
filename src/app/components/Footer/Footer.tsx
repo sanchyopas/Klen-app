@@ -7,28 +7,11 @@ import {useModal} from "@/app/components/Modal/ModalContext";
 import FormProject from "@/app/components/FormProject/FormProject";
 import ButtonWithWrapper from "@/app/components/Button/Button";
 import FormTender from "@/app/components/FormTender/FormTender";
+import {useModalHandlers} from "@/app/hooks/useModalHandler";
 
 
 export default function Footer () {
-  const { openModal } = useModal();
-
-  const handleOpenModalBid = () => {
-    openModal({
-      title: 'Обсудить проект', // Передаем заголовок
-      content: (
-        <FormProject />
-      ),
-    });
-  };
-
-  const handleOpenModalTender = () => {
-    openModal({
-      title: 'Пригласить в тендер/конкурс', // Передаем заголовок
-      content: (
-        <FormTender />
-      ),
-    });
-  };
+  const { handleOpenModalBid, handleOpenModalTender } = useModalHandlers();
 
   return (
     <>

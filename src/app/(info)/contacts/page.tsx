@@ -1,15 +1,15 @@
 import React from 'react';
 import YandexMap from "@/app/components/YandexMap/YandexMap";
-import {notFound} from "next/navigation";
+import { notFound } from "next/navigation";
 
-export async function getContactData(){
-  try{
+async function getContactData() {
+  try {
     const res = await fetch("https://test-6600.fg.onl/api/contacts/", {
       cache: "force-cache",
     });
 
-    if(!res.ok){
-      if(res.status === 404) {
+    if (!res.ok) {
+      if (res.status === 404) {
         return null;
       }
 
@@ -17,8 +17,7 @@ export async function getContactData(){
     }
 
     return res.json();
-
-  }catch(error){
+  } catch (error) {
     console.error(`Error getting contact data for ${error}`);
     return null;
   }
@@ -27,22 +26,22 @@ export async function getContactData(){
 export async function generateMetadata() {
   const res = await getContactData();
 
-  if(!res || !res.object?.seo){
+  if (!res || !res.object?.seo) {
     return {
       title: "Not found"
-    }
+    };
   }
 
   return {
     title: res.object?.seo?.title,
     description: res.object?.seo?.description,
-  }
+  };
 }
 
 export default async function Contact() {
   const res = await getContactData();
 
-  if(!res || !res.object.contacts_block){
+  if (!res || !res.object.contacts_block) {
     notFound();
     return null;
   }
@@ -52,4 +51,4 @@ export default async function Contact() {
       <YandexMap info={res?.object?.contacts_block} />
     </>
   );
-};
+}

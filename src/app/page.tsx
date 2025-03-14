@@ -56,7 +56,7 @@ export default async function Home() {
 
   return (
     <>
-      <IndexScreen />
+      <IndexScreen mainData={result.object.main_screen} />
       {hasProjects && (
         <>
           <Projects

@@ -4,7 +4,7 @@ import { z } from 'zod';
 import React, { useState } from 'react';
 import s from "./form-tender.module.scss";
 import ButtonWithWrapper from "@/app/components/Button/Button";
-import {useModal} from "@/app/components/Modal/ModalContext";
+import { useModal } from "@/app/components/Modal/ModalContext";
 import ThankYou from "@/app/components/ThankYou/ThankYou";
 
 // Схема валидации с использованием Zod
@@ -27,6 +27,8 @@ type FormData = z.infer<typeof schema>;
 
 export default function FormTender() {
   const { openModal } = useModal();
+  const [isSubmitting, setIsSubmitting] = useState(false); // Состояние отправки формы
+  const [error, setError] = useState<string | null>(null); // Состояние ошибки
 
   const {
     register,
@@ -77,19 +79,43 @@ export default function FormTender() {
     setValue('phone', formattedValue, { shouldValidate: false }); // Отключаем валидацию при изменении
   };
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log('Форма отправлена:', data);
-    openModal({
-      title: 'Спасибо за заявку', // Передаем заголовок
-      content: (
-        <ThankYou/>
-      ),
-    });
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      // Отправляем данные на наш API Route
+      const response = await fetch('/api/submitForm', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Ошибка при отправке формы');
+      }
+
+      const result = await response.json();
+
+      // Открываем модальное окно с благодарностью
+      openModal({
+        title: 'Спасибо за заявку',
+        content: <ThankYou />,
+      });
+
+      console.log('Форма успешно отправлена:', result);
+    } catch (error) {
+      console.error('Ошибка:', error);
+      setError('Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)} noValidate>
-
       <div className={s.radioGroup}>
         <label>
           <input
@@ -164,7 +190,13 @@ export default function FormTender() {
 
       <div>
         <span>Нажимая на кнопку «Отправить», вы соглашаетесь на обработку персональных данных</span>
-        <ButtonWithWrapper className="" dotReverce={false} isWrapper={false} name={"Отправить"}/>
+        <ButtonWithWrapper
+          className=""
+          dotReverce={false}
+          isWrapper={false}
+          name={isSubmitting ? 'Отправка...' : 'Отправить'}
+          disabled={isSubmitting}
+        />
       </div>
     </form>
   );

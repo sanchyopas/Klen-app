@@ -125,6 +125,7 @@
         text-transform: lowercase;
         color: #424242;
         transition: all 0.1s;
+        cursor: pointer;
 
         @media (max-width: 767px) {
           padding: 8px 24px;

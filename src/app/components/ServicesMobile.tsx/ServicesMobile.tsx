@@ -99,14 +99,17 @@ export default function ServiceMobile({ is_mobile, slides, is_boolet, name_btn,l
               <SwiperSlide className={s.slider__slide} key={i}>
                 <Link href={`/services/${item.alias}`} className={''} prefetch={true}>
                   {
-                    item.hasOwnProperty("main_screen") ?
-                      <img
-                        src={item.main_screen.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.main_screen.image}` : `https://test-6600.fg.onl/upload_resources/${item.main_screen.image}`}
-                        alt=""/>
-                      :
-                      <img
-                        src={item.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.image}` : `https://test-6600.fg.onl/upload_resources/${item.image}`}
-                        alt=""/>
+                    !!item.main_screen.image || !!item.image ?
+
+                      item.hasOwnProperty("main_screen") ?
+                        <img
+                          src={item.main_screen.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.main_screen.image}` : `https://test-6600.fg.onl/upload_resources/${item.main_screen.image}`}
+                          alt=""/>
+                        :
+                        <img
+                          src={item.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.image}` : `https://test-6600.fg.onl/upload_resources/${item.image}`}
+                          alt=""/>
+                    : null
                   }
                   <span>{item.main_screen_title}</span>
                 </Link>

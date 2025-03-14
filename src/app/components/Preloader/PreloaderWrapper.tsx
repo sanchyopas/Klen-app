@@ -8,6 +8,7 @@ import {gsap} from "gsap";
 import {useSmoothScroll} from "@/app/hooks/useSmoothScroll";
 import {ModalProvider} from "@/app/components/Modal/ModalContext";
 import {Modal} from "@/app/components/Modal/Modal";
+import Cookie from "@/app/components/Cookie/Cookie";
 
 const LoadingContext = createContext<{ isLoaded: boolean }>({isLoaded: false});
 
@@ -41,6 +42,7 @@ export default function PreloaderWrapper({children}: { children: React.ReactNode
             <Footer/>
             <Modal />
           </ModalProvider>
+          <Cookie/>
         </>
       ) : (
         <Preloader/>

@@ -22,7 +22,7 @@ export default function Footer () {
               <div className={s.logo}>
                 <a href="/">KLЁN — architectural bureau</a>
                 <img
-                  src="/img/Logo.svg"
+                  src="/img/Logo-footer.svg"
                   alt="KLЁN — architectural bureau"
                 />
               </div>

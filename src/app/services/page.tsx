@@ -4,7 +4,7 @@ import { ClientServices } from "@/app/pageClientComponents/ClientServices";
 async function getServiceData() {
   try {
     const res = await fetch(`https://test-6600.fg.onl/api/services`, {
-      cache: "force-cache", // Используем force-cache для статической генерации
+      cache: "no-store", // Используем force-cache для статической генерации
     });
 
     if (!res.ok) {
@@ -24,15 +24,15 @@ async function getServiceData() {
 export async function generateMetadata() {
   const result = await getServiceData();
 
-  if (!result || !result.page?.seo) {
+  if (!result || !result.object?.page?.seo) {
     return {
       title: "Not found",
     };
   }
 
   return {
-    title: result?.page?.seo?.title,
-    description: result?.page?.seo?.description,
+    title: result.object.page.seo.title,
+    description: result.object.page.seo.description,
   };
 }
 

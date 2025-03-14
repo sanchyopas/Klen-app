@@ -40,12 +40,14 @@ export const ClientServices = ({cases}:Props) => {
                   </div>
                   <div className="col-12 col-md-6">
                     <div className={s.img}>
-                      <Image
-                        src={`https://test-6600.fg.onl${item.main_screen.image}`}
-                        alt={item.main_screen.title}
-                        width={670}
-                        height={420}
-                      />
+                      {!!item.main_screen.image &&
+                        <Image
+                          src={`https://test-6600.fg.onl${item.main_screen.image}`}
+                          alt={item.main_screen.title}
+                          width={670}
+                          height={420}
+                        />
+                      }
                     </div>
                   </div>
                 </div>

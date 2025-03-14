@@ -10,7 +10,7 @@ import ServiceMobile from "@/app/components/ServicesMobile.tsx/ServicesMobile";
 async function getData() {
   try {
     const res = await fetch(`https://test-6600.fg.onl/api/main`, {
-      cache: "force-cache", // Используем force-cache для статической генерации
+      cache: "no-store", // Используем force-cache для статической генерации
     });
 
     if (!res.ok) {

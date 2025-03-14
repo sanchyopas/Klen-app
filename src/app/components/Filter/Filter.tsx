@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import s from "./filter.module.scss";
 
 type FilterProps = {
@@ -16,6 +16,9 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange, initialTyp
   const [selectedType, setSelectedType] = useState<string | null>(initialType || null);
   const [selectedYear, setSelectedYear] = useState<string | null>(initialYear || null);
   const [openFilter, setOpenFilter] = useState<"type" | "year" | null>(null);
+  const [paddingBottom, setPaddingBottom] = useState<number>(0); // Состояние для padding-bottom
+  const typeDropListRef = useRef<HTMLDivElement | null>(null); // Реф для filterDropList (тип)
+  const yearDropListRef = useRef<HTMLDivElement | null>(null); // Реф для filterDropList (год)
 
   // Обновляем состояние при изменении initialType или initialYear
   useEffect(() => {
@@ -30,6 +33,21 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange, initialTyp
   useEffect(() => {
     onFilterChange({ type: selectedType, year: selectedYear });
   }, [selectedType, selectedYear, onFilterChange]);
+
+  // Эффект для обновления padding-bottom при открытии filterDropList
+  useEffect(() => {
+    if (openFilter === "type" && typeDropListRef.current) {
+      // Вычисляем высоту filterDropList (тип)
+      const height = typeDropListRef.current.offsetHeight;
+      setPaddingBottom(height); // Устанавливаем padding-bottom
+    } else if (openFilter === "year" && yearDropListRef.current) {
+      // Вычисляем высоту filterDropList (год)
+      const height = yearDropListRef.current.offsetHeight;
+      setPaddingBottom(height); // Устанавливаем padding-bottom
+    } else {
+      setPaddingBottom(0); // Сбрасываем padding-bottom, если фильтр закрыт
+    }
+  }, [openFilter]);
 
   const handleResetFilters = () => {
     setSelectedType(null);
@@ -52,7 +70,10 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange, initialTyp
   return (
     <div className={s.filter}>
       <div className="container">
-        <div className={s.filterList}>
+        <div
+          className={s.filterList}
+          style={{ paddingBottom: `${paddingBottom}px` }} // Динамический padding-bottom
+        >
           <button
             onClick={handleResetFilters}
             className={`${s.resetButton} ${!selectedType && !selectedYear ? s.selected : ""}`}
@@ -75,6 +96,7 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange, initialTyp
           </button>
 
           <div
+            ref={typeDropListRef}
             className={`${s.filterDropList} ${openFilter === "type" ? s.open : ""}`}
           >
             {filtersData.types.map((type) => (
@@ -91,6 +113,7 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange, initialTyp
           </div>
 
           <div
+            ref={yearDropListRef}
             className={`${s.filterDropList} ${openFilter === "year" ? s.open : ""}`}
           >
             {filtersData.years.map((year) => (

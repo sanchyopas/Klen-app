@@ -11,6 +11,11 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 20px 40px;
+    transition: all 0.2s ease-in-out;
+
+    @media (max-width: 767px) {
+      padding-bottom: 0!important;
+    }
   }
 
   .resetButton,
@@ -62,9 +67,13 @@
     }
   }
 
+  .filterList {
+
+  }
+
   .filterDropList {
     position: absolute;
-    top: 100%;
+    bottom: 0;
     left: 0;
     right: 0;
     padding: 24px 0 8px;
@@ -73,23 +82,25 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 12px 24px;
-    transition: all .2s ease-in-out;
-    opacity: 0;
-    transform: translateY(-20px);
-
     pointer-events: none;
     z-index: 1;
+    transition: all .2s ease-in-out;
+    transform: translateY(20px);
+    opacity: 0;
 
     &.open {
-      opacity: 1;
-      transform: translateY(0);
       pointer-events: auto;
+      transform: translateY(0);
+      opacity: 1;
     }
 
     @media (max-width: 767px) {
       flex-direction: column;
       padding: 8px 0;
       gap: 0;
+      top: 100%;
+      bottom: initial;
+      transform: translateY(-20px);
     }
 
     .filterItem {

@@ -7,9 +7,15 @@ import Link from "next/link";
 import Image from "next/image";
 import MenuLink from "@/app/components/MenuLink/MenuLink";
 
-export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
+type HeaderProps = {
+  headerData: {
+    telegram?: string;
+    phone?: string;
+  };
+};
 
+export default function Header({ headerData }: HeaderProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     const isTouchDevice = window.matchMedia("(hover: none)").matches;
     if (isTouchDevice) return;
@@ -120,10 +126,10 @@ const menuItem = [
           </nav>
 
           <div className={s.contacts}>
-            <a href="https://www.t.me/#" target="_blank" className="contact-item">
+            <a href={`${headerData.telegram}`} target="_blank" className="contact-item">
               <img src="/img/icon/Telegram.svg" alt="Telegram"/>
             </a>
-            <a href="tel:+79267617433" className="contact-item">+7 (926) 761-74-33</a>
+            <a href={`tel:${headerData.phone}`} className="contact-item">{headerData.phone}</a>
           </div>
         </div>
       </div>

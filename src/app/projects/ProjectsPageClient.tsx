@@ -39,14 +39,14 @@ export default function ProjectsPageClient({ projects, filtersData }: Props) {
   useEffect(() => {
     // Проверяем, что searchParams не равен null
     if (searchParams) {
-      const type = searchParams.get("type"); // Получаем значение type из URL
-      const year = searchParams.get("year"); // Получаем значение year из URL
+      const type = searchParams.get("type");
+      const year = searchParams.get("year");
 
       if (type) {
-        setInitialType(type); // Устанавливаем начальное значение для type
+        setInitialType(type);
       }
       if (year) {
-        setInitialYear(year); // Устанавливаем начальное значение для year
+        setInitialYear(year);
       }
 
       setFilters({
@@ -54,7 +54,7 @@ export default function ProjectsPageClient({ projects, filtersData }: Props) {
         year: searchParams.get("year"),
       });
     }
-  }, [searchParams]); // Добавляем searchParams в зависимости useEffect
+  }, [searchParams]);
 
   useEffect(() => {
     const filtered = projects.filter((project) => {
@@ -72,8 +72,8 @@ export default function ProjectsPageClient({ projects, filtersData }: Props) {
       <Filter
         filtersData={filtersData}
         onFilterChange={setFilters}
-        initialType={initialType} // Передаем начальное значение type
-        initialYear={initialYear} // Передаем начальное значение year
+        initialType={initialType}
+        initialYear={initialYear}
       />
       <Projects classes={s.projectsPage} projects={filteredProjects} />
     </>

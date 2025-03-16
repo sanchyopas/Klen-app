@@ -5,17 +5,20 @@ import Preloader from "./Preloader";
 import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
 import {gsap} from "gsap";
-import {useSmoothScroll} from "@/app/hooks/useSmoothScroll";
 import {ModalProvider} from "@/app/components/Modal/ModalContext";
 import {Modal} from "@/app/components/Modal/Modal";
 import Cookie from "@/app/components/Cookie/Cookie";
+
+type PreloaderWrapperProps = {
+  children: React.ReactNode;
+  object: any;
+}
 
 const LoadingContext = createContext<{ isLoaded: boolean }>({isLoaded: false});
 
 export const useLoading = () => useContext(LoadingContext);
 
-export default function PreloaderWrapper({children}: { children: React.ReactNode }) {
-
+export default function PreloaderWrapper({children, object}: PreloaderWrapperProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -37,7 +40,7 @@ export default function PreloaderWrapper({children}: { children: React.ReactNode
       {isLoaded ? (
         <>
           <ModalProvider>
-            <Header/>
+            <Header headerData={object}/>
             <main>{children}</main>
             <Footer/>
             <Modal />

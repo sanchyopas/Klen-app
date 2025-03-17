@@ -76,39 +76,63 @@ export default function Slider({
   }, []);
 
   return (
-    <div
-      ref={sliderRef}
-      className={`${s.slider} ${is_mobile ? s.mb : ""} ${!!class_name && class_name}`}
+    <>
+      <div
+        ref={sliderRef}
+        className={`${s.slider} ${is_mobile ? s.mb : ""} ${!!class_name && class_name}`}
+      >
+        <div className="container">
+          {!!title && <Title title={title} as={title_as} />}
 
-    >
-      <div className="container">
-        <Swiper
-          modules={[Pagination, Navigation]}
-          pagination={{
-            el: paginationRef.current,
-            clickable: true,
-          }}
-          navigation={{
-            nextEl: nextRef.current,
-            prevEl: prevRef.current,
-          }}
-          onInit={(swiper) => {
-            if (!swiper.params.navigation) return;
-            const navigation = swiper.params.navigation as NavigationOptions;
-            navigation.prevEl = prevRef.current;
-            navigation.nextEl = nextRef.current;
+          <Swiper
+            modules={[Pagination, Navigation]}
+            pagination={{
+              el: paginationRef.current,
+              clickable: true,
+            }}
+            navigation={{
+              nextEl: nextRef.current,
+              prevEl: prevRef.current,
+            }}
+            onInit={(swiper) => {
+              if (!swiper.params.navigation) return;
+              const navigation = swiper.params.navigation as NavigationOptions;
+              navigation.prevEl = prevRef.current;
+              navigation.nextEl = nextRef.current;
 
-            swiper.navigation?.init();
-            swiper.navigation?.update();
-          }}
-        >
-          {slides.map((item: Slide, i: number) => (
+              swiper.navigation?.init();
+              swiper.navigation?.update();
+            }}
+          >
+            {slides.map((item: Slide, i: number) => (
 
-            item.hasOwnProperty("alias") ?
-              <SwiperSlide className={s.slider__slide} key={i}>
-                <Link href={`/projects/${item.alias}`} className={s.linkSlide} prefetch={true}>
-                {
-                  !!item.main_screen.image || !!item.image ?
+              item.hasOwnProperty("alias") ?
+                <SwiperSlide className={s.slider__slide} key={i}>
+                  <Link href={`/projects/${item.alias}`} className={s.linkSlide} prefetch={true}>
+                    {
+                      !!item.main_screen.image || !!item.image ?
+                        item.hasOwnProperty("main_screen") ?
+                          <Image
+                            src={item.main_screen.image.includes('/upload_resources/') ?
+                              `https://test-6600.fg.onl${item.main_screen.image}` :
+                              `https://test-6600.fg.onl/upload_resources/${item.main_screen.image}`}
+                            alt="" width={1360} height={720}
+                          />
+                          :
+                          <Image src={item.image.includes('/upload_resources/') ?
+                            `https://test-6600.fg.onl${item.image}` :
+                            `https://test-6600.fg.onl/upload_resources/${item.image}`}
+                            alt="" width={1360} height={720}
+
+                          />
+                      : null
+                    }
+                    <div  className={s.nameSlide}>{item.main_screen.preview_text}</div>
+                  </Link>
+                </SwiperSlide>
+              :
+                <SwiperSlide className={s.slider__slide} key={i}>
+                  {
                     item.hasOwnProperty("main_screen") ?
                       <Image
                         src={item.main_screen.image.includes('/upload_resources/') ?
@@ -120,52 +144,32 @@ export default function Slider({
                       <Image src={item.image.includes('/upload_resources/') ?
                         `https://test-6600.fg.onl${item.image}` :
                         `https://test-6600.fg.onl/upload_resources/${item.image}`}
-                        alt="" width={1360} height={720}
+                             alt="" width={1360} height={720}
 
                       />
-                  : null
-                }
-                </Link>
-              </SwiperSlide>
-            :
-              <SwiperSlide className={s.slider__slide} key={i}>
-                {
-                  item.hasOwnProperty("main_screen") ?
-                    <Image
-                      src={item.main_screen.image.includes('/upload_resources/') ?
-                        `https://test-6600.fg.onl${item.main_screen.image}` :
-                        `https://test-6600.fg.onl/upload_resources/${item.main_screen.image}`}
-                      alt="" width={1360} height={720}
-                    />
-                    :
-                    <Image src={item.image.includes('/upload_resources/') ?
-                      `https://test-6600.fg.onl${item.image}` :
-                      `https://test-6600.fg.onl/upload_resources/${item.image}`}
-                           alt="" width={1360} height={720}
+                  }
+                </SwiperSlide>
+            ))}
+          </Swiper>
 
-                    />
-                }
-              </SwiperSlide>
-          ))}
-        </Swiper>
+          <div className={s["slider__actions"]}>
+            {is_boolet ? (
+              <div ref={paginationRef} className={`${s.slider__pagination}`}/>
+            ) : (
+              <LinkWithWrapper dotReverce={false} isWrapper={false} name={name_btn} link={link_btn}/>
+            )}
 
-        <div className={s["slider__actions"]}>
-          {is_boolet ? (
-            <div ref={paginationRef} className={`${s.slider__pagination}`}/>
-          ) : (
-            <LinkWithWrapper dotReverce={false} isWrapper={false} name={name_btn} link={link_btn}/>
-          )}
-
-          <div className={s["slider__navigations"]}>
-            <button ref={prevRef} className={s["slider__prev"]}>
-              <img src="/img/icon/arrow_left.svg" alt=""/>
-            </button>
-            <button ref={nextRef} className={s["slider__next"]}>
-              <img src="/img/icon/arrow_right.svg" alt=""/>
-            </button>
+            <div className={s["slider__navigations"]}>
+              <button ref={prevRef} className={s["slider__prev"]}>
+                <img src="/img/icon/arrow_left.svg" alt=""/>
+              </button>
+              <button ref={nextRef} className={s["slider__next"]}>
+                <img src="/img/icon/arrow_right.svg" alt=""/>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

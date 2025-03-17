@@ -60,7 +60,21 @@
 }
 
 .linkSlide {
+  position: relative;
   display: block;
+
+  .nameSlide {
+    display: block;
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    line-height: 1.5;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: lowercase;
+  }
 }
 
 

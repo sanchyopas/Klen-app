@@ -14,6 +14,8 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
   useEffect(() => {
     if (!containerRef.current || isAnimating) return;
 
+    if (JSON.stringify(prevProjects) === JSON.stringify(projects)) return; // ✅ Если проекты не изменились - выходим
+
     const items = gsap.utils.toArray(".project-card");
     if (items.length === 0) {
       setPrevProjects(projects);

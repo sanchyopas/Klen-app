@@ -8,8 +8,8 @@ import { useSearchParams } from "next/navigation";
 type Project = {
   id: number;
   alias: string;
-  getTypes: string;
-  getYears: string;
+  getTypes: string | string[];
+  getYears: string | string[];
   main_screen: {
     preview_text: string;
     image: string;
@@ -28,8 +28,6 @@ type Props = {
 
 export default function ProjectsPageClient({ projects, filtersData }: Props) {
   const searchParams = useSearchParams();
-  const [initialType, setInitialType] = useState<string | null>(null);
-  const [initialYear, setInitialYear] = useState<string | null>(null);
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
   const [filters, setFilters] = useState<{ type: string | null; year: string | null }>({
     type: null,
@@ -37,30 +35,22 @@ export default function ProjectsPageClient({ projects, filtersData }: Props) {
   });
 
   useEffect(() => {
-    // Проверяем, что searchParams не равен null
     if (searchParams) {
-      const type = searchParams.get("type");
-      const year = searchParams.get("year");
+      const type = searchParams.get("type") ? decodeURIComponent(searchParams.get("type") as string) : null;
+      const year = searchParams.get("year") ? decodeURIComponent(searchParams.get("year") as string) : null;
 
-      if (type) {
-        setInitialType(type);
-      }
-      if (year) {
-        setInitialYear(year);
-      }
-
-      setFilters({
-        type: searchParams.get("type"),
-        year: searchParams.get("year"),
-      });
+      setFilters({ type, year });
     }
-  }, [searchParams]);
+  }, [searchParams?.toString()]);
 
   useEffect(() => {
     const filtered = projects.filter((project) => {
+      const projectTypes = Array.isArray(project.getTypes) ? project.getTypes : [project.getTypes];
+      const projectYears = Array.isArray(project.getYears) ? project.getYears : [project.getYears];
+
       return (
-        (!filters.type || project.getTypes === filters.type) &&
-        (!filters.year || project.getYears === filters.year)
+        (!filters.type || projectTypes.includes(filters.type)) &&
+        (!filters.year || projectYears.includes(filters.year))
       );
     });
 
@@ -69,12 +59,7 @@ export default function ProjectsPageClient({ projects, filtersData }: Props) {
 
   return (
     <>
-      <Filter
-        filtersData={filtersData}
-        onFilterChange={setFilters}
-        initialType={initialType}
-        initialYear={initialYear}
-      />
+      <Filter filtersData={filtersData} onFilterChange={setFilters} initialType={filters.type} initialYear={filters.year} />
       <Projects classes={s.projectsPage} projects={filteredProjects} />
     </>
   );

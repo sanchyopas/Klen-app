@@ -19,7 +19,7 @@ export default function ProjectCard({ title, image, id, slug }: Props) {
           height={400}
           priority
         />
-      <Link href={`/projects/${slug}`} />
+      <Link href={`/projects/${slug}`} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} />
       <h3 className={s.name}>{title}</h3>
     </div>
   );

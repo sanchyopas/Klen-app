@@ -56,7 +56,7 @@
 
   @media (max-width: 767px) {
     .row {
-      & > div:last-child {
+      & > div + div {
         margin-top: 40px;
 
         .img {

@@ -13,16 +13,19 @@ export default function ProjectInfo({description, details}: ProjectInfoProps) {
       <div className="container">
         <div className={s.two_columns_content}>
           <div className={`${s.row} row`}>
-            <div className="col-12 col-md-6">
-              <div className={s.text}>
-                <AnimatedText htmlContent={description} className={s.noGapContent} />
-              </div>
-            </div>
-            <div className="col-12 col-md-6">
-              <div className={s.text}>
-                <AnimatedText htmlContent={details} className={s.noGapContent} />
-              </div>
-            </div>
+
+            {!!description && <div className="col-12 col-md-6">
+                <div className={s.text}>
+                    <AnimatedText htmlContent={description} className={s.noGapContent}/>
+                </div>
+            </div>}
+
+            {!!details && <div className="col-12 col-md-6">
+                <div className={s.text}>
+                    <AnimatedText htmlContent={details} className={s.noGapContent}/>
+                </div>
+            </div>}
+
           </div>
         </div>
       </div>

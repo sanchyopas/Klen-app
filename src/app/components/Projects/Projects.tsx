@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import s from "./projects.module.scss";
 import Title from "@/app/components/Title/Title";
@@ -8,32 +8,52 @@ import LinkWithWrapper from "@/app/components/Link/Link";
 
 export default function Projects({ classes, title, link, projects, is_pc, isNextProjects, btn_name }: any) {
   const containerRef = useRef(null);
+  const [prevProjects, setPrevProjects] = useState(projects);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-    const items = gsap.utils.toArray(".project-card");
-    if (items.length === 0) return;
+    if (!containerRef.current || isAnimating) return;
 
+    const items = gsap.utils.toArray(".project-card");
+    if (items.length === 0) {
+      setPrevProjects(projects); // Если пусто - сразу меняем проекты без анимации
+      return;
+    }
+
+    setIsAnimating(true); // Блокируем повторную анимацию
+
+    // 1️⃣ Анимируем исчезновение старых карточек
     gsap.to(items, {
-      opacity: 1,
-      y: 0,
+      opacity: 0,
+      y: 50,
       duration: 0.3,
       ease: "power2.in",
       stagger: 0.1,
       onComplete: () => {
-        gsap.set(items, { opacity: 1, y: 0, clipPath: "inset(0% 100% 0% 0%)" });
-
-        gsap.to(items, {
-          opacity: 1,
-          y: 0,
-          clipPath: "inset(0% 0% 0% 0%)",
-          duration: 0.5,
-          ease: "power2.out",
-          stagger: 0.1,
-        });
+        setPrevProjects(projects); // 2️⃣ Меняем контент после завершения анимации
+        setIsAnimating(false); // Разблокируем анимацию
       },
     });
   }, [projects]);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const items = gsap.utils.toArray(".project-card");
+    if (items.length === 0) return;
+
+    // 3️⃣ Показываем новые карточки с анимацией clip-path
+    gsap.set(items, { opacity: 0, y: 20, clipPath: "inset(0% 100% 0% 0%)" });
+
+    gsap.to(items, {
+      opacity: 1,
+      y: 0,
+      clipPath: "inset(0% 0% 0% 0%)",
+      duration: 0.5,
+      ease: "power2.out",
+      stagger: items.length > 1 ? 0.1 : 0,
+    });
+  }, [prevProjects]); // Анимация запускается только после обновления проектов
 
   return (
     <section id="projects" className={`${is_pc ? s.pc : ""} ${classes}`}>
@@ -41,8 +61,8 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
         {!!title && <Title title={title} as="h2" />}
 
         <div ref={containerRef} className={isNextProjects ? `${s.projectsList} ${s.nextProjects}` : s.projectsList}>
-          {projects.length > 0 ? (
-            projects.map((project: any) => (
+          {prevProjects.length > 0 ? (
+            prevProjects.map((project: any) => (
               <ProjectCard key={project.id} id={project.id} slug={project.alias} title={project.main_screen.preview_text} image={project.main_screen.image} />
             ))
           ) : (

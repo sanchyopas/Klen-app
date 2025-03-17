@@ -29,12 +29,12 @@ export const Modal = () => {
 
   const disableBodyScroll = () => {
     const scrollbarWidth = getScrollbarWidth();
-    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
     document.body.style.paddingRight = `${scrollbarWidth}px`;
   };
 
   const enableBodyScroll = () => {
-    document.documentElement.style.overflow = 'initial';
+    document.body.style.overflow = 'initial';
     document.body.style.paddingRight = '0';
   };
 

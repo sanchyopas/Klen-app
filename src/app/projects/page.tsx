@@ -33,7 +33,7 @@ export async function generateMetadata() {
 
   return {
     title: result?.page?.seo?.title,
-    description: result?.page?.seo?.description,
+    description: result?.page?.seo?.description || "Тест",
   };
 }
 

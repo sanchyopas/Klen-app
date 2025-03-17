@@ -1,6 +1,6 @@
 import React from 'react';
 import YandexMap from "@/app/components/YandexMap/YandexMap";
-import { notFound } from "next/navigation";
+import {notFound} from "next/navigation";
 
 async function getContactData() {
   try {
@@ -46,9 +46,22 @@ export default async function Contact() {
     return null;
   }
 
+  const contact_block = res?.object?.contacts_block
+
   return (
     <>
-      <YandexMap info={res?.object?.contacts_block} />
+      <YandexMap info={contact_block}/>
+
+      {/* Блок для поисковых роботов */}
+      <div itemScope itemType="http://schema.org/Organization" className="sr-only">
+        <span itemProp="name">{contact_block?.title_h2}</span>
+        <div itemProp="address" itemScope itemType="http://schema.org/PostalAddress">
+          <span itemProp="streetAddress">{contact_block?.address}</span>
+          <span itemProp="addressLocality">Москва, Россия</span>
+        </div>
+        <span itemProp="telephone">{contact_block?.phone}</span>
+        <span itemProp="email">{contact_block?.email}</span>
+      </div>
     </>
   );
 }

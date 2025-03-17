@@ -19,8 +19,6 @@ export default function IndexScreen( {mainData}: any ) {
 
   }, []);
 
-  console.log(mainData.background.image);
-
   return (
     <section id={s.hello}>
       <Image

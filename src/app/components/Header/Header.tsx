@@ -133,6 +133,6 @@ const menuItem = [
           </div>
         </div>
       </div>
-      </header>
+    </header>
       );
     }

@@ -1,12 +1,10 @@
 "use client";
 import s from "./map.module.scss";
 import React, { useEffect, useRef } from "react";
-import LinkWithWrapper from "@/app/components/Link/Link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Link from "next/link";
 import ButtonWithWrapper from "@/app/components/Button/Button";
-import {useModalHandlers} from "@/app/hooks/useModalHandler";
+import { useModalHandlers } from "@/app/hooks/useModalHandler";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,23 +15,25 @@ declare global {
 }
 
 type Props = {
-  phone: string,
-  title_h2: string,
-  email: string,
-  address: string,
-  hours: string,
-  coords: string,
-  tg: string,
-}
+  phone: string;
+  title_h2: string;
+  email: string;
+  address: string;
+  hours: string;
+  coords: string;
+  tg: string;
+};
 
 type InfoProps = {
   info: Props;
-}
+};
 
-export default function YandexMap({info}:InfoProps) {
+export default function YandexMap({ info }: InfoProps) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const contactInfoRef = useRef<HTMLDivElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
   const listItemsRef = useRef<HTMLDivElement[]>([]);
+  const buttonsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     let map: any;
@@ -62,23 +62,6 @@ export default function YandexMap({info}:InfoProps) {
         map.behaviors.disable("multiTouch");
         map.controls.remove("zoomControl");
 
-        const layer = window.ymaps.layer.storage.get("map#custom");
-
-        if (!layer) {
-          window.ymaps.layer.storage.add("map#custom", function () {
-            return new window.ymaps.Layer(
-              "https://core-renderer-tiles.maps.yandex.net/tiles?l=map&x=%x&y=%y&z=%z&scale=1&lang=ru_RU"
-            );
-          });
-
-          window.ymaps.mapType.storage.add(
-            "custom#grey",
-            new window.ymaps.MapType("Серая карта", ["map#custom"])
-          );
-        }
-
-        map.setType("custom#grey");
-
         const placemark = new window.ymaps.Placemark(
           [55.755135, 37.561625],
           {
@@ -94,7 +77,6 @@ export default function YandexMap({info}:InfoProps) {
         );
 
         map.geoObjects.add(placemark);
-
       });
     };
 
@@ -114,81 +96,22 @@ export default function YandexMap({info}:InfoProps) {
     };
   }, []);
 
-
   useEffect(() => {
+    gsap.set([contactInfoRef.current, titleRef.current, listItemsRef.current, buttonsRef.current], { opacity: 0 });
 
-
-
-    gsap.fromTo(
-      mapContainer.current,
-      { opacity: 0, y: 100 },
-      {
-        opacity: 1,
-        y: 0,
-        delay: 0.5,
-        duration: 1.2,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: mapContainer.current,
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      contactInfoRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.5,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: contactInfoRef.current,
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      listItemsRef.current,
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        delay: 0.8,
-        duration: 0.8,
-        ease: "power3.out",
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: contactInfoRef.current,
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-  }, []);
-
-  gsap.fromTo(
-    ".contact-info__actions",
-    { opacity: 0, y: 20 },
-    {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      delay: 1.4,
-      ease: "power3.out",
+    const tl = gsap.timeline({
+      defaults: { duration: 1, ease: "power3.out" },
       scrollTrigger: {
-        trigger: ".contact-info__actions",
-        start: "top 85%",
-        toggleActions: "play none none none",
+        trigger: mapContainer.current,
+        start: "top 80%",
       },
-    }
-  );
+    });
 
+    tl.fromTo(contactInfoRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0 },"+=0.5")
+      .fromTo(titleRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, "-=0.2")
+      .fromTo(listItemsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.2 }, "-=0.6")
+      .fromTo(buttonsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.2 }, "-=0.6");
+  }, []);
 
   const { handleOpenModalBid, handleOpenModalTender } = useModalHandlers();
 
@@ -196,58 +119,88 @@ export default function YandexMap({info}:InfoProps) {
     <div className={s.map}>
       <div className="container">
         <div className={s["map__inner"]}>
+          <div ref={mapContainer} className={s["map-container"]}></div>
           <div ref={contactInfoRef} className={s["contact-info"]}>
             <div className={s["contact-info__body"]}>
-              <h2>KLЁN — architectural bureau</h2>
+              <h2 ref={titleRef}>{info?.title_h2}</h2>
               <div className={s["contact-info__list"]}>
+                {[
+                  {
+                    refIndex: 0,
+                    icon: "/img/icon/tg.svg",
+                    alt: "KLЁN — architectural bureau telegram",
+                    link: info?.tg,
+                    text: info?.phone,
+                    hours: info?.hours,
+                  },
+                  {
+                    refIndex: 1,
+                    icon: "/img/icon/mail.svg",
+                    alt: "KLЁN — architectural bureau email",
+                    link: `mailto:${info?.email}`,
+                    text: info?.email,
+                  },
+                  {
+                    refIndex: 2,
+                    icon: "/img/icon/location.svg",
+                    alt: "KLЁN — architectural bureau address",
+                    text: info?.address,
+                  },
+                ].map(({ refIndex, icon, alt, link, text, hours }) => (
                   <div
+                    key={refIndex}
                     ref={(el) => {
-                      if (el) listItemsRef.current[0] = el;
+                      if (el) listItemsRef.current[refIndex] = el;
                     }}
                     className={s["contact-info__list-item"]}
                   >
                     <div className={s["contact-info__list-icon"]}>
-                      <img src={"/img/icon/tg.svg"} alt={"KLЁN — architectural bureau telegram"} />
+                      <img src={icon} alt={alt} />
                     </div>
                     <div className={s["contact-info__list-text"]}>
-                      <a href={info?.tg} target={"_blank"}>{info?.phone}</a>
-                      <p>{info?.hours}</p>
+                      {link ? (
+                        <a href={link} target="_blank">
+                          {text}
+                        </a>
+                      ) : (
+                        <p>{text}</p>
+                      )}
+                      {hours && <p>{hours}</p>}
                     </div>
                   </div>
-                <div
-                  ref={(el) => {
-                    if (el) listItemsRef.current[1] = el;
-                  }}
-                  className={s["contact-info__list-item"]}
-                >
-                  <div className={s["contact-info__list-icon"]}>
-                    <img src={"/img/icon/mail.svg"} alt={"KLЁN — architectural bureau email"} />
-                  </div>
-                  <div className={s["contact-info__list-text"]}>
-                    <a href={`mailto:${info?.email}`} target={"_blank"}>{info?.email}</a>
-                  </div>
-                </div>
-                <div
-                  ref={(el) => {
-                    if (el) listItemsRef.current[2] = el;
-                  }}
-                  className={s["contact-info__list-item"]}
-                >
-                  <div className={s["contact-info__list-icon"]}>
-                    <img src={"/img/icon/location.svg"} alt={"KLЁN — architectural bureau address"} />
-                  </div>
-                  <div className={s["contact-info__list-text"]}>
-                    <p>{info?.address}</p>
-                  </div>
-                </div>
+                ))}
               </div>
               <div className={s["contact-info__actions"]}>
-                <ButtonWithWrapper onClick={handleOpenModalBid} className="" dotReverce={false} isWrapper={false} name={"Отправить заявку"} />
-                <ButtonWithWrapper onClick={handleOpenModalTender} className="" dotReverce={false} isWrapper={false} name={"Пригласить в тендер"} />
+                {[
+                  {
+                    refIndex: 0,
+                    onClick: handleOpenModalBid,
+                    name: "Отправить заявку",
+                  },
+                  {
+                    refIndex: 1,
+                    onClick: handleOpenModalTender,
+                    name: "Пригласить в тендер",
+                  },
+                ].map(({ refIndex, onClick, name }) => (
+                  <div
+                    key={refIndex}
+                    ref={(el) => {
+                      if (el) buttonsRef.current[refIndex] = el;
+                    }}
+                  >
+                    <ButtonWithWrapper
+                      onClick={onClick}
+                      className=""
+                      dotReverce={false}
+                      isWrapper={false}
+                      name={name}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-          <div ref={mapContainer} className={s["map-container"]}></div>
         </div>
       </div>
     </div>

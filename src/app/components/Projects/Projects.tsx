@@ -16,13 +16,12 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
 
     const items = gsap.utils.toArray(".project-card");
     if (items.length === 0) {
-      setPrevProjects(projects); // Если пусто - сразу меняем проекты без анимации
+      setPrevProjects(projects);
       return;
     }
 
-    setIsAnimating(true); // Блокируем повторную анимацию
+    setIsAnimating(true);
 
-    // 1️⃣ Анимируем исчезновение старых карточек
     gsap.to(items, {
       opacity: 0,
       y: 50,
@@ -30,8 +29,8 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
       ease: "power2.in",
       stagger: 0.1,
       onComplete: () => {
-        setPrevProjects(projects); // 2️⃣ Меняем контент после завершения анимации
-        setIsAnimating(false); // Разблокируем анимацию
+        setPrevProjects(projects);
+        setIsAnimating(false);
       },
     });
   }, [projects]);
@@ -42,7 +41,6 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
     const items = gsap.utils.toArray(".project-card");
     if (items.length === 0) return;
 
-    // 3️⃣ Показываем новые карточки с анимацией clip-path
     gsap.set(items, { opacity: 0, y: 20, clipPath: "inset(0% 100% 0% 0%)" });
 
     gsap.to(items, {
@@ -53,7 +51,7 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
       ease: "power2.out",
       stagger: items.length > 1 ? 0.1 : 0,
     });
-  }, [prevProjects]); // Анимация запускается только после обновления проектов
+  }, [prevProjects]);
 
   return (
     <section id="projects" className={`${is_pc ? s.pc : ""} ${classes}`}>

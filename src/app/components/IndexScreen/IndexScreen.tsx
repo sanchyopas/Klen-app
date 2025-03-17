@@ -32,7 +32,7 @@ export default function IndexScreen( {mainData}: any ) {
 
       <div className={`${s.mask} mask`}></div>
       <div className={s.container}>
-        <h1>architectural bureau</h1>
+        <h1>{mainData.title}</h1>
       </div>
     </section>
   );

@@ -6,6 +6,7 @@ import s from "./header.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import MenuLink from "@/app/components/MenuLink/MenuLink";
+import useAppHeight from "@/app/hooks/useAppHeight";
 
 type HeaderProps = {
   headerData: {
@@ -16,6 +17,9 @@ type HeaderProps = {
 
 export default function Header({ headerData }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useAppHeight();
+
   useEffect(() => {
     const isTouchDevice = window.matchMedia("(hover: none)").matches;
     if (isTouchDevice) return;
@@ -43,6 +47,38 @@ export default function Header({ headerData }: HeaderProps) {
   const [isFixMenu, setIsFixMenu] = useState(false);
   const [isShow, setIsShow] = useState(false);
   const [isHide, setIsHide] = useState(false);
+
+  const getScrollbarWidth = () => {
+    const scrollDiv = document.createElement('div');
+    scrollDiv.style.width = '100px';
+    scrollDiv.style.height = '100px';
+    scrollDiv.style.overflow = 'scroll';
+    scrollDiv.style.position = 'absolute';
+    scrollDiv.style.top = '-9999px';
+    document.body.appendChild(scrollDiv);
+    const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+    document.body.removeChild(scrollDiv);
+    return scrollbarWidth;
+  };
+
+  const disableBodyScroll = () => {
+    const scrollbarWidth = getScrollbarWidth();
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+  };
+
+  const enableBodyScroll = () => {
+    document.body.style.overflow = 'auto';
+    document.body.style.paddingRight = '0';
+  };
+
+  useEffect( () => {
+    if (menuOpen) {
+      disableBodyScroll();
+    } else {
+      enableBodyScroll();
+    }
+  }, [menuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {

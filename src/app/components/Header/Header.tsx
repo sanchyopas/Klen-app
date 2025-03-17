@@ -39,7 +39,6 @@ export default function Header({ headerData }: HeaderProps) {
     );
   }, []);
 
-
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [isFixMenu, setIsFixMenu] = useState(false);
   const [isShow, setIsShow] = useState(false);
@@ -126,10 +125,10 @@ const menuItem = [
           </nav>
 
           <div className={s.contacts}>
-            <a href={`${headerData.telegram}`} target="_blank" className="contact-item">
+            <a href={`${headerData?.telegram}`} target="_blank" className="contact-item">
               <img src="/img/icon/Telegram.svg" alt="Telegram"/>
             </a>
-            <a href={`tel:${headerData.phone}`} className="contact-item">{headerData.phone}</a>
+            <a href={`tel:${headerData?.phone}`} className="contact-item">{headerData?.phone}</a>
           </div>
         </div>
       </div>

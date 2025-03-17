@@ -1,6 +1,5 @@
 import ProjectsPageClient from "@/app/projects/ProjectsPageClient";
 import { notFound } from "next/navigation";
-import {log} from "node:util";
 
 async function getData() {
   try {

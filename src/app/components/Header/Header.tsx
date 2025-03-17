@@ -68,7 +68,7 @@ export default function Header({ headerData }: HeaderProps) {
   };
 
   const enableBodyScroll = () => {
-    document.documentElement.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'initial';
     document.body.style.paddingRight = '0';
   };
 

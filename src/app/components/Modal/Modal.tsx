@@ -34,7 +34,7 @@ export const Modal = () => {
   };
 
   const enableBodyScroll = () => {
-    document.documentElement.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'initial';
     document.body.style.paddingRight = '0';
   };
 

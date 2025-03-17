@@ -63,12 +63,12 @@ export default function Header({ headerData }: HeaderProps) {
 
   const disableBodyScroll = () => {
     const scrollbarWidth = getScrollbarWidth();
-    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.paddingRight = `${scrollbarWidth}px`;
   };
 
   const enableBodyScroll = () => {
-    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'auto';
     document.body.style.paddingRight = '0';
   };
 

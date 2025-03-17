@@ -11,11 +11,28 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
 
   useEffect(() => {
     if (!containerRef.current) return;
+    const items = gsap.utils.toArray(".project-card");
+    if (items.length === 0) return;
 
-    gsap.to(containerRef.current, { opacity: 0, y: 50, duration: 0.3, ease: "power2.in", onComplete: () => {
-        gsap.set(containerRef.current, { opacity: 0, y: 50 });
-        gsap.to(containerRef.current, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
-      }});
+    gsap.to(items, {
+      opacity: 1,
+      y: 0,
+      duration: 0.3,
+      ease: "power2.in",
+      stagger: 0.1,
+      onComplete: () => {
+        gsap.set(items, { opacity: 1, y: 0, clipPath: "inset(0% 100% 0% 0%)" });
+
+        gsap.to(items, {
+          opacity: 1,
+          y: 0,
+          clipPath: "inset(0% 0% 0% 0%)",
+          duration: 0.5,
+          ease: "power2.out",
+          stagger: 0.1,
+        });
+      },
+    });
   }, [projects]);
 
   return (

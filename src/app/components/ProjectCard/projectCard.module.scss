@@ -3,6 +3,10 @@
   background: #dedede;
   overflow: hidden;
 
+  @media(hover:hover) {
+    clip-path: inset(0% 100% 0% 0%);
+  }
+
   @media (min-width: 768px) {
     width: calc(50% - 10px);
   }
@@ -54,6 +58,7 @@
     z-index: 0;
     pointer-events: none;
     transition: all 0.5s ease-in-out;
+
   }
 
   a {
@@ -98,3 +103,4 @@
     }
   }
 }
+

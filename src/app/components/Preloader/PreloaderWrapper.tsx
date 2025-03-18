@@ -22,7 +22,7 @@ export default function PreloaderWrapper({children, object}: PreloaderWrapperPro
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setIsLoaded(true), 3000);
+    setTimeout(() => setIsLoaded(true), 2700);
   }, []);
 
   useEffect(() => {

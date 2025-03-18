@@ -8,7 +8,7 @@ import React from "react";
 async function getPolicyData() {
   try {
     const res = await fetch("https://test-6600.fg.onl/api/policy/", {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {

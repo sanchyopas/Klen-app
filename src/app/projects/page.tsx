@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 async function getData() {
   try {
     const res = await fetch("https://test-6600.fg.onl/api/cases", {
-      cache: "no-store",
+      next: { revalidate: 60 }, // Регенерировать страницу каждые 60 секунд
     });
 
     if (!res.ok) {

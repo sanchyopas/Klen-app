@@ -11,7 +11,7 @@ import ProjectsMobile from "@/app/components/ProjectsMobile/ProjectsMobile";
 async function getData() {
   try {
     const res = await fetch(`https://test-6600.fg.onl/api/main`, {
-      cache: "no-store", // Используем force-cache для статической генерации
+      next: { revalidate: 60 }, // Регенерировать страницу каждые 60 секунд
     });
 
     if (!res.ok) {
@@ -67,16 +67,6 @@ export default async function Home() {
             projects={projectsList}
             is_pc={true}
           />
-          {/*<Slider*/}
-          {/*  slides={projectsList}*/}
-          {/*  title={projects.title_h2 || "Проекты"}*/}
-          {/*  title_as={"h2"}*/}
-          {/*  is_boolet={false}*/}
-          {/*  name_btn={projects.button_name || "Подробнее"}*/}
-          {/*  link_btn={projects.button_link || "#"}*/}
-          {/*  is_mobile={true}*/}
-          {/*/>*/}
-
           <ProjectsMobile
             slides={projectsList}
             title={projects.title_h2 || "Проекты"}
@@ -85,10 +75,8 @@ export default async function Home() {
             link_btn={projects.button_link || "#"}
             is_mobile={true}
           />
-
         </>
       )}
-      {/*<Buro />*/}
       <Services
         slides={result.object.services.list}
         title={result.object.services.title_h2}

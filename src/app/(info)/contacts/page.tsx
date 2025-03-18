@@ -5,7 +5,7 @@ import {notFound} from "next/navigation";
 async function getContactData() {
   try {
     const res = await fetch("https://test-6600.fg.onl/api/contacts/", {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {

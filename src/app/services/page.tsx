@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 import { ClientServices } from "@/app/pageClientComponents/ClientServices";
 
-// Указываем, что страница должна быть динамической
+
 export const dynamic = 'force-dynamic';
 
-async function getServiceData() {
+export async function getServiceData() {
   try {
     const res = await fetch(`https://test-6600.fg.onl/api/services`, {
-      next: { revalidate: 60 }, // Используем no-store для динамических данных
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {

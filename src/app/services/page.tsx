@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 async function getServiceData() {
   try {
     const res = await fetch(`https://test-6600.fg.onl/api/services`, {
-      cache: "no-store", // Используем no-store для динамических данных
+      next: { revalidate: 60 }, // Используем no-store для динамических данных
     });
 
     if (!res.ok) {

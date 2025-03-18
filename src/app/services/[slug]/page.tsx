@@ -12,7 +12,7 @@ type Params = {
 async function getService(slug: string) {
   try {
     const res = await fetch(`https://test-6600.fg.onl/api/services/${slug}`, {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {

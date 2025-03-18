@@ -15,7 +15,7 @@ type Params = {
 async function getProject(slug: string) {
   try {
     const res = await fetch(`https://test-6600.fg.onl/api/cases/${slug}`, {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {

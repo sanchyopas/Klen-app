@@ -42,9 +42,9 @@ export default async function RootLayout({children}: { children: React.ReactNode
   return (
     <html lang="en">
     <body className={InterSans.variable}>
-      <div id="serverData">
-        {children}
-      </div>
+      {/*<div id="serverData">*/}
+      {/*  {children}*/}
+      {/*</div>*/}
       <PreloaderWrapper object={res?.object?.header || null}>{children}</PreloaderWrapper>
     {/*<Header/>*/}
     {/*<main>*/}

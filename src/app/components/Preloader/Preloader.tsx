@@ -10,7 +10,7 @@ export default function Preloader() {
     gsap.to(`.${s.preloader}`, {
       opacity: 0,
       duration: 2,
-      delay: 2.5,
+      delay: 2.7,
     });
   }, []);
 

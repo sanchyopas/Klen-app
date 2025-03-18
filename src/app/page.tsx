@@ -40,6 +40,25 @@ export async function generateMetadata() {
   return {
     title: result.object.seo.title,
     description: result.object.seo.description,
+
+    // Open Graph разметка, надо проверить все на тесте
+    // Пока что тестовые
+    openGraph: {
+      title: result.object.seo.title,
+      description: result.object.seo.description,
+      url: "https://abklen.com/",
+      siteName: "Klen",
+      images: [
+        {
+          url: `https://test-6600.fg.onl${result.object.main_screen.background.image}`,
+          width: 1200,
+          height: 630,
+          alt: result.object.seo.description,
+        },
+      ],
+      type: "website",
+      locale: "ru_RU",
+    },
   };
 }
 

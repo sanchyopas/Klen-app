@@ -6,6 +6,7 @@ import Projects from "@/app/components/Projects/Projects";
 import React from "react";
 import NextProjects from "@/app/components/NextProjects/NextProjects";
 import Breadcrumbs from "@/app/components/Breadcrumbs/Breadcrumbs";
+import s from "./project.module.scss"
 
 type Params = {
   slug: string
@@ -71,17 +72,18 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       <div>
         <div className="container">
           <Breadcrumbs pathNames={pathNames}/>
-          <Title title={project?.object?.main_screen?.title} as="h1" />
+          <Title className={s.projectTitle} title={project?.object?.main_screen?.title} as="h1"/>
         </div>
       </div>
 
-      {
-        project?.object?.BlocksList?.map((block: any, index: number) => {
+      <div className={s.blockConstructor}>
+        {project?.object?.BlocksList?.map((block: any, index: number) => {
           return <DynamicBlock block={block} key={index}/>
-        })
-      }
+        })}
+      </div>
+
       {/*<NextProjects projects={project.object.nextCases} />*/}
-      <Projects title={"Следующий проект"} isNextProjects={true} projects={project?.object?.nextCases} />
+      <Projects title={"Следующий проект"} isNextProjects={true} projects={project?.object?.nextCases}/>
     </>
   );
 }

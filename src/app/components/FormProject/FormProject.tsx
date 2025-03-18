@@ -4,7 +4,7 @@ import { z } from 'zod';
 import React, { useState } from 'react';
 import s from "./form-project.module.scss";
 import ButtonWithWrapper from "@/app/components/Button/Button";
-import { useModal } from "@/app/components/Modal/ModalContext";
+import {useModalStore} from "@/app/components/Modal/modalStore";
 import ThankYou from "@/app/components/ThankYou/ThankYou";
 
 // Схема валидации с использованием Zod
@@ -23,7 +23,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function FormProject() {
-  const { openModal } = useModal();
+  const { openModal } = useModalStore();
   const [isSubmitting, setIsSubmitting] = useState(false); // Состояние отправки формы
   const [error, setError] = useState<string | null>(null); // Состояние ошибки
 

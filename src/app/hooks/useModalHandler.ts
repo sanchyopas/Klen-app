@@ -1,10 +1,10 @@
 import React from "react";
-import { useModal } from "@/app/components/Modal/ModalContext";
 import FormProject from "@/app/components/FormProject/FormProject";
 import FormTender from "@/app/components/FormTender/FormTender";
+import {useModalStore} from "@/app/components/Modal/modalStore";
 
 export const useModalHandlers = () => {
-  const { openModal } = useModal();
+  const { openModal } = useModalStore();
 
   const handleOpenModalBid = () => {
     openModal({

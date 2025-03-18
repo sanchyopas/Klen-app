@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ButtonWithWrapper from "@/app/components/Button/Button";
 import { useModalHandlers } from "@/app/hooks/useModalHandler";
+import {useModalStore} from "@/app/components/Modal/modalStore";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -115,6 +116,9 @@ export default function YandexMap({ info }: InfoProps) {
 
   const { handleOpenModalBid, handleOpenModalTender } = useModalHandlers();
 
+  const { openModal } = useModalStore();
+
+
   return (
     <div className={s.map}>
       <div className="container">
@@ -182,7 +186,7 @@ export default function YandexMap({ info }: InfoProps) {
                     onClick: handleOpenModalTender,
                     name: "Пригласить в тендер",
                   },
-                ].map(({ refIndex, onClick, name }) => (
+                ].map(({refIndex, onClick, name}) => (
                   <div
                     key={refIndex}
                     ref={(el) => {

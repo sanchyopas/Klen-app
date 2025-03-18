@@ -1,18 +1,19 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import s from "./filter.module.scss";
 
 type FilterProps = {
   filtersData: {
     types: string[];
     years: string[];
-  };
-  onFilterChange: (filters: { type: string | null; year: string | null }) => void;
-  initialType?: string | null; // Начальное значение type
-  initialYear?: string | null; // Начальное значение year
+  },
+  onFilterChange: (filters: { type: string | null; year: string | null }) => void,
+  initialType?: string | null,
+  initialYear?: string | null,
+  filteredEvent?: (value: (((prevState: boolean) => boolean) | boolean)) => void
 };
 
-const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange, initialType, initialYear }) => {
+const Filter: React.FC<FilterProps> = ({filtersData, onFilterChange, initialType, initialYear, filteredEvent}) => {
   const [selectedType, setSelectedType] = useState<string | null>(initialType || null);
   const [selectedYear, setSelectedYear] = useState<string | null>(initialYear || null);
   const [openFilter, setOpenFilter] = useState<"type" | "year" | null>(null);
@@ -31,7 +32,7 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange, initialTyp
   }, [initialType, initialYear]);
 
   useEffect(() => {
-    onFilterChange({ type: selectedType, year: selectedYear });
+    onFilterChange({type: selectedType, year: selectedYear});
   }, [selectedType, selectedYear, onFilterChange]);
 
   // Эффект для обновления padding-bottom при открытии filterDropList
@@ -57,10 +58,16 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange, initialTyp
 
   const handleTypeClick = (type: string) => {
     setSelectedType(selectedType === type ? null : type);
+    if (filteredEvent) {
+      filteredEvent(true);
+    }
   };
 
   const handleYearClick = (year: string) => {
     setSelectedYear(selectedYear === year ? null : year);
+    if (filteredEvent) {
+      filteredEvent(true);
+    }
   };
 
   const handleFilterToggle = (filter: "type" | "year") => {
@@ -72,7 +79,7 @@ const Filter: React.FC<FilterProps> = ({ filtersData, onFilterChange, initialTyp
       <div className="container">
         <div
           className={s.filterList}
-          style={{ paddingBottom: `${paddingBottom}px` }} // Динамический padding-bottom
+          style={{paddingBottom: `${paddingBottom}px`}} // Динамический padding-bottom
         >
           <button
             onClick={handleResetFilters}

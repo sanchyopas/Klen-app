@@ -34,6 +34,8 @@ export default function ProjectsPageClient({ projects, filtersData }: Props) {
     year: null,
   });
 
+  const [isFormFiltered, setIsFormFiltered] = useState(false);
+
   // Применяем фильтры при изменении filters или projects
   useEffect(() => {
     const type = searchParams?.get("type") ? decodeURIComponent(searchParams.get("type") as string) : null;
@@ -54,11 +56,32 @@ export default function ProjectsPageClient({ projects, filtersData }: Props) {
     setFilteredProjects(filtered);
   }, [searchParams?.toString(), projects]);
 
+  useEffect( () => {
+
+    if ( isFormFiltered ) {
+
+      const filtered = projects.filter((project) => {
+        const projectTypes = Array.isArray(project.getTypes) ? project.getTypes : [project.getTypes];
+        const projectYears = Array.isArray(project.getYears) ? project.getYears : [project.getYears];
+
+        return (
+          (!filters.type || projectTypes.includes(filters.type)) &&
+          (!filters.year || projectYears.includes(filters.year))
+        );
+      });
+
+      setFilteredProjects(filtered);
+
+    }
+
+  }, [filters, isFormFiltered] )
+
   return (
     <>
       <Filter
         filtersData={filtersData}
         onFilterChange={setFilters}
+        filteredEvent={setIsFormFiltered}
         initialType={filters.type}
         initialYear={filters.year}
       />

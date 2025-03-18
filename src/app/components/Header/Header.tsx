@@ -18,6 +18,12 @@ type HeaderProps = {
 export default function Header({ headerData }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Работает для того, чтобы скрыть серверный компонент и отобразить клиентскую часть
+  useEffect(() => {
+    document.getElementById('serverData').style.display = "none";
+  }, [])
+  //
+
   useAppHeight();
 
   useEffect(() => {

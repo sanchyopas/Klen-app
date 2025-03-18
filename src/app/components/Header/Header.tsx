@@ -138,7 +138,7 @@ const menuItem = [
     ].filter(Boolean).join(' ')}>
       <div className={`${s.container} container`}>
         <div className={`${s.logo} logo`}>
-          <Link href="/">KLЁN — architectural bureau</Link>
+          <Link href="/" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>KLЁN — architectural bureau</Link>
           <Image src={"/img/Logo.svg"} alt={"KLЁN — architectural bureau"} width={117} height={40} layout="responsive"/>
         </div>
 

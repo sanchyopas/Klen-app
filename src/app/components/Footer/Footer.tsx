@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import s from "./footer.module.scss"
 import Link from "next/link";
@@ -20,7 +22,7 @@ export default function Footer () {
           <div className={`${s.row} row`}>
             <div className="col-12 col-md-6">
               <div className={s.logo}>
-                <a href="/">KLЁN — architectural bureau</a>
+                <Link href="/" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>KLЁN — architectural bureau</Link>
                 <img
                   src="/img/Logo-footer.svg"
                   alt="KLЁN — architectural bureau"
@@ -69,7 +71,7 @@ export default function Footer () {
             </div>
 
             <div className="col-12 col-md-6">
-              <Link href={"/privacy"}>политика конфиденциальности</Link>
+              <Link href={"/privacy"} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>политика конфиденциальности</Link>
             </div>
           </div>
         </div>

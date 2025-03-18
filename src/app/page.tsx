@@ -5,7 +5,8 @@ import Services from "@/app/components/Services/Services";
 import Slider from "@/app/components/Slider/Slider";
 import React from "react";
 import { notFound } from "next/navigation";
-import ServiceMobile from "@/app/components/ServicesMobile.tsx/ServicesMobile";
+import ServiceMobile from "@/app/components/ServicesMobile/ServicesMobile";
+import ProjectsMobile from "@/app/components/ProjectsMobile/ProjectsMobile";
 
 async function getData() {
   try {
@@ -66,15 +67,25 @@ export default async function Home() {
             projects={projectsList}
             is_pc={true}
           />
-          <Slider
+          {/*<Slider*/}
+          {/*  slides={projectsList}*/}
+          {/*  title={projects.title_h2 || "Проекты"}*/}
+          {/*  title_as={"h2"}*/}
+          {/*  is_boolet={false}*/}
+          {/*  name_btn={projects.button_name || "Подробнее"}*/}
+          {/*  link_btn={projects.button_link || "#"}*/}
+          {/*  is_mobile={true}*/}
+          {/*/>*/}
+
+          <ProjectsMobile
             slides={projectsList}
-            title={"Проекты"}
-            title_as={"h2"}
+            title={projects.title_h2 || "Проекты"}
             is_boolet={false}
-            name_btn={"все проекты"}
-            link_btn={"/projects"}
+            name_btn={projects.button_name || "Подробнее"}
+            link_btn={projects.button_link || "#"}
             is_mobile={true}
           />
+
         </>
       )}
       {/*<Buro />*/}

@@ -79,7 +79,7 @@ export default function Services({slides, title, button_name, button_link, is_pc
                   key={index}
                   onMouseEnter={() => handleImageChange(index)}
                 >
-                  <Link href={`/services/${slide.alias}`} className={''} prefetch={true}>
+                  <Link href={`/services/${slide.alias}`} className={''} prefetch={true} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
                     <h3 className={s.name}>{slide.main_screen_title}</h3>
                   </Link>
                 </div>

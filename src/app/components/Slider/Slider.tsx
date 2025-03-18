@@ -108,7 +108,7 @@ export default function Slider({
 
               item.hasOwnProperty("alias") ?
                 <SwiperSlide className={s.slider__slide} key={i}>
-                  <Link href={`/projects/${item.alias}`} className={s.linkSlide} prefetch={true}>
+                  <Link href={`/projects/${item.alias}`} className={s.linkSlide} prefetch={true}  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
                     {
                       !!item.main_screen.image || !!item.image ?
                         item.hasOwnProperty("main_screen") ?

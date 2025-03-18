@@ -72,3 +72,41 @@
     }
   }
 }
+
+.thumbsSlider {
+  margin-right: 0!important;
+  .thumbSlide {
+    position: relative;
+    font-size: 0;
+    width: 16px!important;
+    height: 16px;
+    margin: 0 !important;
+    &:after,
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:after {
+      border: 1px solid #424242;
+    }
+    &:before {
+      background: #424242;
+      opacity: 0;
+      transition: opacity 0.25s ease-in-out;
+    }
+
+    &.active {
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+}

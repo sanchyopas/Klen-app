@@ -30,6 +30,9 @@ export default function MenuLink({clickEvent, link, name}: LinkProps) {
   }, [isActive]);
 
   const clickEffect = (e: any) => {
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
     const element = e.target.getBoundingClientRect();
 
     setPosition([e.clientX, e.clientY - element.top]);

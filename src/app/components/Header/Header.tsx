@@ -20,7 +20,10 @@ export default function Header({ headerData }: HeaderProps) {
 
   // Работает для того, чтобы скрыть серверный компонент и отобразить клиентскую часть
   useEffect(() => {
-    document.getElementById('serverData').style.display = "none";
+    const serverDataElement = document.getElementById('serverData');
+    if (serverDataElement) {
+      serverDataElement.style.display = "none";
+    }
   }, [])
   //
 

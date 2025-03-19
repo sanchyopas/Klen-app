@@ -20,9 +20,11 @@ export const useLoading = () => useContext(LoadingContext);
 
 export default function PreloaderWrapper({children, object}: PreloaderWrapperProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isPageLoaded, setPageIsLoaded] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setIsLoaded(true), 2700);
+    setPageIsLoaded(true);
   }, []);
 
   useEffect(() => {
@@ -35,8 +37,8 @@ export default function PreloaderWrapper({children, object}: PreloaderWrapperPro
     }
   }, [isLoaded]);
 
-  return (
-    <LoadingContext.Provider value={{isLoaded}}>
+  return ( <>
+    {isPageLoaded && <LoadingContext.Provider value={{isLoaded}}>
       {isLoaded ? (
         <>
           <ModalProvider>
@@ -50,6 +52,7 @@ export default function PreloaderWrapper({children, object}: PreloaderWrapperPro
       ) : (
         <Preloader/>
       )}
-    </LoadingContext.Provider>
+    </LoadingContext.Provider>}
+    </>
   );
 }

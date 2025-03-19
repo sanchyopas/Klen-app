@@ -1,10 +1,10 @@
 "use client";
 import s from "./map.module.scss";
-import React, { useEffect, useRef } from "react";
+import React, {useEffect, useRef} from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
 import ButtonWithWrapper from "@/app/components/Button/Button";
-import { useModalHandlers } from "@/app/hooks/useModalHandler";
+import {useModalHandlers} from "@/app/hooks/useModalHandler";
 import {useModalStore} from "@/app/components/Modal/modalStore";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -29,7 +29,7 @@ type InfoProps = {
   info: Props;
 };
 
-export default function YandexMap({ info }: InfoProps) {
+export default function YandexMap({info}: InfoProps) {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const contactInfoRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
@@ -98,26 +98,27 @@ export default function YandexMap({ info }: InfoProps) {
   }, []);
 
   useEffect(() => {
-    gsap.set([contactInfoRef.current, titleRef.current, listItemsRef.current, buttonsRef.current], { opacity: 0 });
+    const isTo = window.matchMedia("(max-width: 768px").matches;
+    if (isTo) return;
+    gsap.set([contactInfoRef.current, titleRef.current, listItemsRef.current, buttonsRef.current], {opacity: 0});
 
     const tl = gsap.timeline({
-      defaults: { duration: 1, ease: "power3.out" },
+      defaults: {duration: 1, ease: "power3.out"},
       scrollTrigger: {
         trigger: mapContainer.current,
         start: "top 80%",
       },
     });
 
-    tl.fromTo(contactInfoRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0 },"+=0.5")
-      .fromTo(titleRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, "-=0.2")
-      .fromTo(listItemsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.2 }, "-=0.6")
-      .fromTo(buttonsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.2 }, "-=0.6");
+    tl.fromTo(contactInfoRef.current, {opacity: 0, y: 50}, {opacity: 1, y: 0}, "+=0.5")
+      .fromTo(titleRef.current, {opacity: 0, y: 20}, {opacity: 1, y: 0}, "-=0.2")
+      .fromTo(listItemsRef.current, {opacity: 0, y: 20}, {opacity: 1, y: 0, stagger: 0.2}, "-=0.6")
+      .fromTo(buttonsRef.current, {opacity: 0, y: 20}, {opacity: 1, y: 0, stagger: 0.2}, "-=0.6");
   }, []);
 
-  const { handleOpenModalBid, handleOpenModalTender } = useModalHandlers();
+  const {handleOpenModalBid, handleOpenModalTender} = useModalHandlers();
 
-  const { openModal } = useModalStore();
-
+  const {openModal} = useModalStore();
 
   return (
     <div className={s.map}>
@@ -128,52 +129,58 @@ export default function YandexMap({ info }: InfoProps) {
             <div className={s["contact-info__body"]}>
               <h2 ref={titleRef}>{info?.title_h2}</h2>
               <div className={s["contact-info__list"]}>
-                {[
-                  {
-                    refIndex: 0,
-                    icon: "/img/icon/tg.svg",
-                    alt: "KLЁN — architectural bureau telegram",
-                    link: info?.tg,
-                    text: info?.phone,
-                    hours: info?.hours,
-                  },
-                  {
-                    refIndex: 1,
-                    icon: "/img/icon/mail.svg",
-                    alt: "KLЁN — architectural bureau email",
-                    link: `mailto:${info?.email}`,
-                    text: info?.email,
-                  },
-                  {
-                    refIndex: 2,
-                    icon: "/img/icon/location.svg",
-                    alt: "KLЁN — architectural bureau address",
-                    text: info?.address,
-                  },
-                ].map(({ refIndex, icon, alt, link, text, hours }) => (
-                  <div
-                    key={refIndex}
-                    ref={(el) => {
-                      if (el) listItemsRef.current[refIndex] = el;
-                    }}
-                    className={s["contact-info__list-item"]}
-                  >
-                    <div className={s["contact-info__list-icon"]}>
-                      <img src={icon} alt={alt} />
-                    </div>
-                    <div className={s["contact-info__list-text"]}>
-                      {link ? (
-                        <a href={link} target="_blank">
-                          {text}
-                        </a>
-                      ) : (
-                        <p>{text}</p>
-                      )}
-                      {hours && <p>{hours}</p>}
-                    </div>
+
+                <div
+                  key={0}
+                  ref={(el) => {
+                    if (el) listItemsRef.current[0] = el;
+                  }}
+                  className={s["contact-info__list-item"]}
+                >
+                  <div className={s["contact-info__list-icon"]}>
+                    <img src={"/img/icon/tg.svg"} alt={"KLЁN — architectural bureau telegram"}/>
                   </div>
-                ))}
+                  <div className={s["contact-info__list-text"]}>
+                    <a href={`tel:${info?.phone}`}>
+                      {info?.phone}
+                    </a>
+                    {info?.hours && <p className={s["contact-info__list-sublink"]}>{info?.hours}</p>}
+                  </div>
+                </div>
+                <div
+                  key={1}
+                  ref={(el) => {
+                    if (el) listItemsRef.current[1] = el;
+                  }}
+                  className={s["contact-info__list-item"]}
+                >
+                  <div className={s["contact-info__list-icon"]}>
+                    <img src={"/img/icon/mail.svg"} alt={"KLЁN — architectural bureau telegram"}/>
+                  </div>
+                  <div className={s["contact-info__list-text"]}>
+                    <a href={`mailto:${info?.email}`} target="_blank">
+                      {info?.email}
+                    </a>
+                  </div>
+                </div>
+                <div
+                  key={2}
+                  ref={(el) => {
+                    if (el) listItemsRef.current[2] = el;
+                  }}
+                  className={s["contact-info__list-item"]}
+                >
+                  <div className={s["contact-info__list-icon"]}>
+                    <img src={"/img/icon/location.svg"} alt={"KLЁN — architectural bureau telegram"}/>
+                  </div>
+                  <div className={s["contact-info__list-text"]}>
+                    <p className={s["contact-info__list-address"]}>
+                      {info?.address}
+                    </p>
+                  </div>
+                </div>
               </div>
+
               <div className={s["contact-info__actions"]}>
                 {[
                   {

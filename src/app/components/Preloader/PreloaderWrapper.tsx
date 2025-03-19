@@ -28,6 +28,9 @@ export default function PreloaderWrapper({children, object}: PreloaderWrapperPro
   }, []);
 
   useEffect(() => {
+    const isTo = window.matchMedia("(max-width: 768px").matches;
+    if (isTo) return;
+
     if (isLoaded) {
       gsap.fromTo(
         "main",

@@ -40,6 +40,10 @@ export async function generateMetadata() {
   return {
     title: result.object.seo.title,
     description: result.object.seo.description,
+    // Добавляет вот такой мета тег <meta name="format-detection" content="telephone=no">
+    other: {
+      "format-detection": "telephone=no",
+    },
     robots: {
       index: true, // Разрешить индексацию страницы
       follow: true, // Разрешить следование по ссылкам на странице

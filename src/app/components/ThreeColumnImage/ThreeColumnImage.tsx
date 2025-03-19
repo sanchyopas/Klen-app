@@ -19,8 +19,8 @@ export default function ThreeColumnImage({image_1, image_2, image_3}: Props) {
   const imagesRef = useRef<HTMLImageElement[]>([]);
 
   useEffect(() => {
-    if (imagesRef.current.length === 0) return;
-
+    const isTo = window.matchMedia("(max-width: 768px").matches;
+    if (isTo || imagesRef.current.length === 0) return;
     gsap.fromTo(
       imagesRef.current,
       { opacity: 0, y: 50 },

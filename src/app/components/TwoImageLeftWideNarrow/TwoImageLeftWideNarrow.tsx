@@ -14,7 +14,8 @@ export default function TwoImageLeftWideNarrow({image_left, image_right}: Props)
   const imagesRef = useRef<HTMLImageElement[]>([]);
 
   useEffect(() => {
-    if (imagesRef.current.length === 0) return;
+    const isTo = window.matchMedia("(max-width: 768px").matches;
+    if (isTo || imagesRef.current.length === 0) return;
 
     gsap.fromTo(
       imagesRef.current,

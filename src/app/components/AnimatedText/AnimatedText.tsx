@@ -10,6 +10,5 @@ type AnimatedTextProps = {
 
 export default function AnimatedText({ htmlContent, className = "" }: AnimatedTextProps) {
   const textRef = useGsapFadeIn<HTMLDivElement>();
-
   return <div ref={textRef} className={`${className} ${s.defaultPosition}`} dangerouslySetInnerHTML={{ __html: htmlContent }} />;
 }

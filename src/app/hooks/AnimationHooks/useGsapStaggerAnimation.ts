@@ -12,7 +12,8 @@ export const useGsapStaggerAnimation = (
   const ref = useRef<HTMLImageElement[]>([]);
 
   useEffect(() => {
-    if (ref.current.length === 0) return;
+    const isTo = window.matchMedia("(max-width: 768px").matches;
+    if (isTo || ref.current.length === 0) return;
 
     gsap.fromTo(
       ref.current,

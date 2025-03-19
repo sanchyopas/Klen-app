@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import {useEffect, useRef, useState} from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import dynamic from "next/dynamic";
@@ -13,8 +13,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function AnimatedTitle({ title }: { title: string }) {
   const titleRef = useRef(null);
+  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
+    setIsTouch(window.matchMedia("(hover: none)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (isTouch || !titleRef.current) return;
     const el = titleRef.current;
 
     gsap.fromTo(
@@ -31,7 +37,7 @@ export default function AnimatedTitle({ title }: { title: string }) {
         },
       }
     );
-  }, []);
+  }, [isTouch]);
 
   return (
     <h1 ref={titleRef}>

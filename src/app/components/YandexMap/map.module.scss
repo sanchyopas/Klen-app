@@ -3,7 +3,7 @@
   width: 100%;
   position: relative;
 
-  &__inner{
+  &__inner {
     position: relative;
 
     @media screen and (max-width: 768px) {
@@ -16,11 +16,16 @@
 
 .contact-info {
   @media screen and (min-width: 768px) {
+    max-width: 473px;
     position: absolute;
     top: 20px;
     left: 20px;
     background: #ffffff;
     z-index: 1;
+  }
+
+  @media screen and (max-width: 768px) {
+    order: 1;
   }
 
   @media (hover: hover) {
@@ -67,13 +72,17 @@
   }
 
   &__list-text {
-    a{
+    a {
 
     }
 
-    p{
-      color: rgba(66, 66, 66, 0.5);
+    p {
+
     }
+  }
+
+  &__list-sublink {
+    color: rgba(66, 66, 66, 0.5);
   }
 
   &__actions {
@@ -92,5 +101,9 @@
 
   @media screen and (min-width: 578px) {
     height: 670px;
+  }
+
+  @media screen and (max-width: 768px) {
+    order: 2;
   }
 }

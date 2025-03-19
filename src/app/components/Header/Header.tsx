@@ -30,8 +30,8 @@ export default function Header({ headerData }: HeaderProps) {
   useAppHeight();
 
   useEffect(() => {
-    const isTouchDevice = window.matchMedia("(hover: none)").matches;
-    if (isTouchDevice) return;
+    const isTo = window.matchMedia("(max-width: 768px").matches;
+    if (isTo) return;
 
     gsap.fromTo(
       ".logo",

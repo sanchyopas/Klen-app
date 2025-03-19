@@ -118,6 +118,11 @@ body {
     color: #424242;
   }
 
+  a[href^="tel"] {
+    text-decoration: none !important;
+    color: inherit;
+  }
+
   .fullscreen_bg {
     position: relative;
     img.bg {

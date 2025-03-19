@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import s from "./title.module.scss";
+import {useGsapFadeIn} from "@/app/hooks/AnimationHooks/useGsapFadeIn";
 
 type TitleProps = {
   title: string;
@@ -12,18 +13,7 @@ type TitleProps = {
 };
 
 export default function Title({ title, className, is_mobile, as: Tag = "h2" }: TitleProps) {
-  const titleRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!titleRef.current) return;
-
-    gsap.fromTo(
-      titleRef.current,
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }
-    );
-  }, []);
-
+  const titleRef = useGsapFadeIn<HTMLDivElement>()
   return (
     <div ref={titleRef} className={`${s.title} ${className || ""} ${is_mobile ? s.mb : ""}`}>
       <Tag>{title}</Tag>

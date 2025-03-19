@@ -1,7 +1,7 @@
 import ProjectsPageClient from "@/app/projects/ProjectsPageClient";
 import { notFound } from "next/navigation";
 
-export async function getData() {
+async function getData() {
   try {
     const res = await fetch("https://test-6600.fg.onl/api/cases", {
       next: { revalidate: 60 }, // Регенерировать страницу каждые 60 секунд

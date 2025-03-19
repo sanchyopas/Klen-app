@@ -4,7 +4,7 @@ import { ClientServices } from "@/app/pageClientComponents/ClientServices";
 
 export const dynamic = 'force-dynamic';
 
-export async function getServiceData() {
+async function getServiceData() {
   try {
     const res = await fetch(`https://test-6600.fg.onl/api/services`, {
       next: { revalidate: 60 },

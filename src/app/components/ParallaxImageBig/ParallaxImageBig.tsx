@@ -18,20 +18,40 @@ export default function ParallaxImageBig({ image }: Props) {
   useEffect(() => {
     const el = imageRef.current;
 
-    gsap.fromTo(
-      el,
-      { y: 0 },
-      {
-        y: -200,
-        ease: "easeInOut",
-        scrollTrigger: {
-          trigger: el,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 4,
-        },
+    // Проверяем ширину экрана с помощью matchMedia
+    const mediaQuery = window.matchMedia("(min-width: 767px)");
+
+    if (mediaQuery.matches) {
+      const animation = gsap.fromTo(
+        el,
+        { y: 0 },
+        {
+          y: -200,
+          ease: "easeInOut",
+          scrollTrigger: {
+            trigger: el,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 4,
+          },
+        }
+      );
+
+      // Очистка анимации при изменении ширины экрана
+      mediaQuery.addEventListener("change", (event) => {
+        if (!event.matches) {
+          animation.kill(); // Останавливаем анимацию, если экран меньше 767px
+        }
+        gsap.set(el, { clearProps: "all" });
+      });
+    }
+
+    // Очистка анимации при размонтировании компонента
+    return () => {
+      if (ScrollTrigger.getAll().length > 0) {
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       }
-    );
+    };
   }, []);
 
   return (

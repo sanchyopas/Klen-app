@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 8px 40px;
   font-size: 16px;
   margin-top: 16px;
   margin-bottom: 20px;
@@ -15,12 +15,8 @@
     margin-bottom: 40px;
   }
 
-  @media screen and (max-width: 481px) {
-    gap: 8px 40px;
-  }
-
   li + li {
-    margin-top: 0px;
+    margin-top: 0;
   }
 }
 
@@ -29,13 +25,18 @@
   align-items: center;
   gap: 5px;
   color: #424242;
+
+  @media (max-width: 767px) {
+    &:first-child {
+      margin-right: 100%;
+    }
+  }
 }
 
 .breadcrumbLink {
   text-decoration: none;
   color: #424242;
   transition: color 0.2s ease-in-out;
-
   &:hover {
     color: #0056b3;
   }

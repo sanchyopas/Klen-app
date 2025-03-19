@@ -29,6 +29,11 @@
 
 .nextProjects {
   align-items: initial;
+  @media (max-width: 767px) {
+    & > div:last-child {
+      display: none;
+    }
+  }
 }
 
 .emptyMessage {

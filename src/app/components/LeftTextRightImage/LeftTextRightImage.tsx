@@ -18,14 +18,16 @@ export default function LeftTextRightImage({ image, text, title }: Props) {
   const imageRef = useGsapFadeIn<HTMLImageElement>();
   const titleRef = useGsapFadeIn<HTMLHeadingElement>();
 
+  // Объединяем title и text в один htmlContent
+  const htmlContent = `<h2>${title}</h2>${text}`;
+
   return (
     <section id={s.services}>
       <div className={s.two_columns_content}>
         <div className="container">
           <div className={`${s.row} row`}>
             <div className="col-12 col-md-6">
-              <h2 ref={titleRef}>{title}</h2>
-              <AnimatedText htmlContent={text} className={s.text} />
+              <AnimatedText htmlContent={htmlContent} className={s.text} />
             </div>
 
             <div className="col-12 col-md-6">

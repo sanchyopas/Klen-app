@@ -121,6 +121,9 @@ body {
   a[href^="tel"] {
     text-decoration: none !important;
     color: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    font-style: inherit;
   }
 
   .fullscreen_bg {

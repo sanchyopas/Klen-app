@@ -40,7 +40,10 @@ export async function generateMetadata() {
   return {
     title: result.object.seo.title,
     description: result.object.seo.description,
-
+    robots: {
+      index: true, // Разрешить индексацию страницы
+      follow: true, // Разрешить следование по ссылкам на странице
+    },
     // Open Graph разметка, надо проверить все на тесте
     // Пока что тестовые
     openGraph: {

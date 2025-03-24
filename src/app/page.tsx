@@ -7,6 +7,7 @@ import React from "react";
 import { notFound } from "next/navigation";
 import ServiceMobile from "@/app/components/ServicesMobile/ServicesMobile";
 import ProjectsMobile from "@/app/components/ProjectsMobile/ProjectsMobile";
+import {createMetadate} from "@/app/utils/seo";
 
 async function getData() {
   try {
@@ -29,44 +30,7 @@ async function getData() {
 }
 
 export async function generateMetadata() {
-  const result = await getData();
-
-  if (!result || !result.object?.seo) {
-    return {
-      title: "Not found",
-    };
-  }
-
-  return {
-    title: result.object.seo.title,
-    description: result.object.seo.description,
-    // Добавляет вот такой мета тег <meta name="format-detection" content="telephone=no">
-    other: {
-      "format-detection": "telephone=no",
-    },
-    robots: {
-      index: true, // Разрешить индексацию страницы
-      follow: true, // Разрешить следование по ссылкам на странице
-    },
-    // Open Graph разметка, надо проверить все на тесте
-    // Пока что тестовые
-    openGraph: {
-      title: result.object.seo.title,
-      description: result.object.seo.description,
-      url: "https://abklen.com/",
-      siteName: "Klen",
-      images: [
-        {
-          url: `https://test-6600.fg.onl${result.object.main_screen.background.image}`,
-          width: 1200,
-          height: 630,
-          alt: result.object.seo.description,
-        },
-      ],
-      type: "website",
-      locale: "ru_RU",
-    },
-  };
+  return createMetadate(getData)
 }
 
 export default async function Home() {

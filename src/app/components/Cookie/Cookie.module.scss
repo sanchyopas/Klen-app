@@ -3,7 +3,7 @@
   bottom: 20px;
   left: 20px;
   width: 100%;
-  max-width: 670px;
+  max-width: 560px;
   z-index: 99;
   background: #fff;
   border: 1px solid #42424233;
@@ -29,17 +29,20 @@
     flex-wrap: wrap;
     align-items: center;
     flex-direction: row;
-    min-height: 36px;
-    margin-bottom: 40px;
+    margin-bottom: 24px;
     @media (max-width: 767px) {
       min-height: initial;
       margin-bottom: 0;
     }
-    .title {
-      font-size: 20px;
-      line-height: 1.4;
-      font-weight: 600;
-      padding-right: 40px;
+    .text {
+      opacity: .8;
+      color: rgba(66, 66, 66, 0.8);
+      a {
+        color: rgb(66, 66, 66);
+        line-height: 24px;
+        display: inline-block;
+        border-bottom: 1px solid #42424280;
+      }
     }
     .accept {
       position: absolute;

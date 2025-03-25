@@ -3,6 +3,8 @@ import s from "./Cookie.module.scss";
 import { useState, useEffect } from 'react';
 import LinkWithWrapper from "@/app/components/Link/Link";
 import Image from "next/image";
+import ButtonWithWrapper from "@/app/components/Button/Button";
+import Link from "next/link";
 
 export default function Cookie() {
   const [showBanner, setShowBanner] = useState(false);
@@ -31,15 +33,15 @@ export default function Cookie() {
       showBanner ? '' : s.hide
     ].filter(Boolean).join(' ')}>
       <div className={s.header}>
-        <span className={s.title}>Мы используем файлы cookie</span>
-        <button
-          onClick={handleAccept}
-          className={s.accept}
-        >
-          <Image src={"/img/icon/X.svg"} alt={"KLЁN — architectural bureau"} width={24} height={24}/>
-        </button>
+        <span className={s.text}>Сайт использует <Link href="/privacy">cookie</Link>, это помогает улучшить его работу</span>
+        {/*<button*/}
+        {/*  onClick={handleAccept}*/}
+        {/*  className={s.accept}*/}
+        {/*>*/}
+        {/*  <Image src={"/img/icon/X.svg"} alt={"KLЁN — architectural bureau"} width={24} height={24}/>*/}
+        {/*</button>*/}
       </div>
-      <LinkWithWrapper className={s.linkWrapper} link={"/policy"} dotReverce={false} isWrapper={true} name={"подробнее"} />
+      <ButtonWithWrapper className={s.linkWrapper} onClick={handleAccept} dotReverce={false} isWrapper={true} name={"хорошо"} />
     </div>
   );
 }

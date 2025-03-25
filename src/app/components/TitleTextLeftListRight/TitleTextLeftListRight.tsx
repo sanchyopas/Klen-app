@@ -5,6 +5,7 @@ type Props = {
   title?: string;
   text?: any;
   list?: any;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 };
 
 function decodeHTML(encodedString: string) {
@@ -23,7 +24,7 @@ type ProjectInfoProps = {
   details: string
 }
 
-export default function TitleTextLeftListRight({ title, text, list }: Props) {
+export default function TitleTextLeftListRight({ title, text, list, as: Tag = "h2"  }: Props) {
   const sectionRef = useGsapFadeIn<HTMLDivElement>();
   return (
     <div className={s.two_columns_content__wrapper} ref={sectionRef}>
@@ -32,7 +33,7 @@ export default function TitleTextLeftListRight({ title, text, list }: Props) {
           <div className={`${s.row} row`}>
             <div className="col-12 col-md-6">
               <div className={s.text}>
-                <h2>{title}</h2>
+                <Tag>{title}</Tag>
                 <AnimatedText htmlContent={text} className={s.noGapContent} />
               </div>
             </div>

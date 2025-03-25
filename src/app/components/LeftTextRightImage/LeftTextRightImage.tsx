@@ -19,7 +19,7 @@ export default function LeftTextRightImage({ image, text, title }: Props) {
   const titleRef = useGsapFadeIn<HTMLHeadingElement>();
 
   // Объединяем title и text в один htmlContent
-  const htmlContent = `<h2>${title}</h2>${text}`;
+  const htmlContent = `<h3>${title}</h3>${text}`;
 
   return (
     <section id={s.services}>

@@ -19,6 +19,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 type SliderProps = {
   is_mobile?: boolean;
+  slide_contian?: boolean;
   slides: any;
   is_boolet?: boolean;
   name_btn?: string;
@@ -36,6 +37,7 @@ type Slide = {
 
 export default function Slider({
                                  is_mobile,
+                                 slide_contian,
                                  slides,
                                  is_boolet,
                                  name_btn,
@@ -81,7 +83,7 @@ export default function Slider({
     <>
       <div
         ref={sliderRef}
-        className={`${s.slider} ${is_mobile ? s.mb : ""} ${!!class_name && class_name}`}
+        className={`${s.slider} ${is_mobile ? s.mb : ""}  ${slide_contian ? s.slideContain : ""} ${!!class_name && class_name}`}
       >
         <div className="container">
           {!!title && <Title title={title} as={title_as} />}

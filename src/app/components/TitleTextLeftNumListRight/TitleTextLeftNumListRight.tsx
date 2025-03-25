@@ -20,7 +20,7 @@ export default function TitleTextLeftNumListRight({title, text, list}:Props) {
             <div className="col-12 col-md-6">
 
               <div className={s.text}>
-                <h2>{title}</h2>
+                <h3>{title}</h3>
                 <AnimatedText htmlContent={text} className={s.noGapContent} />
               </div>
 

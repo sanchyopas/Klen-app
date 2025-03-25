@@ -21,7 +21,7 @@ export const DynamicBlock = ({block}: any) => {
     case "текст в 2 колонки":
       return <TextTwoColumn text={block.text} />
     case "Галлерея фото":
-      return <Slider slides={Array.isArray(block.image) ? block.image : []} is_boolet={true}/>
+      return <Slider slide_contian={true} slides={Array.isArray(block.image) ? block.image : []} is_boolet={true}/>
     case "Текстовый блок - узкая колонка по центру":
       return <SmallTextSection text={block.text}/>
     case "Текст":
@@ -32,16 +32,18 @@ export const DynamicBlock = ({block}: any) => {
       return <SmallImage image={block.image}/>
     case "Слева текст / Справа слайдер":
       return <LeftTextRightSlider slides={block.slider} text={block.text} title={block.title}/>
-    case "2 изображения в центре без текста":
+    case "2 изображения в ряд (вертикальные) по центру":
       return <TwoColumnImage imageOne={block.image_1} imageTwo={block.image_2}/>
     case "3 изображения без текста":
       return <ThreeColumnImage image_1={block.image_1} image_2={block.image_2} image_3={block.image_3}/>
     case "Заголовок и текст слева + картинка справа":
       return <LeftTextRightImage image={block.image} text={block.text} title={block.title}/>
-    case "2 изображения широкое слева узкое справа":
+    case "2 изображения в ряд - на 2/3 ширины слева и 1/3 справа":
       return <TwoImageLeftWideNarrow image_left={block.image_left} image_right={block.image_right}  />
     case "Заголовок h2 и текст слева + список справа":
-      return <TitleTextLeftListRight text={block.text} title={block.title} list={block.list}/>
+      return <TitleTextLeftListRight text={block.text} title={block.title} as={'h2'} list={block.list}/>
+    case "Заголовок h3 и текст слева + список справа":
+      return <TitleTextLeftListRight text={block.text} title={block.title} as={'h3'} list={block.list}/>
     case "Заголовок h3 и текст слева + нумерованный список справа":
       return <TitleTextLeftNumListRight text={block.text} title={block.title} list={block.list} />
     default:

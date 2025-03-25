@@ -7,7 +7,7 @@ import Footer from "@/app/components/Footer/Footer";
 import PreloaderWrapper from "@/app/components/Preloader/PreloaderWrapper";
 import SmoothScroll from "@/app/components/SmoothScroll/SmoothScroll";
 import Cookie from "@/app/components/Cookie/Cookie";
-
+import Favicon from "@/app/components/Favicon/Favicon";
 
 const InterSans = Inter({
   subsets: ["latin"],
@@ -40,19 +40,22 @@ export default async function RootLayout({children}: { children: React.ReactNode
   const res = await getGlobalSettings();
 
   return (
-    <html lang="en">
-    <body className={InterSans.variable}>
-      <div id="serverData">
-        {children}
-      </div>
-      <PreloaderWrapper object={res?.object?.header || null}>{children}</PreloaderWrapper>
-    {/*<Header/>*/}
-    {/*<main>*/}
-    {/*<SmoothScroll>{children}</SmoothScroll>*/}
-    {/*</main>*/}
-    {/*<Footer/>*/}
-    {/*<Cookie/>*/}
-    </body>
+    <html lang="ru" className={InterSans.variable}>
+      <head>
+        <Favicon/>
+      </head>
+      <body>
+        <div id="serverData">
+          {children}
+        </div>
+        <PreloaderWrapper object={res?.object?.header || null}>{children}</PreloaderWrapper>
+        {/*<Header/>*/}
+        {/*<main>*/}
+        {/*<SmoothScroll>{children}</SmoothScroll>*/}
+        {/*</main>*/}
+        {/*<Footer/>*/}
+        {/*<Cookie/>*/}
+      </body>
     </html>
   );
 }

@@ -35,6 +35,11 @@ export default function ProjectsPageClient({ projects, filtersData }: Props) {
   });
 
   const [isFormFiltered, setIsFormFiltered] = useState(false);
+  const [isLoad, setIsLoad] = useState(false);
+
+  useEffect(() => {
+    setIsLoad(true)
+  }, [])
 
   // Применяем фильтры при изменении filters или projects
   useEffect(() => {
@@ -85,7 +90,8 @@ export default function ProjectsPageClient({ projects, filtersData }: Props) {
         initialType={filters.type}
         initialYear={filters.year}
       />
-      <Projects classes={s.projectsPage} projects={filteredProjects} />
+
+      {isLoad && <Projects classes={s.projectsPage} projects={filteredProjects} />}
     </>
   );
 }

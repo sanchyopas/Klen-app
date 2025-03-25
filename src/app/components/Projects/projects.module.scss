@@ -29,9 +29,13 @@
 
 .nextProjects {
   align-items: initial;
-  @media (max-width: 767px) {
-    & > div:last-child {
-      display: none;
+  & > div {
+    aspect-ratio: 670 / 420!important;
+    @media (max-width: 767px) {
+      aspect-ratio: 328 / 420!important;
+      &:last-child {
+        display: none;
+      }
     }
   }
 }

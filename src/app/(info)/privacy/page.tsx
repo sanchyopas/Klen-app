@@ -4,6 +4,7 @@ import Title from "@/app/components/Title/Title";
 import {notFound} from "next/navigation";
 import YandexMap from "@/app/components/YandexMap/YandexMap";
 import React from "react";
+import {createMetadate} from "@/app/utils/seo";
 
 async function getPolicyData() {
   try {
@@ -26,19 +27,23 @@ async function getPolicyData() {
   }
 }
 
+// export async function generateMetadata() {
+//   const res = await getPolicyData();
+//
+//   if (!res || !res.object?.seo) {
+//     return {
+//       title: "Not found"
+//     };
+//   }
+//
+//   return {
+//     title: res.object?.seo?.title,
+//     description: res.object?.seo?.description,
+//   };
+// }
+
 export async function generateMetadata() {
-  const res = await getPolicyData();
-
-  if (!res || !res.object?.seo) {
-    return {
-      title: "Not found"
-    };
-  }
-
-  return {
-    title: res.object?.seo?.title,
-    description: res.object?.seo?.description,
-  };
+  return createMetadate(getPolicyData)
 }
 
 export default async function Privacy() {

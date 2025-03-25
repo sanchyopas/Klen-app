@@ -14,7 +14,7 @@ export default function SmallImage({image}: Props) {
     <section className={s.halfScreenImage} ref={imageRef}>
       <div className="container">
         <Image
-          src={`https://test-6600.fg.onl/upload_resources/${image}`}
+          src={`https://test-6600.fg.onl${image}`}
           alt=""
           width={900}
           height={600}

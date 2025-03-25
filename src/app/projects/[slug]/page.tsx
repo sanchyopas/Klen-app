@@ -7,6 +7,7 @@ import React from "react";
 import NextProjects from "@/app/components/NextProjects/NextProjects";
 import Breadcrumbs from "@/app/components/Breadcrumbs/Breadcrumbs";
 import s from "./project.module.scss"
+import {createMetadate} from "@/app/utils/seo";
 
 type Params = {
   slug: string
@@ -36,19 +37,26 @@ export async function generateMetadata(props: { params: Promise<Params> }) {
   const params = await props.params
   const {slug} = params;
 
-  const result = await getProject(slug);
-
-  if (!result || !result.object.seo) {
-    return {
-      title: "Not found"
-    }
-  }
-
-  return {
-    title: result.object.seo.title   || `Заголовок проекта с айди ${slug}`,
-    description: result.object.seo.description  || `Описание проекта с айди ${slug}`,
-  }
+  return createMetadate(getProject, slug)
 }
+
+// export async function generateMetadata(props: { params: Promise<Params> }) {
+//   const params = await props.params
+//   const {slug} = params;
+//
+//   const result = await getProject(slug);
+//
+//   if (!result || !result.object.seo) {
+//     return {
+//       title: "Not found"
+//     }
+//   }
+//
+//   return {
+//     title: result.object.seo.title   || `Заголовок проекта с айди ${slug}`,
+//     description: result.object.seo.description  || `Описание проекта с айди ${slug}`,
+//   }
+// }
 
 
 

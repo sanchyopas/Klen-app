@@ -24,14 +24,14 @@ export default function TwoColumnImage({ imageOne, imageTwo }: Props) {
             ref={(el) => {
               if (el) imagesRef.current[0] = el;
             }}
-            src={`https://test-6600.fg.onl/upload_resources/${imageOne}`}
+            src={`https://test-6600.fg.onl${imageOne}`}
             alt=""
           />
           <img
             ref={(el) => {
               if (el) imagesRef.current[1] = el;
             }}
-            src={`https://test-6600.fg.onl/upload_resources/${imageTwo}`}
+            src={`https://test-6600.fg.onl${imageTwo}`}
             alt=""
           />
         </div>

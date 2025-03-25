@@ -14,11 +14,11 @@ export const SliderSlide = ({item}: Props) => {
       {
         item.hasOwnProperty("main_screen") ?
           <img
-            src={item?.main_screen?.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.main_screen.image}` : `https://test-6600.fg.onl/upload_resources/${item.main_screen?.image}`}
+            src={`https://test-6600.fg.onl${item.main_screen?.image}`}
             alt=""/>
           :
           <img
-            src={item?.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${item.image}` : `https://test-6600.fg.onl/upload_resources/${item.image}`}
+            src={`https://test-6600.fg.onl${item.image}`}
             alt=""/>
       }
     </SwiperSlide>

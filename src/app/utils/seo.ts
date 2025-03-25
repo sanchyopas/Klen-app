@@ -1,5 +1,5 @@
-export async function createMetadate(data: () => Promise<any>) {
-  const result = await data();
+export async function createMetadate(data: any, dataParam?: string): Promise<any> {
+  const result = !!dataParam ? await data(dataParam) : await data();
 
   if (!result || !result.object?.seo) {
     return {
@@ -27,7 +27,7 @@ export async function createMetadate(data: () => Promise<any>) {
       siteName: "Klen",
       images: [
         {
-          url: `https://test-6600.fg.onl/upload_resources/${seo?.og_image}`,
+          url: `https://test-6600.fg.onl${seo?.og_image}`,
           width: 1200,
           height: 630,
           alt: seo?.og_image_alt,

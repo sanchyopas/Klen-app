@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import { ClientServices } from "@/app/pageClientComponents/ClientServices";
-
-
-export const dynamic = 'force-dynamic';
+import {createMetadate} from "@/app/utils/seo";
 
 async function getServiceData() {
   try {
@@ -25,18 +23,7 @@ async function getServiceData() {
 }
 
 export async function generateMetadata() {
-  const result = await getServiceData();
-
-  if (!result || !result.object?.page?.seo) {
-    return {
-      title: "Not found",
-    };
-  }
-
-  return {
-    title: result.object.page.seo.title,
-    description: result.object.page.seo.description,
-  };
+  return createMetadate(getServiceData)
 }
 
 export default async function ServicesPage() {

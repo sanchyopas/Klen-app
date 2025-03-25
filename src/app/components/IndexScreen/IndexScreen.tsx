@@ -22,7 +22,7 @@ export default function IndexScreen( {mainData}: any ) {
   return (
     <section id={s.hello}>
       <Image
-        src={mainData.background.image.includes('/upload_resources/') ? `https://test-6600.fg.onl${mainData.background.retina}` : `https://test-6600.fg.onl/upload_resources/${mainData.background.image}`}
+        src={`https://test-6600.fg.onl${mainData.background.retina}`}
         alt={'KLËN — architectural bureau'}
         width={800}
         height={400}

@@ -3,6 +3,7 @@ import {DynamicBlock} from "@/app/components/DynamicBlock/DynamicBlock";
 import React from "react";
 import {notFound} from "next/navigation";
 import Breadcrumbs from "@/app/components/Breadcrumbs/Breadcrumbs";
+import {createMetadate} from "@/app/utils/seo";
 
 
 type Params = {
@@ -33,19 +34,27 @@ export async function generateMetadata(props: { params: Promise<Params> }) {
   const params = await props.params
   const {slug} = params;
 
-  const result = await getService(slug);
-
-  if (!result || !result.object.seo) {
-    return {
-      title: "Not found"
-    }
-  }
-
-  return {
-    title: result.object.seo.title   || `Заголовок проекта с айди ${slug}`,
-    description: result.object.seo.description  || `Описание проекта с айди ${slug}`,
-  }
+  return createMetadate(getService, slug)
 }
+
+// export async function generateMetadata(props: { params: Promise<Params> }) {
+//   const params = await props.params
+//   const {slug} = params;
+//
+//   const result = await getService(slug);
+//
+//   if (!result || !result.object.seo) {
+//     return {
+//       title: "Not found"
+//     }
+//   }
+//
+//   return {
+//     title: result.object.seo.title   || `Заголовок проекта с айди ${slug}`,
+//     description: result.object.seo.description  || `Описание проекта с айди ${slug}`,
+//   }
+// }
+
 export default async function Service({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const service = await getService(slug);

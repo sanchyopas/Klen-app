@@ -48,19 +48,19 @@ export default function ThreeColumnImage({image_1, image_2, image_3}: Props) {
             ref={(el) => {
               if (el) imagesRef.current[0] = el;
             }}
-            src={`https://test-6600.fg.onl/upload_resources/${image_1}`}
+            src={`https://test-6600.fg.onl${image_1}`}
             alt=""/>
           <img
             ref={(el) => {
               if (el) imagesRef.current[1] = el;
             }}
-            src={`https://test-6600.fg.onl/upload_resources/${image_2}`}
+            src={`https://test-6600.fg.onl${image_2}`}
             alt=""/>
           <img
             ref={(el) => {
               if (el) imagesRef.current[2] = el;
             }}
-            src={`https://test-6600.fg.onl/upload_resources/${image_3}`}
+            src={`https://test-6600.fg.onl${image_3}`}
             alt=""/>
         </div>
       </div>

@@ -34,7 +34,7 @@ export default function LeftTextRightImage({ image, text, title }: Props) {
               <div className={s.img}>
                 <img
                   ref={imageRef}
-                  src={`https://test-6600.fg.onl/upload_resources/${image}`}
+                  src={`https://test-6600.fg.onl${image}`}
                   alt=""
                 />
               </div>

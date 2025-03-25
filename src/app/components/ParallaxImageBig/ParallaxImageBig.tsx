@@ -59,7 +59,7 @@ export default function ParallaxImageBig({ image }: Props) {
       <div className={`container ${s.containerImage}`}>
         <Image
           ref={imageRef}
-          src={`https://test-6600.fg.onl/upload_resources/${image}`}
+          src={`https://test-6600.fg.onl${image}`}
           alt=""
           className={s.parallaxImage}
           width={1360}

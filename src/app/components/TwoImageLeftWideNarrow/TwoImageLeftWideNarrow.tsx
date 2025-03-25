@@ -45,13 +45,13 @@ export default function TwoImageLeftWideNarrow({image_left, image_right}: Props)
               if (el) imagesRef.current[0] = el;
             }}
             className={s.wide}
-            src={`https://test-6600.fg.onl/upload_resources/${image_left}`} alt="" />
+            src={`https://test-6600.fg.onl${image_left}`} alt="" />
 
           <img
             ref={(el) => {
               if (el) imagesRef.current[1] = el;
             }}
-            src={`https://test-6600.fg.onl/upload_resources/${image_right}`}
+            src={`https://test-6600.fg.onl${image_right}`}
             alt="" />
         </div>
       </div>

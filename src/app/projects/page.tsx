@@ -1,5 +1,6 @@
 import ProjectsPageClient from "@/app/projects/ProjectsPageClient";
 import { notFound } from "next/navigation";
+import {createMetadate} from "@/app/utils/seo";
 
 async function getData() {
   try {
@@ -15,7 +16,7 @@ async function getData() {
     }
 
     const data = await res.json();
-    return data?.object || null;
+    return data;
   } catch (error) {
     console.error("Error:", error);
     return null;
@@ -23,33 +24,22 @@ async function getData() {
 }
 
 export async function generateMetadata() {
-  const result = await getData();
-
-  if (!result || !result.page?.seo) {
-    return {
-      title: "Not found",
-    };
-  }
-
-  return {
-    title: result?.page?.seo?.title,
-    description: result?.page?.seo?.description,
-  };
+  return createMetadate(getData)
 }
 
 export default async function ProjectsPage() {
   const result = await getData();
 
-  if (!result || !result.cases) {
+  if (!result || !result.object.cases) {
     notFound();
     return null;
   }
 
-  const projects = result.cases;
+  const projects = result.object.cases;
 
   const filtersData = {
-    types: result.page?.filter_projects || [],
-    years: result.page?.filter_period || [],
+    types: result.object?.filter_projects || [],
+    years: result.object?.filter_period || [],
   };
 
   return <ProjectsPageClient projects={projects} filtersData={filtersData} />;

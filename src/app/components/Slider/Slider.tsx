@@ -117,19 +117,9 @@ export default function Slider({
               <SwiperSlide className={s.slider__slide} key={i}>
                 {
                   item.hasOwnProperty("main_screen") ?
-                    <Image
-                      src={item.main_screen.image.includes('/upload_resources/') ?
-                        `https://test-6600.fg.onl${item.main_screen.image}` :
-                        `https://test-6600.fg.onl/upload_resources/${item.main_screen.image}`}
-                      alt="" width={1360} height={720}
-                    />
+                    <Image src={`https://test-6600.fg.onl${item.main_screen.image}`} alt="" width={1360} height={720} />
                     :
-                    <Image src={item.image.includes('/upload_resources/') ?
-                      `https://test-6600.fg.onl${item.image}` :
-                      `https://test-6600.fg.onl/upload_resources/${item.image}`}
-                           alt="" width={1360} height={720}
-
-                    />
+                    <Image src={`https://test-6600.fg.onl${item.image}`} alt="" width={1360} height={720} />
                 }
               </SwiperSlide>
             ))}

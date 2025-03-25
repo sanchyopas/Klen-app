@@ -1,6 +1,7 @@
 import React from 'react';
 import YandexMap from "@/app/components/YandexMap/YandexMap";
 import {notFound} from "next/navigation";
+import {createMetadate} from "@/app/utils/seo";
 
 async function getContactData() {
   try {
@@ -23,19 +24,23 @@ async function getContactData() {
   }
 }
 
+// export async function generateMetadata() {
+//   const res = await getContactData();
+//
+//   if (!res || !res.object?.seo) {
+//     return {
+//       title: "Not found"
+//     };
+//   }
+//
+//   return {
+//     title: res.object?.seo?.title,
+//     description: res.object?.seo?.description,
+//   };
+// }
+
 export async function generateMetadata() {
-  const res = await getContactData();
-
-  if (!res || !res.object?.seo) {
-    return {
-      title: "Not found"
-    };
-  }
-
-  return {
-    title: res.object?.seo?.title,
-    description: res.object?.seo?.description,
-  };
+  return createMetadate(getContactData)
 }
 
 export default async function Contact() {

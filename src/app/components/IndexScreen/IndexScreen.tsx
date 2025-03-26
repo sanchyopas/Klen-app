@@ -24,9 +24,10 @@ export default function IndexScreen( {mainData}: any ) {
       <Image
         src={`https://test-6600.fg.onl${mainData.background.retina}`}
         alt={'KLËN — architectural bureau'}
-        width={800}
-        height={400}
+        width={2720}
+        height={1216}
         priority
+        quality={100}
         className={`${s.helloImage} helloImage`}
       />
 

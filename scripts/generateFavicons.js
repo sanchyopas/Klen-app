@@ -52,8 +52,8 @@ async function createAppleIcon() {
 // Создаёт site.webmanifest
 async function createManifest() {
   const manifest = {
-    name: "MyApp",
-    short_name: "MyApp",
+    name: "KLËN — architectural bureau",
+    short_name: "KLËN",
     icons: sizes.map((size) => ({
       src: `/favicon-${size}x${size}.png`,
       sizes: `${size}x${size}`,

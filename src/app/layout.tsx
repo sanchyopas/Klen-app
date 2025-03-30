@@ -16,7 +16,7 @@ const InterSans = Inter({
 
 async function getGlobalSettings() {
   try {
-    const res = await fetch(`https://test-6600.fg.onl/api/globals`, {
+    const res = await fetch(`https://test-9900.fg.onl/api/globals`, {
       cache: "force-cache",
     });
 

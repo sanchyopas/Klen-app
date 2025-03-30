@@ -4,7 +4,7 @@ import {createMetadate} from "@/app/utils/seo";
 
 async function getData() {
   try {
-    const res = await fetch("https://test-6600.fg.onl/api/cases", {
+    const res = await fetch("https://test-9900.fg.onl/api/cases", {
       next: { revalidate: 60 }, // Регенерировать страницу каждые 60 секунд
     });
 

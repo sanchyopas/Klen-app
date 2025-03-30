@@ -8,7 +8,7 @@ import {createMetadate} from "@/app/utils/seo";
 
 async function getPolicyData() {
   try {
-    const res = await fetch("https://test-6600.fg.onl/api/policy/", {
+    const res = await fetch("https://test-9900.fg.onl/api/policy/", {
       next: { revalidate: 60 },
     });
 

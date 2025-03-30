@@ -5,7 +5,7 @@ import {createMetadate} from "@/app/utils/seo";
 
 async function getContactData() {
   try {
-    const res = await fetch("https://test-6600.fg.onl/api/contacts/", {
+    const res = await fetch("https://test-9900.fg.onl/api/contacts/", {
       next: { revalidate: 60 },
     });
 

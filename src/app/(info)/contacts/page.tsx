@@ -5,7 +5,8 @@ import {createMetadate} from "@/app/utils/seo";
 
 async function getContactData() {
   try {
-    const res = await fetch("https://test-9900.fg.onl/api/contacts/", {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`${API_URL}/api/contacts/`, {
       next: { revalidate: 60 },
     });
 

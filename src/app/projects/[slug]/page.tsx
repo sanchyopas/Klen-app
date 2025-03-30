@@ -15,7 +15,8 @@ type Params = {
 
 async function getProject(slug: string) {
   try {
-    const res = await fetch(`https://test-9900.fg.onl/api/cases/${slug}`, {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`${API_URL}/api/cases/${slug}`, {
       next: { revalidate: 60 },
     });
 

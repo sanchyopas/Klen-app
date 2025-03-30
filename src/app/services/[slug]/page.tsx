@@ -12,7 +12,8 @@ type Params = {
 
 async function getService(slug: string) {
   try {
-    const res = await fetch(`https://test-9900.fg.onl/api/services/${slug}`, {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`${API_URL}/api/services/${slug}`, {
       next: { revalidate: 60 },
     });
 

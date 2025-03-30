@@ -1,7 +1,8 @@
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
-            const response = await fetch('https://test-9900.fg.onl/api/mail', {
+            const API_URL = process.env.NEXT_PUBLIC_API_URL;
+            const response = await fetch(`${API_URL}/api/mail`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

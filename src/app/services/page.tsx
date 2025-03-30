@@ -4,7 +4,8 @@ import {createMetadate} from "@/app/utils/seo";
 
 async function getServiceData() {
   try {
-    const res = await fetch(`https://test-9900.fg.onl/api/services`, {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`${API_URL}/api/services`, {
       next: { revalidate: 60 },
     });
 

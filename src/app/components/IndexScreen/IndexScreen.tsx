@@ -19,10 +19,12 @@ export default function IndexScreen( {mainData}: any ) {
 
   }, []);
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   return (
     <section id={s.hello}>
       <Image
-        src={`https://test-6600.fg.onl${mainData.background.retina}`}
+        src={`${API_URL}${mainData.background.retina}`}
         alt={'KLËN — architectural bureau'}
         width={2720}
         height={1216}

@@ -8,6 +8,8 @@ export default function NextProjects( props:any ) {
 
   const {projects} = props
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   return (
     <section id={`next-projects`}>
       <div className={"container"}>
@@ -17,7 +19,7 @@ export default function NextProjects( props:any ) {
             projects.map((project:any) => ((
               <div className={s.item} key={project.id}>
                 <img
-                  src={`https://test-6600.fg.onl${project.main_screen.image}`}
+                  src={`${API_URL}${project.main_screen.image}`}
                   alt={project.title}
                 />
                 <Link href={`/projects/${project.id}`}></Link>

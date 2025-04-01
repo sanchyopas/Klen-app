@@ -40,6 +40,8 @@ export default function ThreeColumnImage({image_1, image_2, image_3}: Props) {
     );
   }, []);
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   return (
     <section>
       <div className="container">
@@ -48,19 +50,19 @@ export default function ThreeColumnImage({image_1, image_2, image_3}: Props) {
             ref={(el) => {
               if (el) imagesRef.current[0] = el;
             }}
-            src={`https://test-6600.fg.onl${image_1}`}
+            src={`${API_URL}${image_1}`}
             alt=""/>
           <img
             ref={(el) => {
               if (el) imagesRef.current[1] = el;
             }}
-            src={`https://test-6600.fg.onl${image_2}`}
+            src={`${API_URL}${image_2}`}
             alt=""/>
           <img
             ref={(el) => {
               if (el) imagesRef.current[2] = el;
             }}
-            src={`https://test-6600.fg.onl${image_3}`}
+            src={`${API_URL}${image_3}`}
             alt=""/>
         </div>
       </div>

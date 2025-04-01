@@ -10,6 +10,9 @@ type Props = {
 
 export const ClientServices = ({cases}:Props) => {
   const elRef = useGsapFadeIn<HTMLDivElement>()
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   return (
     <>
       {
@@ -42,7 +45,7 @@ export const ClientServices = ({cases}:Props) => {
                     <div className={s.img}>
                       {!!item.main_screen.image &&
                         <Image
-                          src={`https://test-6600.fg.onl${item.main_screen.image}`}
+                          src={`${API_URL}${item.main_screen.image}`}
                           alt={item.main_screen.title}
                           width={670}
                           height={420}

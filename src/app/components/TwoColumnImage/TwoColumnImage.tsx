@@ -16,6 +16,8 @@ type Props = {
 export default function TwoColumnImage({ imageOne, imageTwo }: Props) {
   const imagesRef = useGsapStaggerAnimation();
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   return (
     <section>
       <div className="container">
@@ -24,14 +26,14 @@ export default function TwoColumnImage({ imageOne, imageTwo }: Props) {
             ref={(el) => {
               if (el) imagesRef.current[0] = el;
             }}
-            src={`https://test-6600.fg.onl${imageOne}`}
+            src={`${API_URL}${imageOne}`}
             alt=""
           />
           <img
             ref={(el) => {
               if (el) imagesRef.current[1] = el;
             }}
-            src={`https://test-6600.fg.onl${imageTwo}`}
+            src={`${API_URL}${imageTwo}`}
             alt=""
           />
         </div>

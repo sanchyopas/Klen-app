@@ -8,6 +8,7 @@ export async function createMetadate(data: any, dataParam?: string): Promise<any
   }
 
   const seo = result.object?.seo;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   return {
     title: seo?.title,
@@ -23,11 +24,11 @@ export async function createMetadate(data: any, dataParam?: string): Promise<any
     openGraph: {
       title: seo?.og_title,
       description: seo?.og_description,
-      url: "https://abklen.com/",
+      url: "https://abklen.ru/",
       siteName: "Klen",
       images: [
         {
-          url: `https://test-6600.fg.onl${seo?.og_image}`,
+          url: `${API_URL}${seo?.og_image}`,
           width: 1200,
           height: 630,
           alt: seo?.og_image_alt,

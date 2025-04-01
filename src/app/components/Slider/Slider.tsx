@@ -79,6 +79,8 @@ export default function Slider({
     }
   }, []);
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   return (
     <>
       <div
@@ -117,9 +119,9 @@ export default function Slider({
               <SwiperSlide className={s.slider__slide} key={i}>
                 {
                   item.hasOwnProperty("main_screen") ?
-                    <Image src={`https://test-6600.fg.onl${item.main_screen.image}`} alt="" width={1360} height={720} />
+                    <Image src={`${API_URL}${item.main_screen.image}`} alt="" width={1360} height={720} />
                     :
-                    <Image src={`https://test-6600.fg.onl${item.image}`} alt="" width={1360} height={720} />
+                    <Image src={`${API_URL}${item.image}`} alt="" width={1360} height={720} />
                 }
               </SwiperSlide>
             ))}

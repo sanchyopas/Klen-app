@@ -21,6 +21,8 @@ export default function LeftTextRightImage({ image, text, title }: Props) {
   // Объединяем title и text в один htmlContent
   const htmlContent = `<h3>${title}</h3>${text}`;
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   return (
     <section id={s.services}>
       <div className={s.two_columns_content}>
@@ -34,7 +36,7 @@ export default function LeftTextRightImage({ image, text, title }: Props) {
               <div className={s.img}>
                 <img
                   ref={imageRef}
-                  src={`https://test-6600.fg.onl${image}`}
+                  src={`${API_URL}${image}`}
                   alt=""
                 />
               </div>

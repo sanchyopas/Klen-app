@@ -78,6 +78,8 @@ export default function ProjectsMobile({
     }
   }, []);
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   return (
     <div
       ref={sliderRef}
@@ -123,12 +125,12 @@ export default function ProjectsMobile({
                 {!!item.main_screen.image || !!item.image ? (
                   item.hasOwnProperty("main_screen") ? (
                     <img
-                      src={`https://test-6600.fg.onl${item.main_screen.image}`}
+                      src={`${API_URL}${item.main_screen.image}`}
                       alt=""
                     />
                   ) : (
                     <img
-                      src={`https://test-6600.fg.onl${item.image}`}
+                      src={`${API_URL}${item.image}`}
                       alt=""
                     />
                   )

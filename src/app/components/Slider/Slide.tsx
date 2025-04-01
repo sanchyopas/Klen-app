@@ -9,16 +9,18 @@ type Props = {
   }
 }
 export const SliderSlide = ({item}: Props) => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   return (
     <SwiperSlide className={s.slider__slide}>
       {
         item.hasOwnProperty("main_screen") ?
           <img
-            src={`https://test-6600.fg.onl${item.main_screen?.image}`}
+            src={`${API_URL}${item.main_screen?.image}`}
             alt=""/>
           :
           <img
-            src={`https://test-6600.fg.onl${item.image}`}
+            src={`${API_URL}${item.image}`}
             alt=""/>
       }
     </SwiperSlide>

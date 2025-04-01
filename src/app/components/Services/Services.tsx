@@ -27,13 +27,14 @@ export default function Services({slides, title, button_name, button_link, is_pc
   const [activeIndex, setActiveIndex] = useState(0);
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const handleImageChange = (index: number) => {
     if (index === activeIndex) return;
 
     const oldImage = document.querySelector(`.${s.activeImage}`) as HTMLImageElement | null;
     const newImage = document.createElement("img");
-    newImage.src = `https://test-6600.fg.onl${slides[index].main_screen.image}`;
+    newImage.src = `${API_URL}${slides[index].main_screen.image}`;
     newImage.alt = slides[index].main_screen_title;
     newImage.className = s.animatedImage;
     newImage.style.opacity = "0";
@@ -97,7 +98,7 @@ export default function Services({slides, title, button_name, button_link, is_pc
           <div className="col-12 col-lg-6">
             <div className={s.imageContainer} ref={imageContainerRef}>
               <img
-                src={`https://test-6600.fg.onl${slides[activeIndex].main_screen.image}`}
+                src={`${API_URL}${slides[activeIndex].main_screen.image}`}
                 alt={slides[activeIndex].main_screen_title}
                 title={slides[activeIndex].main_screen_title}
                 className={`${s.animatedImage} ${s.activeImage}`}

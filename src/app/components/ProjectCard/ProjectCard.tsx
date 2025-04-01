@@ -10,10 +10,13 @@ type Props = {
 }
 
 export default function ProjectCard({ title, image, id, slug }: Props) {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   return (
     <div className={`${s.item} project-card`} key={id}>
         <Image
-          src={`https://test-6600.fg.onl${image}`}
+          src={`${API_URL}${image}`}
           alt={title}
           width={800}
           height={400}

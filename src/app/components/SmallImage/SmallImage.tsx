@@ -8,13 +8,15 @@ type Props = {
   image: string,
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function SmallImage({image}: Props) {
   const imageRef = useGsapFadeIn<HTMLDivElement>();
   return (
     <section className={s.halfScreenImage} ref={imageRef}>
       <div className="container">
         <Image
-          src={`https://test-6600.fg.onl${image}`}
+          src={`${API_URL}${image}`}
           alt=""
           width={900}
           height={600}

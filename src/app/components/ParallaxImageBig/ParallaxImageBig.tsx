@@ -54,12 +54,14 @@ export default function ParallaxImageBig({ image }: Props) {
     };
   }, []);
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   return (
     <section className={s.fullScreenImage}>
       <div className={`container ${s.containerImage}`}>
         <Image
           ref={imageRef}
-          src={`https://test-6600.fg.onl${image}`}
+          src={`${API_URL}${image}`}
           alt=""
           className={s.parallaxImage}
           width={1360}

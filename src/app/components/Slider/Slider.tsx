@@ -3,12 +3,13 @@
 import s from "./Slider.module.scss";
 import React, {useEffect, useRef, useState} from "react";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Navigation, Pagination, Thumbs} from "swiper/modules";
+import {Navigation, Pagination, Thumbs, EffectCreative} from "swiper/modules";
 import gsap from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import 'swiper/css/effect-creative';
 import {NavigationOptions} from "swiper/types";
 import LinkWithWrapper from "@/app/components/Link/Link";
 import Title from "@/app/components/Title/Title";
@@ -52,8 +53,8 @@ export default function Slider({
   const sliderRef = useRef(null);
 
   const [isMounted, setIsMounted] = useState(false);
-  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null); // Состояние для миниатюр
-  const [activeThumbIndex, setActiveThumbIndex] = useState(0); // Состояние для активного слайда
+  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const [activeThumbIndex, setActiveThumbIndex] = useState(0);
 
   useEffect(() => {
     const isTouchDevice = window.matchMedia("(hover: none)").matches;
@@ -91,7 +92,20 @@ export default function Slider({
           {!!title && <Title title={title} as={title_as} />}
 
           <Swiper
-            modules={[Pagination, Navigation, Thumbs]}
+            loop={true} // Основной слайдер зациклен
+            grabCursor={true}
+            effect={'creative'}
+            creativeEffect={{
+              prev: {
+                translate: [0, 0, -400],
+                opacity: 0,
+              },
+              next: {
+                translate: ['100%', 0, 0],
+                opacity: 1,
+              },
+            }}
+            modules={[Pagination, Navigation, Thumbs, EffectCreative]}
             pagination={{
               el: paginationRef.current,
               clickable: true,
@@ -100,7 +114,7 @@ export default function Slider({
               nextEl: nextRef.current,
               prevEl: prevRef.current,
             }}
-            thumbs={{ swiper: thumbsSwiper }} // Связь с миниатюрами
+            thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
             onInit={(swiper) => {
               if (!swiper.params.navigation) return;
               const navigation = swiper.params.navigation as NavigationOptions;
@@ -111,8 +125,7 @@ export default function Slider({
               swiper.navigation?.update();
             }}
             onSlideChange={(swiper) => {
-              // Обновляем индекс активного слайда
-              setActiveThumbIndex(swiper.activeIndex);
+              setActiveThumbIndex(swiper.realIndex);
             }}
           >
             {slides.map((item: Slide, i: number) => (
@@ -129,25 +142,27 @@ export default function Slider({
 
           <div className={s["slider__actions"]}>
             {is_boolet ? (
-              // <div ref={paginationRef} className={`${s.slider__pagination}`}/>
-              // {/* Слайдер миниатюр */}
-              <Swiper
-                modules={[Thumbs]}
-                onSwiper={setThumbsSwiper} // Устанавливаем Swiper для миниатюр
-                slidesPerView={slides.length} // Отображаем все слайды
-                freeMode={true} // Свободный режим для прокрутки миниатюр
-                watchSlidesProgress={true} // Следим за прогрессом слайдов
-                className={s.thumbsSlider} // Добавляем класс для стилизации
-              >
-                {slides.map((item: Slide, i: number) => (
-                  <SwiperSlide
-                    key={i}
-                    className={`${s.thumbSlide} ${activeThumbIndex === i ? s.active : ""}`} // Добавляем кастомный класс для активного слайда
-                  >
-                    {i + 1} {/* Отображаем порядковый номер слайда */}
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <div className={s.thumbsContainer}>
+                <Swiper
+                  modules={[Thumbs]}
+                  onSwiper={setThumbsSwiper}
+                  slidesPerView={slides.length} // Всегда показываем все миниатюры
+                  watchSlidesProgress={true}
+                  className={s.thumbsSlider}
+                  noSwiping={true} // Отключаем свайп для миниатюр
+                  noSwipingClass={s.thumbSlide} // Указываем класс для элементов, на которых не работает свайп
+                >
+                  {slides.map((item: Slide, i: number) => (
+                    <SwiperSlide
+                      key={i}
+                      className={`${s.thumbSlide} ${activeThumbIndex === i ? s.active : ""}`}
+                      onClick={() => thumbsSwiper?.slideTo(i)}
+                    >
+                      {i + 1}
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
             ) : (
               <LinkWithWrapper dotReverce={false} isWrapper={false} name={name_btn} link={link_btn}/>
             )}

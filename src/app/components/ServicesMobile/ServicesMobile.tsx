@@ -3,17 +3,19 @@
 import s from "./ServicesMobile.module.scss";
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Thumbs } from "swiper/modules"; // Добавлен модуль Thumbs
+import {EffectCreative, Navigation, Pagination, Thumbs} from "swiper/modules"; // Добавлен модуль Thumbs
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/thumbs"; // Импорт стилей для миниатюр
+import 'swiper/css/effect-creative';
 import { NavigationOptions } from "swiper/types";
 import LinkWithWrapper from "@/app/components/Link/Link";
 import Title from "@/app/components/Title/Title";
 import Link from "next/link";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -90,7 +92,18 @@ export default function ServiceMobile({
 
         {/* Основной слайдер */}
         <Swiper
-          modules={[Pagination, Navigation, Thumbs]} // Добавлен модуль Thumbs
+          loop={true}
+          effect={'creative'}
+          creativeEffect={{
+            prev: {
+              opacity: 0,
+              translate: [0, 0, -400],
+            },
+            next: {
+              translate: ['100%', 0, 0],
+            },
+          }}
+          modules={[Pagination, Navigation, Thumbs, EffectCreative]} // Добавлен модуль Thumbs
           pagination={{
             el: paginationRef.current,
             clickable: true,
@@ -111,7 +124,7 @@ export default function ServiceMobile({
           }}
           onSlideChange={(swiper) => {
             // Обновляем индекс активного слайда
-            setActiveThumbIndex(swiper.activeIndex);
+            setActiveThumbIndex(swiper.realIndex);
           }}
         >
           {slides.map((item: Slide, i: number) => (
@@ -158,7 +171,8 @@ export default function ServiceMobile({
             {slides.map((item: Slide, i: number) => (
               <SwiperSlide
                 key={i}
-                className={`${s.thumbSlide} ${activeThumbIndex === i ? s.active : ""}`} // Добавляем кастомный класс для активного слайда
+                className={`${s.thumbSlide} ${activeThumbIndex === i ? s.active : ""}`}
+                onClick={() => thumbsSwiper?.slideTo(i)}
               >
                 {i + 1} {/* Отображаем порядковый номер слайда */}
               </SwiperSlide>

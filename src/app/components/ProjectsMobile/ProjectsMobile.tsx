@@ -10,10 +10,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/thumbs"; // Импорт стилей для миниатюр
+import 'swiper/css/effect-creative';
 import { NavigationOptions } from "swiper/types";
 import LinkWithWrapper from "@/app/components/Link/Link";
 import Title from "@/app/components/Title/Title";
 import Link from "next/link";
+import { EffectCreative } from 'swiper/modules';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -90,7 +92,18 @@ export default function ProjectsMobile({
 
         {/* Основной слайдер */}
         <Swiper
-          modules={[Pagination, Navigation, Thumbs]} // Добавлен модуль Thumbs
+          loop={true}
+          effect={'creative'}
+          creativeEffect={{
+            prev: {
+              shadow: true,
+              translate: ['-20%', 0, -1],
+            },
+            next: {
+              translate: ['100%', 0, 0],
+            },
+          }}
+          modules={[Pagination, Navigation, Thumbs, EffectCreative]} // Добавлен модуль Thumbs
           pagination={{
             el: paginationRef.current,
             clickable: true,
@@ -111,7 +124,7 @@ export default function ProjectsMobile({
           }}
           onSlideChange={(swiper) => {
             // Обновляем индекс активного слайда
-            setActiveThumbIndex(swiper.activeIndex);
+            setActiveThumbIndex(swiper.realIndex);
           }}
         >
           {slides.map((item: Slide, i: number) => (
@@ -149,16 +162,18 @@ export default function ProjectsMobile({
           {/* Слайдер миниатюр */}
           <Swiper
             modules={[Thumbs]}
-            onSwiper={setThumbsSwiper} // Устанавливаем Swiper для миниатюр
-            slidesPerView={slides.length} // Отображаем все слайды
-            freeMode={true} // Свободный режим для прокрутки миниатюр
-            watchSlidesProgress={true} // Следим за прогрессом слайдов
-            className={s.thumbsSlider} // Добавляем класс для стилизации
+            onSwiper={setThumbsSwiper}
+            slidesPerView={slides.length} // Всегда показываем все миниатюры
+            watchSlidesProgress={true}
+            className={s.thumbsSlider}
+            noSwiping={true} // Отключаем свайп для миниатюр
+            noSwipingClass={s.thumbSlide}
           >
             {slides.map((item: Slide, i: number) => (
               <SwiperSlide
                 key={i}
-                className={`${s.thumbSlide} ${activeThumbIndex === i ? s.active : ""}`} // Добавляем кастомный класс для активного слайда
+                className={`${s.thumbSlide} ${activeThumbIndex === i ? s.active : ""}`}
+                onClick={() => thumbsSwiper?.slideTo(i)}
               >
                 {i + 1} {/* Отображаем порядковый номер слайда */}
               </SwiperSlide>

@@ -92,6 +92,7 @@ export default function Slider({
           {!!title && <Title title={title} as={title_as} />}
 
           <Swiper
+            speed={500}
             loop={true} // Основной слайдер зациклен
             grabCursor={true}
             effect={'creative'}

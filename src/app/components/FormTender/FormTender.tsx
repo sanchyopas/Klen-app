@@ -85,7 +85,7 @@ export default function FormTender() {
 
     try {
       // Отправляем данные на наш API Route
-      const response = await fetch('/api/submitForm', {
+      const response = await fetch('/api/next/submitForm', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

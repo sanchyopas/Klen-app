@@ -32,7 +32,7 @@ export default function ParallaxImageBig({ image }: Props) {
             trigger: el,
             start: "top bottom",
             end: "bottom top",
-            scrub: 4,
+            scrub: 0,
           },
         }
       );

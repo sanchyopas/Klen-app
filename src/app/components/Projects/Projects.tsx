@@ -5,6 +5,7 @@ import s from "./projects.module.scss";
 import Title from "@/app/components/Title/Title";
 import ProjectCard from "@/app/components/ProjectCard/ProjectCard";
 import LinkWithWrapper from "@/app/components/Link/Link";
+import Image from "next/image";
 
 export default function Projects({ classes, title, link, projects, is_pc, isNextProjects, btn_name }: any) {
   const containerRef = useRef(null);
@@ -66,7 +67,17 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
               <ProjectCard key={project.id} id={project.id} slug={project.alias} title={project.main_screen.preview_text} image={project.main_screen.image} />
             ))
           ) : (
-            <div className={s.emptyMessage}>Нет результатов</div>
+            <div className={s.emptyMessage}>
+              <Image
+                src={"/img/not-result.svg"}
+                alt="KLЁN — architectural bureau"
+                width={160}
+                height={142}
+                priority
+                quality={100}
+              />
+              <span>Не найдено подходящих проектов</span>
+            </div>
           )}
         </div>
 

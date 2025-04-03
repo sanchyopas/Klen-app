@@ -79,7 +79,7 @@ export default function FormProject() {
 
     try {
       // Отправляем данные на API
-      const response = await fetch('/api/submitForm', {
+      const response = await fetch('/api/next/submitForm', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs'
 import path from 'path'
+import axios from 'axios'
 
 export default async function handler(req, res) {
   // 1. Проверка метода
@@ -21,19 +22,56 @@ export default async function handler(req, res) {
       )
     )
 
-    // 3. Ревалидация для Pages Router
-    await res.revalidate('/')
-    await res.revalidate('/projects')
-    await res.revalidate('/projects/[slug]')
-    await res.revalidate('/services')
-    await res.revalidate('/services/[slug]')
-    await res.revalidate('/contacts')
-    await res.revalidate('/privacy')
-    await res.revalidate('/buro')
+    // 3. Получение ссылок из sitemap.xml и ревалидация
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const sitemapUrl = `${API_URL}/sitemap.xml`
+
+    let urlsToRevalidate = []
+
+    try {
+      // Получаем содержимое sitemap.xml
+      const response = await axios.get(sitemapUrl)
+      const sitemapContent = response.data
+
+      // Парсим URL из sitemap (простая реализация)
+      const urlRegex = /<loc>(.*?)<\/loc>/g
+      let match
+      while ((match = urlRegex.exec(sitemapContent)) !== null) {
+        const url = match[1]
+        // Извлекаем путь (удаляем домен)
+        const path = new URL(url).pathname
+        urlsToRevalidate.push(path)
+      }
+
+      console.log('Found URLs to revalidate:', urlsToRevalidate)
+    } catch (sitemapError) {
+      console.error('Error fetching or parsing sitemap:', sitemapError)
+      // Если не удалось получить sitemap, используем дефолтные URL
+      urlsToRevalidate = [
+        '/',
+        '/projects',
+        '/projects/[slug]',
+        '/services',
+        '/services/[slug]',
+        '/contacts',
+        '/privacy',
+        '/buro'
+      ]
+    }
+
+    // Ревалидируем все найденные URL
+    await Promise.all(
+      urlsToRevalidate.map(path =>
+        res.revalidate(path).catch(e =>
+          console.error(`Error revalidating ${path}:`, e)
+        )
+      )
+    )
 
     return res.json({
       success: true,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      revalidatedUrls: urlsToRevalidate
     })
 
   } catch (error) {

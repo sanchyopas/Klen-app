@@ -27,15 +27,25 @@ export const ClientServices = ({cases}:Props) => {
                       <p>{item.main_screen.preview_text}</p>
                       <div className={s.linkList}>
                         {
-                          item.subservice.map((item: any, i:number)=>(
-                            <LinkWithWrapper
-                              key={i}
-                              className={s.linkWrapper}
-                              link={`/services/${item.alias}`}
-                              dotReverce={false}
-                              isWrapper={false}
-                              name={item.pagetitle}
-                            />
+                          item.subservice.map((itemLink: any, i: number) => (
+                            item.alias == itemLink.alias ?
+                              <LinkWithWrapper
+                                key={i}
+                                className={s.linkWrapper}
+                                link={`/services/${itemLink.alias}`}
+                                dotReverce={false}
+                                isWrapper={false}
+                                name={itemLink.pagetitle}
+                              />
+                            :
+                              <LinkWithWrapper
+                                key={i}
+                                className={s.linkWrapper}
+                                link={`/services/${item.alias}/${itemLink.alias}`}
+                                dotReverce={false}
+                                isWrapper={false}
+                                name={itemLink.pagetitle}
+                              />
                           ))
                         }
                       </div>

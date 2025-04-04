@@ -7,13 +7,16 @@ import {createMetadate} from "@/app/utils/seo";
 
 
 type Params = {
-  slug: string;
+  slug: string | string[];
 }
 
-async function getService(slug: string) {
+async function getService(slug: string | string[]) {
+
+  const slugUrl = typeof slug !== "string" ? slug.join('/') : slug;
+
   try {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
-    const res = await fetch(`${API_URL}/api/services/${slug}`, {
+    const res = await fetch(`${API_URL}/api/services/${slugUrl}`, {
       next: { revalidate: 60 },
     });
 

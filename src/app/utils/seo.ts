@@ -1,4 +1,4 @@
-export async function createMetadate(data: any, dataParam?: string): Promise<any> {
+export async function createMetadate(data: any, dataParam?: string | string[]): Promise<any> {
   const result = !!dataParam ? await data(dataParam) : await data();
 
   if (!result || !result.object?.seo) {

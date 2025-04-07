@@ -62,6 +62,10 @@
       @media (max-width: 767px) {
         gap: 8px 20px;
       }
+
+      a {
+        text-transform: initial;
+      }
     }
   }
 

@@ -6,6 +6,7 @@ import s from "./form-tender.module.scss";
 import ButtonWithWrapper from "@/app/components/Button/Button";
 import ThankYou from "@/app/components/ThankYou/ThankYou";
 import {useModalStore} from "@/app/components/Modal/modalStore";
+import Recaptcha from "@/app/components/Recaptcha/Recaptcha";
 
 // Схема валидации с использованием Zod
 const schema = z.object({
@@ -29,6 +30,8 @@ export default function FormTender() {
   const { openModal } = useModalStore();
   const [isSubmitting, setIsSubmitting] = useState(false); // Состояние отправки формы
   const [error, setError] = useState<string | null>(null); // Состояние ошибки
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Токен reCAPTCHA
+  const [recaptchaError, setRecaptchaError] = useState(false); // Ошибка reCAPTCHA
 
   const {
     register,
@@ -84,13 +87,34 @@ export default function FormTender() {
     setError(null);
 
     try {
+      // Проверка reCAPTCHA
+      if (!recaptchaToken) {
+        throw new Error('Пройдите проверку reCAPTCHA');
+      }
+
+      // Валидация reCAPTCHA на сервере
+      const recaptchaResponse = await fetch('/api/next/recaptcha', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: recaptchaToken })
+      });
+
+      const recaptchaData = await recaptchaResponse.json();
+
+      if (!recaptchaData.success || recaptchaData.score < 0.5) {
+        throw new Error('Проверка безопасности не пройдена');
+      }
+
       // Отправляем данные на наш API Route
       const response = await fetch('/api/next/submitForm', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          recaptchaScore: recaptchaData.score
+        }),
       });
 
       if (!response.ok) {
@@ -108,7 +132,7 @@ export default function FormTender() {
       console.log('Форма успешно отправлена:', result);
     } catch (error) {
       console.error('Ошибка:', error);
-      setError('Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.');
+      setError(error instanceof Error ? error.message : 'Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.');
     } finally {
       setIsSubmitting(false);
     }
@@ -188,6 +212,17 @@ export default function FormTender() {
         {errors.message && <p>{errors.message.message}</p>}
       </div>
 
+      {/* Добавляем reCAPTCHA */}
+      <Recaptcha
+        action="form_submission"
+        onVerify={setRecaptchaToken}
+        onError={() => setRecaptchaError(true)}
+      />
+
+      {recaptchaError && (
+        <p className={s.error}>Ошибка загрузки reCAPTCHA. Пожалуйста, обновите страницу.</p>
+      )}
+
       <div>
         <span>Нажимая на кнопку «Отправить», вы соглашаетесь на обработку персональных данных</span>
         <ButtonWithWrapper
@@ -198,6 +233,8 @@ export default function FormTender() {
           disabled={isSubmitting}
         />
       </div>
+
+      {error && <p className={s.error}>{error}</p>}
     </form>
   );
 }

@@ -1,31 +1,33 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import React, { useState } from 'react';
+'use client'
+
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import s from "./form-project.module.scss";
+import React, { useState } from 'react'
+import { useModalStore } from '@/app/components/Modal/modalStore'
+import ThankYou from '@/app/components/ThankYou/ThankYou'
+import Recaptcha from "@/app/components/Recaptcha/Recaptcha";
 import ButtonWithWrapper from "@/app/components/Button/Button";
-import {useModalStore} from "@/app/components/Modal/modalStore";
-import ThankYou from "@/app/components/ThankYou/ThankYou";
 
-// Схема валидации с использованием Zod
 const schema = z.object({
-  name: z.string().optional(), // Имя не обязательно
-  phone: z
-  .string()
-  .min(1, { message: 'поле обязательно для заполнения' }) // Телефон обязателен
+  name: z.string().optional(),
+  phone: z.string()
+  .min(1, { message: 'Поле обязательно для заполнения' })
   .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
-    message: 'Номер введен не корректно',
+    message: 'Номер введен некорректно',
   }),
-  message: z.string().optional(), // Сообщение не обязательно
-});
+  message: z.string().optional(),
+})
 
-// Тип данных формы на основе схемы
-type FormData = z.infer<typeof schema>;
+type FormData = z.infer<typeof schema>
 
 export default function FormProject() {
-  const { openModal } = useModalStore();
-  const [isSubmitting, setIsSubmitting] = useState(false); // Состояние отправки формы
-  const [error, setError] = useState<string | null>(null); // Состояние ошибки
+  const { openModal } = useModalStore()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
+  const [recaptchaError, setRecaptchaError] = useState(false)
 
   const {
     register,
@@ -35,90 +37,87 @@ export default function FormProject() {
     watch,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    mode: 'onSubmit', // Валидация только при отправке формы
-  });
+    mode: 'onSubmit',
+  })
 
-  const phoneValue = watch('phone', ''); // Отслеживаем значение поля phone
+  const phoneValue = watch('phone', '')
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, ''); // Убираем все нецифровые символы
+    let value = e.target.value.replace(/\D/g, '')
 
-    // Если значение пустое, сбрасываем поле
     if (!value) {
-      setValue('phone', '');
-      return;
+      setValue('phone', '')
+      return
     }
 
-    // Если номер начинается с 8 или 7, заменяем на +7
     if (value.startsWith('8') || value.startsWith('7')) {
-      value = `7${value.slice(1)}`; // Убираем первую цифру (8 или 7)
+      value = `7${value.slice(1)}`
     }
 
-    // Форматируем номер в +7 (XXX) XXX-XX-XX
-    let formattedValue = '+7';
-    if (value.length > 1) {
-      formattedValue += ` (${value.slice(1, 4)}`;
-    }
-    if (value.length > 4) {
-      formattedValue += `) ${value.slice(4, 7)}`;
-    }
-    if (value.length > 7) {
-      formattedValue += `-${value.slice(7, 9)}`;
-    }
-    if (value.length > 9) {
-      formattedValue += `-${value.slice(9, 11)}`;
-    }
+    let formattedValue = '+7'
+    if (value.length > 1) formattedValue += ` (${value.slice(1, 4)}`
+    if (value.length > 4) formattedValue += `) ${value.slice(4, 7)}`
+    if (value.length > 7) formattedValue += `-${value.slice(7, 9)}`
+    if (value.length > 9) formattedValue += `-${value.slice(9, 11)}`
 
-    // Обновляем значение поля
-    setValue('phone', formattedValue, { shouldValidate: false }); // Отключаем валидацию при изменении
-  };
+    setValue('phone', formattedValue, { shouldValidate: false })
+  }
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    setIsSubmitting(true); // Начинаем отправку
-    setError(null); // Сбрасываем ошибку
+    setIsSubmitting(true)
+    setError(null)
 
     try {
-      // Отправляем данные на API
-      const response = await fetch('/api/next/submitForm', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: data.name,
-          phone: data.phone,
-          message: data.message,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Ошибка при отправке формы');
+      // Проверка reCAPTCHA
+      if (!recaptchaToken) {
+        throw new Error('Пройдите проверку reCAPTCHA')
       }
 
-      const result = await response.json();
+      // Валидация reCAPTCHA на сервере
+      const recaptchaResponse = await fetch('/api/next/recaptcha', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: recaptchaToken })
+      })
 
-      // Открываем модальное окно с благодарностью
+      const recaptchaData = await recaptchaResponse.json()
+
+      if (!recaptchaData.success || recaptchaData.score < 0.5) {
+        throw new Error('Проверка безопасности не пройдена')
+      }
+
+      // Отправка формы
+      const response = await fetch('/api/next/submitForm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...data,
+          recaptchaScore: recaptchaData.score
+        })
+      })
+
+      if (!response.ok) throw new Error('Ошибка при отправке формы')
+
       openModal({
         title: 'Спасибо за заявку',
         content: <ThankYou />,
-      });
+      })
 
-      console.log('Форма успешно отправлена:', result);
     } catch (error) {
-      console.error('Ошибка:', error);
-      setError('Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.');
+      console.error('Ошибка:', error)
+      setError(error instanceof Error ? error.message : 'Произошла ошибка')
     } finally {
-      setIsSubmitting(false); // Завершаем отправку
+      setIsSubmitting(false)
     }
-  };
+  }
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)} noValidate>
       <div>
         <input
           id="name"
-          {...register('name')} // Регистрируем поле "name"
-          placeholder="имя"
+          {...register('name')}
+          placeholder="Имя"
         />
       </div>
 
@@ -126,22 +125,32 @@ export default function FormProject() {
         <input
           id="phone"
           type="tel"
-          {...register('phone')} // Регистрируем поле "phone"
+          {...register('phone')}
           value={phoneValue}
-          onChange={handlePhoneChange} // Обрабатываем ввод
-          placeholder="телефон*"
-          className={!!errors.phone ? s.isInvalid : ''}
+          onChange={handlePhoneChange}
+          placeholder="Телефон*"
+          className={errors.phone ? s.isInvalid : ''}
         />
-        {errors.phone && <p>{errors.phone.message}</p>}
+        {errors.phone && <p className={s.error}>{errors.phone.message}</p>}
       </div>
 
       <div>
         <textarea
           id="message"
-          {...register('message')} // Регистрируем поле "message"
-          placeholder="сообщение"
+          {...register('message')}
+          placeholder="Сообщение"
         />
       </div>
+
+      <Recaptcha
+        action="form_submission"
+        onVerify={setRecaptchaToken}
+        onError={() => setRecaptchaError(true)}
+      />
+
+      {recaptchaError && (
+        <p className={s.error}>Ошибка загрузки reCAPTCHA. Пожалуйста, обновите страницу.</p>
+      )}
 
       <div>
         <span>Нажимая на кнопку «Отправить», вы соглашаетесь на обработку персональных данных</span>
@@ -154,7 +163,7 @@ export default function FormProject() {
         />
       </div>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className={s.error}>{error}</p>}
     </form>
-  );
+  )
 }

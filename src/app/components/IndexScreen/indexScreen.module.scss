@@ -1,6 +1,7 @@
 #hello {
   position: relative;
   height: calc(100svh - 72px);
+  min-height: 300px;
   width: calc(100% - 80px);
   max-width: calc(1920px - 80px);
   margin: 0 auto;

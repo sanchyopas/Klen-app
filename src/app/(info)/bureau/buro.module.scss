@@ -23,6 +23,7 @@
 
     & > div {
       max-height: calc(100svh - 80px);
+      min-height: 500px;
       aspect-ratio: initial;
       img {
         height: 100%;

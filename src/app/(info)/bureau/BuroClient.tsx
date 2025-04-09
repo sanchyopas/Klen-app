@@ -36,19 +36,23 @@ export default function BuroClient({ main_screen, about_bureau, team_block }: Bu
 
       const wrapper = nameListWrapperRef.current;
       const children = Array.from(wrapper.children) as HTMLElement[];
+
+      // Проверка на пустой массив
+      if (children.length === 0) return;
+
       const viewportCenter = window.innerHeight / 2;
 
-      // Создаем массив с информацией о всех элементах
-      const childrenData: ClosestChild[] = children.map((child, index) => {
+      const childrenData = children.map((child, index) => {
         const rect = child.getBoundingClientRect();
         const childCenter = rect.top + rect.height / 2;
         const distance = Math.abs(childCenter - viewportCenter);
         return { index, distance };
       });
 
-      // Находим элемент с минимальным расстоянием
-      const closest = childrenData.reduce((prev, current) =>
-        current.distance < prev.distance ? current : prev
+      // Добавляем начальное значение для reduce
+      const closest = childrenData.reduce(
+        (prev, current) => (current.distance < prev.distance ? current : prev),
+        { index: 0, distance: Infinity } // Начальное значение
       );
 
       setActiveIndex(closest.index);
@@ -57,9 +61,7 @@ export default function BuroClient({ main_screen, about_bureau, team_block }: Bu
     window.addEventListener('scroll', handleScroll);
     handleScroll();
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const toggleItem = (index: number) => {

@@ -31,9 +31,10 @@ export default function Footer () {
 
               <nav>
                 <ul>
-                  {/*<li>*/}
-                  {/*  <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Бюро"} link={"/buro"} />*/}
-                  {/*</li>*/}
+                  <li>
+                    <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Бюро"}
+                                     link={"/bureau"} />
+                  </li>
                   <li>
                     <LinkWithWrapper className="" dotReverce={true} isWrapper={false} name={"Проекты"}
                                      link={"/projects"}/>

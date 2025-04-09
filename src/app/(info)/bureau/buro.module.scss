@@ -1,0 +1,157 @@
+.first_screen {
+  position: relative;
+  // height: 100svh;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 40px 40px;
+  aspect-ratio: 1173 / 580;
+  overflow: hidden;
+  .image_wrapper {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.about_bureau {
+  & > div {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .left, .right {
+    width: 50%;
+
+    & > div {
+      max-width: 555px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+
+      div {
+        opacity: .8;
+      }
+    }
+  }
+
+  .left {
+    & > div {
+      position: sticky;
+      top: 90px;
+    }
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+}
+
+.team {
+  & > div {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .name_list {
+    padding-bottom: 240px;
+
+    .title {
+      max-width: 555px;
+      display: block;
+      margin-bottom: 80px;
+
+      h2 {
+
+      }
+
+      p {
+        margin-top: 40px;
+        opacity: .8;
+      }
+    }
+
+    .name_list__wrapper {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+
+      div {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: 20px;
+
+        .name {
+          width: 555px;
+          font-size: 40px;
+          margin: 0;
+          line-height: 1.2;
+          font-weight: 600;
+          opacity: .4;
+          transition: all .2s ease;
+        }
+
+        .role {
+          display: block;
+          width: 325px;
+          text-transform: lowercase;
+          opacity: .8;
+          text-align: right;
+        }
+
+        &.active {
+          .name {
+            opacity: 1;
+          }
+        }
+      }
+
+    }
+
+  }
+
+  .teammate {
+    position: sticky;
+    top: calc(50lvh - (325px / 2));
+    width: 325px;
+    height: 325px;
+
+    div {
+      display: none;
+      img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+      }
+
+      div {
+        display: block;
+        margin: 20px 0 0 0;
+        opacity: .8;
+      }
+
+      &.active {
+        display: block;
+      }
+    }
+
+  }
+}

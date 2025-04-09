@@ -122,11 +122,10 @@ export default function Header({ headerData }: HeaderProps) {
   }, [prevScrollPos]);
 
 const menuItem = [
-  // {
-  //   "name": "Бюро",
-  //   "link": "/buro"
-  // },
   {
+    "name": "Бюро",
+    "link": "/bureau"
+  }, {
     "name": "Проекты",
     "link": "/projects"
   },{

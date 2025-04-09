@@ -115,7 +115,7 @@ export default function BuroClient({ main_screen, about_bureau, team_block }: Bu
             </div>
           </div>
 
-          <div>
+          <div className={s.teammate_wrapper}>
             <div className={s.teammate}>
               {teamData.map((item, index) => (
                 <div className={index === activeIndex ? s.active : ''} key={index}>

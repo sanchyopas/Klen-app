@@ -1,6 +1,7 @@
 "use client"
 import s from './buro.module.scss'
 import { useEffect, useRef, useState } from 'react'
+import ParallaxImageBig from "@/app/components/ParallaxImageBig/ParallaxImageBig";
 
 interface TeamMember {
   name: string;
@@ -25,6 +26,7 @@ interface ClosestChild {
 export default function BuroClient({ main_screen, about_bureau, team_block }: BuroClientProps) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const nameListWrapperRef = useRef<HTMLDivElement>(null);
   const teamData = team_block?.team || [];
 
@@ -60,13 +62,19 @@ export default function BuroClient({ main_screen, about_bureau, team_block }: Bu
     };
   }, []);
 
+  const toggleItem = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
     <>
-      <section className={s.first_screen}>
-        <div className={s.image_wrapper}>
-          <img src={`${API_URL}${main_screen.image.image}`} alt=""/>
-        </div>
-      </section>
+      {/*<section className={s.first_screen}>*/}
+      {/*  <div className={s.image_wrapper}>*/}
+      {/*    <img src={`${API_URL}${main_screen.image.image}`} alt=""/>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
+
+      <ParallaxImageBig className={s.first_screen} image={main_screen.image.retina} imageMobile={main_screen.image.mobile}  yStart={-300} yEnd={-1} />
 
       <section className={s.about_bureau}>
         <div className="container">
@@ -82,7 +90,7 @@ export default function BuroClient({ main_screen, about_bureau, team_block }: Bu
 
             {
               about_bureau.list.map((item: any, i: number) => (
-                <div>
+                <div key={i}>
                   <h3>{item.title}</h3>
                   <div dangerouslySetInnerHTML={{__html: item.text}}/>
                 </div>
@@ -118,9 +126,15 @@ export default function BuroClient({ main_screen, about_bureau, team_block }: Bu
           <div className={s.teammate_wrapper}>
             <div className={s.teammate}>
               {teamData.map((item, index) => (
-                <div className={index === activeIndex ? s.active : ''} key={index}>
-                  <img src={`${API_URL}${item.image}`} alt={item.name}/>
-                  <div dangerouslySetInnerHTML={{ __html: item.text }}/>
+                <div className= {`${index === activeIndex ? s.active : ''} ${openIndex === index ? s.open : ''} `} key={index}>
+                  <div className={s.head} onClick={() => toggleItem(index)}>{item.name}</div>
+                  <div className={s.content}>
+                    <div className={s.image_wrapper}>
+                      <img src={`${API_URL}${item.image}`} alt={item.name}/>
+                    </div>
+                    <div dangerouslySetInnerHTML={{__html: item.text}}/>
+                    <div className={s.role}>{item.position}</div>
+                  </div>
                 </div>
               ))}
             </div>

@@ -224,6 +224,24 @@
     object-fit: cover;
     transform: translateY(0px);
     will-change: transform;
+    @media (max-width: 767px) {
+      height: 100%;
+    }
+  }
+
+  &.forMobileImage {
+    img {
+      display: block;
+      &.parallaxImage_mobile {
+        display: none;
+      }
+      @media (max-width: 767px) {
+        display: none;
+        &.parallaxImage_mobile {
+          display: block;
+        }
+      }
+    }
   }
 }
 

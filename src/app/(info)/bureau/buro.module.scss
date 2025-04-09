@@ -1,21 +1,32 @@
 .first_screen {
-  position: relative;
-  // height: 100svh;
-  width: 100%;
-  max-width: 1920px;
-  margin: 0 auto;
-  padding: 40px 40px;
-  aspect-ratio: 1173 / 580;
-  overflow: hidden;
-  .image_wrapper {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    img {
+  & > div {
+    position: relative;
+    &:before {
+      content: '';
       display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 40px;
+      right: 40px;
+      bottom: 0;
+      background: #000;
+      z-index: 1;
+      opacity: .2;
+      @media (max-width: 767px) {
+        left: 12px;
+        right: 12px;
+      }
+    }
+  }
+  @media (max-width: 767px) {
+    padding: 0;
+
+    & > div {
+      max-height: calc(100svh - 80px);
+      aspect-ratio: initial;
+      img {
+        height: 100%;
+      }
     }
   }
 }
@@ -27,17 +38,29 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+    gap: 40px;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+    }
   }
 
   .left, .right {
     width: 50%;
+    @media (max-width: 767px) {
+      width: 100%;
+    }
 
     & > div {
       max-width: 555px;
-
       display: flex;
       flex-direction: column;
       gap: 40px;
+
+      @media (max-width: 767px) {
+        max-width: 100%;
+        gap: 20px;
+      }
 
       div {
         opacity: .8;
@@ -56,6 +79,10 @@
     display: flex;
     flex-direction: column;
     gap: 80px;
+    @media (max-width: 767px) {
+      max-width: 100%;
+      gap: 40px;
+    }
   }
 }
 
@@ -66,15 +93,31 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+    gap: 40px;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+    }
   }
 
   .name_list {
     padding-bottom: 240px;
+    width: calc(71% - 20px);
+    max-width: 900px;
+
+    @media (max-width: 767px) {
+      padding-bottom: 0;
+      width: 100%;
+    }
 
     .title {
       max-width: 555px;
       display: block;
       margin-bottom: 80px;
+
+      @media (max-width: 767px) {
+        margin-bottom: 0;
+      }
 
       h2 {
 
@@ -83,6 +126,9 @@
       p {
         margin-top: 40px;
         opacity: .8;
+        @media (max-width: 767px) {
+          margin-top: 20px;
+        }
       }
     }
 
@@ -91,26 +137,43 @@
       flex-direction: column;
       flex-wrap: nowrap;
       justify-content: space-between;
-
-      div {
+      @media (max-width: 767px) {
+        display: none;
+      }
+      & > div {
+        width: 100%;
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
         gap: 20px;
 
+        div:nth-child(1) {
+          max-width: 555px;
+          width: calc(62% - 10px);
+        }
+        div:nth-child(2) {
+          max-width: 325px;
+          width: calc(38% - 10px);
+        }
+
         .name {
-          width: 555px;
           font-size: 40px;
           margin: 0;
           line-height: 1.2;
           font-weight: 600;
           opacity: .4;
           transition: all .2s ease;
+          @media (max-width: 1199px) {
+            font-size: 36px;
+          }
+          @media (max-width: 991px) {
+            font-size: 32px;
+          }
         }
 
         .role {
           display: block;
-          width: 325px;
+          padding: 12px 0;
           text-transform: lowercase;
           opacity: .8;
           text-align: right;
@@ -128,33 +191,146 @@
   }
 
   .teammate_wrapper {
+    width: calc(29% - 20px);
+    max-width: 325px;
     padding-bottom: 200px;
+    aspect-ratio: 1 / 1;
+    @media (max-width: 767px) {
+      width: 100%;
+      max-width: 100%;
+      padding-bottom: 0;
+      aspect-ratio: initial;
+    }
   }
 
   .teammate {
     position: sticky;
     top: calc(50lvh - (325px / 2));
-    width: 325px;
-    height: 325px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
 
-    div {
+    @media (max-width: 767px) {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      top: 0;
+      aspect-ratio: initial;
+    }
+
+    & > div {
       display: none;
-      img {
-        display: block;
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-      }
-
-      div {
-        display: block;
-        margin: 20px 0 0 0;
-        opacity: .8;
-      }
 
       &.active {
         display: block;
       }
+
+      @media (max-width: 767px){
+        display: block;
+      }
+
+      .head,
+      .role{
+        display: none!important;
+        @media (max-width: 767px){
+          display: block!important;
+        }
+      }
+
+      .head {
+        position: relative;
+        font-size: 20px;
+        line-height: 1.4;
+        font-weight: 600;
+        &:before {
+          content: '';
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%) rotate(45deg);
+          display: block;
+          width: 24px;
+          height: 24px;
+          background: url(/img/icon/X.svg) no-repeat center;
+          transition: all .2s ease;
+        }
+      }
+
+      .content{
+        @media (max-width: 767px) {
+          display: flex;
+          flex-direction: column-reverse;
+          max-height: 0;
+          opacity: 0;
+          transition: all 0.3s ease;
+          overflow: hidden;
+          &:before,
+          &:after {
+            content: "";
+            display: block;
+            width: 100%;
+          }
+
+          &:before {
+            height: 20px;
+          }
+
+          &:after {
+            height: 8px;
+          }
+        }
+        div {
+          display: block;
+          margin: 20px 0 0 0;
+          opacity: .8;
+          @media (max-width: 767px) {
+            margin-top: 8px;
+          }
+        }
+
+        .role {
+          margin: 0;
+        }
+
+        .image_wrapper {
+          position: relative;
+          margin: 0;
+          opacity: 1;
+          width: 100%;
+
+          overflow: hidden;
+
+          @media (max-width: 767px) {
+            margin-top: 20px;
+          }
+
+          img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            @media (max-width: 767px) {
+              max-width: 330px;
+            }
+          }
+        }
+
+      }
+
+      @media (max-width: 767px){
+        &.open {
+          .head {
+            &:before {
+              transform: translateY(-50%) rotate(90deg);
+            }
+          }
+          .content {
+            max-height: 800px;
+            opacity: 1;
+          }
+        }
+      }
+
     }
 
   }

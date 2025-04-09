@@ -10,9 +10,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
   image: string;
+  imageMobile?: string;
+  className?: string;
+  yStart?: number;
+  yEnd?: number;
 };
 
-export default function ParallaxImageBig({ image }: Props) {
+export default function ParallaxImageBig({ image, imageMobile, className, yStart, yEnd }: Props) {
   const imageRef = useRef(null);
 
   useEffect(() => {
@@ -24,9 +28,9 @@ export default function ParallaxImageBig({ image }: Props) {
     if (mediaQuery.matches) {
       const animation = gsap.fromTo(
         el,
-        { y: 0 },
+        { y: yStart ? yStart : 0 },
         {
-          y: -200,
+          y: yEnd ? yEnd : -200,
           ease: "easeInOut",
           scrollTrigger: {
             trigger: el,
@@ -57,16 +61,40 @@ export default function ParallaxImageBig({ image }: Props) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   return (
-    <section className={s.fullScreenImage}>
+    <section className={ `${s.fullScreenImage} ${className} ${imageMobile ? s.forMobileImage : ''}` }>
       <div className={`container ${s.containerImage}`}>
-        <Image
-          ref={imageRef}
-          src={`${API_URL}${image}`}
-          alt=""
-          className={s.parallaxImage}
-          width={1360}
-          height={720}
-        />
+
+        {imageMobile ?
+          <>
+            <Image
+              ref={imageRef}
+              src={`${API_URL}${image}`}
+              alt=""
+              className={s.parallaxImage}
+              width={1360}
+              height={720}
+              quality={0}
+            />
+            <Image
+              src={`${API_URL}${imageMobile}`}
+              alt=""
+              className={s.parallaxImage_mobile}
+              width={1360}
+              height={720}
+              quality={0}
+            />
+          </>:
+          <Image
+            ref={imageRef}
+            src={`${API_URL}${image}`}
+            alt=""
+            className={s.parallaxImage}
+            width={1360}
+            height={720}
+            quality={0}
+          />
+        }
+
       </div>
     </section>
   );

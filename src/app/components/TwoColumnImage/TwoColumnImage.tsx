@@ -9,8 +9,8 @@ import {useGsapStaggerAnimation} from "@/app/hooks/AnimationHooks/useGsapStagger
 gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
-  imageOne: string;
-  imageTwo: string;
+  imageOne: any;
+  imageTwo: any;
 };
 
 export default function TwoColumnImage({ imageOne, imageTwo }: Props) {
@@ -26,14 +26,14 @@ export default function TwoColumnImage({ imageOne, imageTwo }: Props) {
             ref={(el) => {
               if (el) imagesRef.current[0] = el;
             }}
-            src={`${API_URL}${imageOne}`}
+            src={`${API_URL}${imageOne.image}`}
             alt=""
           />
           <img
             ref={(el) => {
               if (el) imagesRef.current[1] = el;
             }}
-            src={`${API_URL}${imageTwo}`}
+            src={`${API_URL}${imageTwo.image}`}
             alt=""
           />
         </div>

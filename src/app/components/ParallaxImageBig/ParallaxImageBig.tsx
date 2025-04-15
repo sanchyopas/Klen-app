@@ -9,7 +9,7 @@ import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
-  image: string;
+  image: any;
   imageMobile?: string;
   className?: string;
   yStart?: number;
@@ -84,15 +84,27 @@ export default function ParallaxImageBig({ image, imageMobile, className, yStart
               quality={0}
             />
           </>:
-          <Image
-            ref={imageRef}
-            src={`${API_URL}${image}`}
-            alt=""
-            className={s.parallaxImage}
-            width={1360}
-            height={720}
-            quality={0}
-          />
+
+          image.hasOwnProperty("image") ?
+            <Image
+              ref={imageRef}
+              src={`${API_URL}${image.image}`}
+              alt=""
+              className={s.parallaxImage}
+              width={1360}
+              height={720}
+              quality={0}
+            />
+            :
+            <Image
+              ref={imageRef}
+              src={`${API_URL}${image}`}
+              alt=""
+              className={s.parallaxImage}
+              width={1360}
+              height={720}
+              quality={0}
+            />
         }
 
       </div>

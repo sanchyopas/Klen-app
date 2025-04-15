@@ -7,8 +7,8 @@ import {useEffect, useRef} from "react";
 gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
-  image_left: string;
-  image_right: string;
+  image_left: any;
+  image_right: any;
 }
 export default function TwoImageLeftWideNarrow({image_left, image_right}: Props){
   const imagesRef = useRef<HTMLImageElement[]>([]);
@@ -47,13 +47,13 @@ export default function TwoImageLeftWideNarrow({image_left, image_right}: Props)
               if (el) imagesRef.current[0] = el;
             }}
             className={s.wide}
-            src={`${API_URL}${image_left}`} alt="" />
+            src={`${API_URL}${image_left.image}`} alt="" />
 
           <img
             ref={(el) => {
               if (el) imagesRef.current[1] = el;
             }}
-            src={`${API_URL}${image_right}`}
+            src={`${API_URL}${image_right.image}`}
             alt="" />
         </div>
       </div>

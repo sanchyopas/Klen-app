@@ -135,7 +135,10 @@ export default function Slider({
                   item.hasOwnProperty("main_screen") ?
                     <Image src={`${API_URL}${item.main_screen.image}`} alt="" width={1360} height={720} />
                     :
-                    <Image src={`${API_URL}${item.image}`} alt="" width={1360} height={720} />
+                    item.hasOwnProperty("image") ?
+                      <Image src={`${API_URL}${item.image}`} alt="" width={1360} height={720} />
+                      :
+                      <Image src={`${API_URL}${item}`} alt="" width={1360} height={720} />
                 }
               </SwiperSlide>
             ))}

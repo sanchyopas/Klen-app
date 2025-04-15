@@ -8,9 +8,9 @@ import {useEffect, useRef} from "react";
 gsap.registerPlugin(ScrollTrigger);
 
 type Props = {
-  image_1: string,
-  image_2: string,
-  image_3: string,
+  image_1: any,
+  image_2: any,
+  image_3: any,
 }
 
 
@@ -50,19 +50,19 @@ export default function ThreeColumnImage({image_1, image_2, image_3}: Props) {
             ref={(el) => {
               if (el) imagesRef.current[0] = el;
             }}
-            src={`${API_URL}${image_1}`}
+            src={`${API_URL}${image_1.image}`}
             alt=""/>
           <img
             ref={(el) => {
               if (el) imagesRef.current[1] = el;
             }}
-            src={`${API_URL}${image_2}`}
+            src={`${API_URL}${image_2.image}`}
             alt=""/>
           <img
             ref={(el) => {
               if (el) imagesRef.current[2] = el;
             }}
-            src={`${API_URL}${image_3}`}
+            src={`${API_URL}${image_3.image}`}
             alt=""/>
         </div>
       </div>

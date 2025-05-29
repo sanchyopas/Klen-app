@@ -1,5 +1,3 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import React, { useState } from 'react';
 import s from "./form-tender.module.scss";
@@ -10,17 +8,19 @@ import Recaptcha from "@/app/components/Recaptcha/Recaptcha";
 
 // Схема валидации с использованием Zod
 const schema = z.object({
-  name: z.string().optional(), // Имя не обязательно
-  phone: z
-  .string()
-  .min(1, { message: 'поле обязательно для заполнения' }) // Телефон обязателен
+  name: z.string().optional(),
+  phone: z.string()
+  .min(1, { message: 'поле обязательно для заполнения' })
   .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
     message: 'Номер введен не корректно',
   }),
-  email: z.string().email({ message: 'поле обязательно для заполнения' }), // Email обязателен
-  city: z.string().optional(), // Город/регион не обязателен
-  type: z.enum(['tender', 'contest'], { message: 'Выберите тип' }), // Тип (тендер или конкурс) обязателен
-  message: z.string().min(1, { message: 'поле обязательно для заполнения' }), // Сообщение обязательно
+  email: z.string().email({ message: 'поле обязательно для заполнения' }),
+  city: z.string().optional(),
+  type: z.enum(['tender', 'contest'], { message: 'Выберите тип' }),
+  message: z.string().min(1, { message: 'поле обязательно для заполнения' }),
+  isAgreePolicy: z.boolean()
+  .refine(val => val, { message: 'Необходимо дать согласие' }),
+  isConsentMailing: z.boolean().optional(),
 });
 
 // Тип данных формы на основе схемы
@@ -28,71 +28,85 @@ type FormData = z.infer<typeof schema>;
 
 export default function FormTender() {
   const { openModal } = useModalStore();
-  const [isSubmitting, setIsSubmitting] = useState(false); // Состояние отправки формы
-  const [error, setError] = useState<string | null>(null); // Состояние ошибки
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null); // Токен reCAPTCHA
-  const [recaptchaError, setRecaptchaError] = useState(false); // Ошибка reCAPTCHA
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    watch,
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-    mode: 'onSubmit', // Валидация только при отправке формы
-    defaultValues: {
-      type: 'tender', // Устанавливаем значение по умолчанию для радиокнопки "Тендер"
-    },
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    phone: '',
+    email: '',
+    city: '',
+    type: 'tender',
+    message: '',
+    isAgreePolicy: false,
+    isConsentMailing: false,
   });
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [recaptchaError, setRecaptchaError] = useState(false);
 
-  const phoneValue = watch('phone', ''); // Отслеживаем значение поля phone
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target as HTMLInputElement;
+    const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, ''); // Убираем все нецифровые символы
+    let value = e.target.value.replace(/\D/g, '');
 
-    // Если значение пустое, сбрасываем поле
     if (!value) {
-      setValue('phone', '');
+      setFormData(prev => ({ ...prev, phone: '' }));
       return;
     }
 
-    // Если номер начинается с 8 или 7, заменяем на +7
     if (value.startsWith('8') || value.startsWith('7')) {
-      value = `7${value.slice(1)}`; // Убираем первую цифру (8 или 7)
+      value = `7${value.slice(1)}`;
     }
 
-    // Форматируем номер в +7 (XXX) XXX-XX-XX
     let formattedValue = '+7';
-    if (value.length > 1) {
-      formattedValue += ` (${value.slice(1, 4)}`;
-    }
-    if (value.length > 4) {
-      formattedValue += `) ${value.slice(4, 7)}`;
-    }
-    if (value.length > 7) {
-      formattedValue += `-${value.slice(7, 9)}`;
-    }
-    if (value.length > 9) {
-      formattedValue += `-${value.slice(9, 11)}`;
-    }
+    if (value.length > 1) formattedValue += ` (${value.slice(1, 4)}`;
+    if (value.length > 4) formattedValue += `) ${value.slice(4, 7)}`;
+    if (value.length > 7) formattedValue += `-${value.slice(7, 9)}`;
+    if (value.length > 9) formattedValue += `-${value.slice(9, 11)}`;
 
-    // Обновляем значение поля
-    setValue('phone', formattedValue, { shouldValidate: false }); // Отключаем валидацию при изменении
+    setFormData(prev => ({ ...prev, phone: formattedValue }));
   };
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    setIsSubmitting(true);
+  const validateForm = async () => {
+    try {
+      await schema.parseAsync(formData);
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const newErrors: typeof errors = {};
+        error.errors.forEach(err => {
+          const path = err.path[0] as keyof FormData;
+          newErrors[path] = err.message;
+        });
+        setErrors(newErrors);
+      }
+      return false;
+    }
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setError(null);
 
+    const isValid = await validateForm();
+    if (!isValid) return;
+
+    setIsSubmitting(true);
+
     try {
-      // Проверка reCAPTCHA
       if (!recaptchaToken) {
         throw new Error('Пройдите проверку reCAPTCHA');
       }
 
-      // Валидация reCAPTCHA на сервере
       const recaptchaResponse = await fetch('/api/next/recaptcha', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -105,47 +119,40 @@ export default function FormTender() {
         throw new Error('Проверка безопасности не пройдена');
       }
 
-      // Отправляем данные на наш API Route
       const response = await fetch('/api/next/submitForm', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...data,
+          ...formData,
           recaptchaScore: recaptchaData.score
-        }),
+        })
       });
 
-      if (!response.ok) {
-        throw new Error('Ошибка при отправке формы');
-      }
+      if (!response.ok) throw new Error('Ошибка при отправке формы');
 
-      const result = await response.json();
-
-      // Открываем модальное окно с благодарностью
       openModal({
         title: 'Спасибо за заявку',
         content: <ThankYou />,
       });
 
-      console.log('Форма успешно отправлена:', result);
     } catch (error) {
       console.error('Ошибка:', error);
-      setError(error instanceof Error ? error.message : 'Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.');
+      setError(error instanceof Error ? error.message : 'Произошла ошибка');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <form className={s.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form className={s.form} onSubmit={onSubmit} noValidate>
       <div className={s.radioGroup}>
         <label>
           <input
             type="radio"
+            name="type"
             value="tender"
-            {...register('type')} // Регистрируем поле "type"
+            checked={formData.type === 'tender'}
+            onChange={handleChange}
           />
           <div className={s.radio}></div>
           Тендер
@@ -153,19 +160,23 @@ export default function FormTender() {
         <label>
           <input
             type="radio"
+            name="type"
             value="contest"
-            {...register('type')} // Регистрируем поле "type"
+            checked={formData.type === 'contest'}
+            onChange={handleChange}
           />
           <div className={s.radio}></div>
           Конкурс
         </label>
-        {errors.type && <p>{errors.type.message}</p>}
+        {errors.type && <p>{errors.type}</p>}
       </div>
 
       <div>
         <input
           id="name"
-          {...register('name')} // Регистрируем поле "name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
           placeholder="имя"
         />
       </div>
@@ -174,30 +185,34 @@ export default function FormTender() {
         <input
           id="email"
           type="email"
-          {...register('email')} // Регистрируем поле "email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
           placeholder="email*"
-          className={!!errors.email ? s.isInvalid : ''}
+          className={errors.email ? s.isInvalid : ''}
         />
-        {errors.email && <p>{errors.email.message}</p>}
+        {errors.email && <p>{errors.email}</p>}
       </div>
 
       <div>
         <input
           id="phone"
           type="tel"
-          {...register('phone')} // Регистрируем поле "phone"
-          value={phoneValue}
-          onChange={handlePhoneChange} // Обрабатываем ввод
+          name="phone"
+          value={formData.phone}
+          onChange={handlePhoneChange}
           placeholder="телефон*"
-          className={!!errors.phone ? s.isInvalid : ''}
+          className={errors.phone ? s.isInvalid : ''}
         />
-        {errors.phone && <p>{errors.phone.message}</p>}
+        {errors.phone && <p>{errors.phone}</p>}
       </div>
 
       <div>
         <input
           id="city"
-          {...register('city')} // Регистрируем поле "city"
+          name="city"
+          value={formData.city}
+          onChange={handleChange}
           placeholder="город/регион"
         />
       </div>
@@ -205,14 +220,15 @@ export default function FormTender() {
       <div>
         <textarea
           id="message"
-          {...register('message')} // Регистрируем поле "message"
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
           placeholder="сообщение*"
-          className={!!errors.message ? s.isInvalid : ''}
+          className={errors.message ? s.isInvalid : ''}
         />
-        {errors.message && <p>{errors.message.message}</p>}
+        {errors.message && <p>{errors.message}</p>}
       </div>
 
-      {/* Добавляем reCAPTCHA */}
       <Recaptcha
         action="form_submission"
         onVerify={setRecaptchaToken}
@@ -223,8 +239,38 @@ export default function FormTender() {
         <p className={s.error}>Ошибка загрузки reCAPTCHA. Пожалуйста, обновите страницу.</p>
       )}
 
+      <div className="checkboxGroup">
+        <div className={`checkbox ${errors.isAgreePolicy ? 'error' : ''}`}>
+          <label>
+            <input
+              id="isAgreePolicy"
+              type="checkbox"
+              name="isAgreePolicy"
+              checked={formData.isAgreePolicy}
+              onChange={handleChange}
+            />
+            <span>
+              Я даю согласие на обработку моих персональных данных в соответствии с политикой конфиденциальности
+            </span>
+          </label>
+          {/*{errors.isAgreePolicy && <p className={s.error}>{errors.isAgreePolicy}</p>}*/}
+        </div>
+
+        <div className="checkbox">
+          <label>
+            <input
+              id="isConsentMailing"
+              type="checkbox"
+              name="isConsentMailing"
+              checked={formData.isConsentMailing}
+              onChange={handleChange}
+            />
+            <span>Я даю согласие на получение новостей, полезных материалов и рекламных предложений</span>
+          </label>
+        </div>
+      </div>
+
       <div>
-        <span>Нажимая на кнопку «Отправить», вы соглашаетесь на обработку персональных данных</span>
         <ButtonWithWrapper
           className=""
           dotReverce={false}

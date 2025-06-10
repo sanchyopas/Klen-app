@@ -285,7 +285,7 @@ export default function FormTender() {
 
         <InvisibleSmartCaptcha
           key={resetCaptcha}
-          sitekey="ysc1_BlKVNTKQxBdBJbhJ1O2OF6V9SXSszXhRChLNf7J2c755c688" // Используйте ваш sitekey SmartCaptcha
+          sitekey="ysc1_eKeOP6pXbb9ZfA3vQKGmqAX9erenRNK4oPwAc0dJ324f005e" // Используйте ваш sitekey SmartCaptcha
           onSuccess={(token: string) => {
             setCaptchaToken(token);
           }}

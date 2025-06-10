@@ -231,7 +231,7 @@ export default function FormProject() {
       <div>
         <InvisibleSmartCaptcha
           key={resetCaptcha} // Сбрасываем компонент для повторной инициализации
-          sitekey="ysc1_bMEfvroEoO4sqwnXGvlE68yXrSNvgAbPXl0ThYKg7ae7b94e" // Используйте ваш sitekey SmartCaptcha
+          sitekey="ysc1_eKeOP6pXbb9ZfA3vQKGmqAX9erenRNK4oPwAc0dJ324f005e" // Используйте ваш sitekey SmartCaptcha
           onSuccess={(token: string) => {
             setCaptchaToken(token);
           }}

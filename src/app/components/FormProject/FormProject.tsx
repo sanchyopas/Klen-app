@@ -2,11 +2,11 @@
 
 import { z } from 'zod'
 import s from "./form-project.module.scss";
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useModalStore } from '@/app/components/Modal/modalStore'
 import ThankYou from '@/app/components/ThankYou/ThankYou'
-import Recaptcha from "@/app/components/Recaptcha/Recaptcha";
 import ButtonWithWrapper from "@/app/components/Button/Button";
+import { InvisibleSmartCaptcha } from '@yandex/smart-captcha'; // Импорт SmartCaptcha
 
 const schema = z.object({
   name: z.string().optional(),
@@ -43,8 +43,11 @@ export default function FormProject() {
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
-  const [recaptchaError, setRecaptchaError] = useState(false)
+
+  // Состояния SmartCaptcha
+  const [resetCaptcha, setResetCaptcha] = useState(0);
+  const [captchaToken, setCaptchaToken] = useState('');
+  const [visible, setVisible] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target as HTMLInputElement
@@ -95,6 +98,60 @@ export default function FormProject() {
     }
   }
 
+  // Обработчики SmartCaptcha
+  const handleChallengeHidden = useCallback(() => setVisible(false), []);
+  const handleButtonClick = () => setVisible(true);
+  const handleReset = () => setResetCaptcha((prev) => prev + 1);
+
+  const successSendForm = () => {
+    setFormData({
+      name: '',
+      phone: '',
+      message: '',
+      isAgreePolicy: false,
+      isConsentMailing: false,
+    });
+    setCaptchaToken(''); // Сбрасываем токен капчи
+    handleReset(); // Сбрасываем SmartCaptcha
+    setVisible(false); // Скрываем SmartCaptcha
+    openModal({
+      title: 'Спасибо за заявку',
+      content: <ThankYou />,
+    });
+  };
+
+  useEffect(() => {
+    const submitFormWithCaptcha = async () => {
+      if (captchaToken) {
+        const isValid = await validateForm();
+        if (isValid) {
+          setIsSubmitting(true);
+          try {
+            const response = await fetch('/api/next/submitForm', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                ...formData,
+                captchaToken, // Включаем captchaToken в отправку
+              })
+            });
+
+            if (!response.ok) throw new Error('Ошибка при отправке формы');
+
+            successSendForm();
+
+          } catch (error) {
+            console.error('Ошибка:', error);
+            setError(error instanceof Error ? error.message : 'Произошла ошибка');
+          } finally {
+            setIsSubmitting(false);
+          }
+        }
+      }
+    };
+    submitFormWithCaptcha();
+  }, [captchaToken]); // Запускаем эффект при изменении captchaToken
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
@@ -102,47 +159,8 @@ export default function FormProject() {
     const isValid = await validateForm()
     if (!isValid) return
 
-    setIsSubmitting(true)
-
-    try {
-      if (!recaptchaToken) {
-        throw new Error('Пройдите проверку reCAPTCHA')
-      }
-
-      const recaptchaResponse = await fetch('/api/next/recaptcha', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: recaptchaToken })
-      })
-
-      const recaptchaData = await recaptchaResponse.json()
-
-      if (!recaptchaData.success || recaptchaData.score < 0.5) {
-        throw new Error('Проверка безопасности не пройдена')
-      }
-
-      const response = await fetch('/api/next/submitForm', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          recaptchaScore: recaptchaData.score
-        })
-      })
-
-      if (!response.ok) throw new Error('Ошибка при отправке формы')
-
-      openModal({
-        title: 'Спасибо за заявку',
-        content: <ThankYou />,
-      })
-
-    } catch (error) {
-      console.error('Ошибка:', error)
-      setError(error instanceof Error ? error.message : 'Произошла ошибка')
-    } finally {
-      setIsSubmitting(false)
-    }
+    // Если форма валидна, запускаем проверку капчи
+    handleButtonClick();
   }
 
   return (
@@ -194,7 +212,6 @@ export default function FormProject() {
               Я даю согласие на обработку моих персональных данных в соответствии с политикой конфиденциальности
             </span>
           </label>
-          {/*{errors.isAgreePolicy && <p className={s.error}>{errors.isAgreePolicy}</p>}*/}
         </div>
 
         <div className="checkbox">
@@ -211,17 +228,17 @@ export default function FormProject() {
         </div>
       </div>
 
-      <Recaptcha
-        action="form_submission"
-        onVerify={setRecaptchaToken}
-        onError={() => setRecaptchaError(true)}
-      />
-
-      {recaptchaError && (
-        <p className={s.error}>Ошибка загрузки reCAPTCHA. Пожалуйста, обновите страницу.</p>
-      )}
-
       <div>
+        <InvisibleSmartCaptcha
+          key={resetCaptcha} // Сбрасываем компонент для повторной инициализации
+          sitekey="ysc1_bMEfvroEoO4sqwnXGvlE68yXrSNvgAbPXl0ThYKg7ae7b94e" // Используйте ваш sitekey SmartCaptcha
+          onSuccess={(token: string) => {
+            setCaptchaToken(token);
+          }}
+          onChallengeHidden={handleChallengeHidden}
+          visible={visible}
+        />
+
         <ButtonWithWrapper
           className=""
           dotReverce={false}

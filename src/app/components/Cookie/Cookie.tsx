@@ -33,7 +33,7 @@ export default function Cookie() {
       showBanner ? '' : s.hide
     ].filter(Boolean).join(' ')}>
       <div className={s.header}>
-        <span className={s.text}>Сайт использует <Link href="/privacy">cookie</Link>, это помогает улучшить его работу</span>
+        <span className={s.text}>Сайт использует <Link href="/cookies">cookie</Link>, это помогает улучшить его работу</span>
         {/*<button*/}
         {/*  onClick={handleAccept}*/}
         {/*  className={s.accept}*/}

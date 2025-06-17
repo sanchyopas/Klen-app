@@ -6,7 +6,15 @@
     }
   }
 
+  a {
+    border-bottom: 1px solid;
+  }
+
   p {
+    opacity: .8!important;
+  }
+
+  p + ul {
     opacity: .8!important;
   }
 

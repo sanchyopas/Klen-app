@@ -1,14 +1,14 @@
-import s from './privacy.module.scss';
+import s from './cookies.module.scss';
 import SmallTextSection from "@/app/components/SmallTextSection/SmallTextSection";
 import {notFound} from "next/navigation";
 import React from "react";
 import {createMetadate} from "@/app/utils/seo";
 
-async function getPersonalData() {
+async function getCookiesData() {
   try {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-    const res = await fetch(`${API_URL}/api/policy`, {
+    const res = await fetch(`${API_URL}/api/cookies`, {
       next: { revalidate: 60 },
     });
 
@@ -28,13 +28,13 @@ async function getPersonalData() {
 }
 
 export async function generateMetadata() {
-  return createMetadate(getPersonalData)
+  return createMetadate(getCookiesData)
 }
 
 export default async function Personal() {
-  const res = await getPersonalData();
+  const res = await getCookiesData();
 
-  if (!res || !res.object.policy_text) {
+  if (!res || !res.object.cookie_text) {
     notFound();
     return null;
   }
@@ -42,7 +42,7 @@ export default async function Personal() {
   return (
     <>
       <div className={s.policy}>
-        <SmallTextSection title={'<h1>' + res.object.policy_title + '</h1>'} text={res.object.policy_text}/>
+        <SmallTextSection title={'<h1>' + res.object.cookie_title + '</h1>'} text={res.object.cookie_text}/>
       </div>
     </>
   );

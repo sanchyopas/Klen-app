@@ -6,7 +6,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useModalStore } from '@/app/components/Modal/modalStore'
 import ThankYou from '@/app/components/ThankYou/ThankYou'
 import ButtonWithWrapper from "@/app/components/Button/Button";
-import { InvisibleSmartCaptcha } from '@yandex/smart-captcha'; // Импорт SmartCaptcha
+import { InvisibleSmartCaptcha } from '@yandex/smart-captcha';
+import Link from "next/link"; // Импорт SmartCaptcha
 
 const schema = z.object({
   name: z.string().optional(),
@@ -209,7 +210,7 @@ export default function FormProject() {
               onChange={handleChange}
             />
             <span>
-              Я даю согласие на обработку моих персональных данных в соответствии с политикой конфиденциальности
+              Я даю <Link href={'/personal'} target={'_blank'}>согласие на обработку моих персональных данных</Link> в соответствии с <Link href={'/privacy'} target={'_blank'}>политикой конфиденциальности</Link>
             </span>
           </label>
         </div>

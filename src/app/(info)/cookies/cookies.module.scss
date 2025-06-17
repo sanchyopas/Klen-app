@@ -1,0 +1,32 @@
+.policy {
+  * {
+    opacity: 1!important;
+    @media (max-width: 767px) {
+      text-align: left!important;
+    }
+  }
+
+  p {
+    opacity: .8!important;
+  }
+
+  h1 {
+    margin-bottom: 40px;
+
+    @media (max-width: 767px) {
+      margin-bottom: 20px;
+    }
+  }
+
+  h3 {
+    margin-top: 40px!important;
+  }
+  h4 {
+    margin-top: 24px!important;
+    margin-bottom: 24px;
+  }
+
+  p + h4 {
+    margin-top: 40px!important;
+  }
+}

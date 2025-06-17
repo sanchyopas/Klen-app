@@ -4,7 +4,8 @@ import s from "./form-tender.module.scss";
 import ButtonWithWrapper from "@/app/components/Button/Button";
 import ThankYou from "@/app/components/ThankYou/ThankYou";
 import {useModalStore} from "@/app/components/Modal/modalStore";
-import { InvisibleSmartCaptcha } from '@yandex/smart-captcha'; // Импорт SmartCaptcha
+import { InvisibleSmartCaptcha } from '@yandex/smart-captcha';
+import Link from "next/link"; // Импорт SmartCaptcha
 
 // Схема валидации с использованием Zod
 const schema = z.object({
@@ -261,7 +262,7 @@ export default function FormTender() {
               onChange={handleChange}
             />
             <span>
-              Я даю согласие на обработку моих персональных данных в соответствии с политикой конфиденциальности
+              Я даю <Link href={'/personal'} target={'_blank'}>согласие на обработку моих персональных данных</Link> в соответствии с <Link href={'/privacy'} target={'_blank'}>политикой конфиденциальности</Link>
             </span>
           </label>
           {/*{errors.isAgreePolicy && <p className={s.error}>{errors.isAgreePolicy}</p>}*/}

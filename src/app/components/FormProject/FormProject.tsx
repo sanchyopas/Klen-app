@@ -210,7 +210,7 @@ export default function FormProject() {
               onChange={handleChange}
             />
             <span>
-              Я даю <Link href={'/personal'} target={'_blank'}>согласие на обработку моих персональных данных</Link> в соответствии с <Link href={'/privacy'} target={'_blank'}>политикой конфиденциальности</Link>
+              Я даю <Link href={'/consent-personal-data'} target={'_blank'}>согласие на обработку моих персональных данных</Link> в соответствии с <Link href={'/privacy'} target={'_blank'}>политикой конфиденциальности</Link>
             </span>
           </label>
         </div>

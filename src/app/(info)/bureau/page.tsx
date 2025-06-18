@@ -32,6 +32,8 @@ export default async function Buro() {
 
   const res = await getBuroData();
 
+  // console.log(res);
+
   if (!res || !res.object) {
     notFound();
     return null;
@@ -40,6 +42,8 @@ export default async function Buro() {
   const main_screen = res?.object?.main_screen
   const about_bureau = res?.object?.about_bureau
   const team_block = res?.object?.team_block
+
+  console.log(team_block)
 
   return <BuroClient main_screen={main_screen} about_bureau={about_bureau} team_block={team_block}/>
 };

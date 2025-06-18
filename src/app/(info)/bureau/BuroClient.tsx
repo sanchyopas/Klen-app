@@ -14,6 +14,8 @@ interface BuroClientProps {
   main_screen?: any;
   about_bureau?: any;
   team_block?: {
+    title: string;
+    description: string;
     team: TeamMember[];
   };
 }
@@ -28,6 +30,8 @@ export default function BuroClient({ main_screen, about_bureau, team_block }: Bu
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const nameListWrapperRef = useRef<HTMLDivElement>(null);
+  const teamTitle = team_block?.title;
+  const teamDescription = team_block?.description;
   const teamData = team_block?.team || [];
 
   useEffect(() => {
@@ -107,8 +111,8 @@ export default function BuroClient({ main_screen, about_bureau, team_block }: Bu
         <div className="container">
           <div className={s.name_list}>
             <div className={s.title}>
-              <h2>Команда</h2>
-              <p>Задача архитекторов заключается в создании зданий, которые минимизируют отрицательное воздействие на окружающую среду.</p>
+              <h2>{teamTitle}</h2>
+              <p dangerouslySetInnerHTML={{ __html: teamDescription || '' }}></p>
             </div>
 
             <div className={s.name_list__wrapper} ref={nameListWrapperRef}>

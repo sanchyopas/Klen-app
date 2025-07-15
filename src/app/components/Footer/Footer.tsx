@@ -51,17 +51,17 @@ export default function Footer () {
               </nav>
             </div>
 
-            <div className="col-12 col-md-6">
-              <Title title={"Давайте обсудим ваш проект"} as={"h2"}/>
-              <ul>
-                <li>
-                  <ButtonWithWrapper onClick={handleOpenModalBid} className="" dotReverce={false} isWrapper={false} name={"Отправить заявку"} />
-                </li>
-                <li className={s.grayLink}>
-                  <ButtonWithWrapper onClick={handleOpenModalTender} className="" dotReverce={false} isWrapper={false} name={"Пригласить в тендер"} />
-                </li>
-              </ul>
-            </div>
+            {/*<div className="col-12 col-md-6">*/}
+            {/*  <Title title={"Давайте обсудим ваш проект"} as={"h2"}/>*/}
+            {/*  <ul>*/}
+            {/*    <li>*/}
+            {/*      <ButtonWithWrapper onClick={handleOpenModalBid} className="" dotReverce={false} isWrapper={false} name={"Отправить заявку"} />*/}
+            {/*    </li>*/}
+            {/*    <li className={s.grayLink}>*/}
+            {/*      <ButtonWithWrapper onClick={handleOpenModalTender} className="" dotReverce={false} isWrapper={false} name={"Пригласить в тендер"} />*/}
+            {/*    </li>*/}
+            {/*  </ul>*/}
+            {/*</div>*/}
           </div>
         </div>
 

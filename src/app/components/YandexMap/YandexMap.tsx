@@ -181,35 +181,35 @@ export default function YandexMap({info}: InfoProps) {
                 </div>
               </div>
 
-              <div className={s["contact-info__actions"]}>
-                {[
-                  {
-                    refIndex: 0,
-                    onClick: handleOpenModalBid,
-                    name: "Отправить заявку",
-                  },
-                  {
-                    refIndex: 1,
-                    onClick: handleOpenModalTender,
-                    name: "Пригласить в тендер",
-                  },
-                ].map(({refIndex, onClick, name}) => (
-                  <div
-                    key={refIndex}
-                    ref={(el) => {
-                      if (el) buttonsRef.current[refIndex] = el;
-                    }}
-                  >
-                    <ButtonWithWrapper
-                      onClick={onClick}
-                      className=""
-                      dotReverce={false}
-                      isWrapper={false}
-                      name={name}
-                    />
-                  </div>
-                ))}
-              </div>
+              {/*<div className={s["contact-info__actions"]}>*/}
+              {/*  {[*/}
+              {/*    {*/}
+              {/*      refIndex: 0,*/}
+              {/*      onClick: handleOpenModalBid,*/}
+              {/*      name: "Отправить заявку",*/}
+              {/*    },*/}
+              {/*    {*/}
+              {/*      refIndex: 1,*/}
+              {/*      onClick: handleOpenModalTender,*/}
+              {/*      name: "Пригласить в тендер",*/}
+              {/*    },*/}
+              {/*  ].map(({refIndex, onClick, name}) => (*/}
+              {/*    <div*/}
+              {/*      key={refIndex}*/}
+              {/*      ref={(el) => {*/}
+              {/*        if (el) buttonsRef.current[refIndex] = el;*/}
+              {/*      }}*/}
+              {/*    >*/}
+              {/*      <ButtonWithWrapper*/}
+              {/*        onClick={onClick}*/}
+              {/*        className=""*/}
+              {/*        dotReverce={false}*/}
+              {/*        isWrapper={false}*/}
+              {/*        name={name}*/}
+              {/*      />*/}
+              {/*    </div>*/}
+              {/*  ))}*/}
+              {/*</div>*/}
             </div>
           </div>
         </div>

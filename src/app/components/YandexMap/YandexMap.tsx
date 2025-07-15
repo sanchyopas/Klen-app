@@ -34,7 +34,7 @@ export default function YandexMap({info}: InfoProps) {
   const contactInfoRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const listItemsRef = useRef<HTMLDivElement[]>([]);
-  const buttonsRef = useRef<HTMLDivElement[]>([]);
+  // const buttonsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     let map: any;
@@ -100,7 +100,7 @@ export default function YandexMap({info}: InfoProps) {
   useEffect(() => {
     const isTo = window.matchMedia("(max-width: 768px").matches;
     if (isTo) return;
-    gsap.set([contactInfoRef.current, titleRef.current, listItemsRef.current, buttonsRef.current], {opacity: 0});
+    gsap.set([contactInfoRef.current, titleRef.current, listItemsRef.current], {opacity: 0}); //, buttonsRef.current
 
     const tl = gsap.timeline({
       defaults: {duration: 1, ease: "power3.out"},
@@ -112,13 +112,13 @@ export default function YandexMap({info}: InfoProps) {
 
     tl.fromTo(contactInfoRef.current, {opacity: 0, y: 50}, {opacity: 1, y: 0}, "+=0.5")
       .fromTo(titleRef.current, {opacity: 0, y: 20}, {opacity: 1, y: 0}, "-=0.2")
-      .fromTo(listItemsRef.current, {opacity: 0, y: 20}, {opacity: 1, y: 0, stagger: 0.2}, "-=0.6")
-      .fromTo(buttonsRef.current, {opacity: 0, y: 20}, {opacity: 1, y: 0, stagger: 0.2}, "-=0.6");
+      .fromTo(listItemsRef.current, {opacity: 0, y: 20}, {opacity: 1, y: 0, stagger: 0.2}, "-=0.6");
+      //.fromTo(buttonsRef.current, {opacity: 0, y: 20}, {opacity: 1, y: 0, stagger: 0.2}, "-=0.6");
   }, []);
 
-  const {handleOpenModalBid, handleOpenModalTender} = useModalHandlers();
-
-  const {openModal} = useModalStore();
+  // const {handleOpenModalBid, handleOpenModalTender} = useModalHandlers();
+  //
+  // const {openModal} = useModalStore();
 
   return (
     <div className={s.map}>

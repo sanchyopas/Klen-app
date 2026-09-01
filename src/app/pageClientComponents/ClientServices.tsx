@@ -45,8 +45,8 @@ export const ClientServices = ({cases}:Props) => {
     const oldImage = imageContainerRef.current.querySelector(`.${s.activeImage}`) as HTMLImageElement | null;
     const newImage = document.createElement("img");
     newImage.src = `${API_URL}${item.main_screen.image}`;
-    newImage.alt = item.main_screen.title;
-    newImage.title = item.main_screen.title;
+    newImage.alt = item.main_screen.title ?? '';
+    newImage.title = item.main_screen.title ?? '';
     newImage.className = `${s.animatedImage} ${s.activeImage}`;
     newImage.style.opacity = "0";
     newImage.style.transform = "scale(1.2)";
@@ -101,7 +101,7 @@ export const ClientServices = ({cases}:Props) => {
                       onClick={() => handleSelect(index)}
                       aria-expanded={activeIndex === index}
                     >
-                      <h3>{item.main_screen.title}</h3>
+                      <h3>{item.main_screen?.title}</h3>
                     </button>
 
                     <div
@@ -114,11 +114,11 @@ export const ClientServices = ({cases}:Props) => {
                           panelRefs.current[index] = node;
                         }}
                       >
-                        {!!item.main_screen.preview_text && <p>{item.main_screen.preview_text}</p>}
+                        {!!item.main_screen?.preview_text && <p>{item.main_screen.preview_text}</p>}
 
                         <div className={s.linkList}>
                           {
-                            item.subservice.map((itemLink: any, i: number) => (
+                            (item.subservice ?? []).map((itemLink: any, i: number) => (
                               <LinkWithWrapper
                                 key={itemLink.id ?? i}
                                 className={s.linkWrapper}

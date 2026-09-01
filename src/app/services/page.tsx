@@ -33,5 +33,11 @@ export default async function ServicesPage() {
     notFound();
     return null;
   }
-  return <ClientServices cases={result.object.cases} />;
+
+  // API отдаёт order (позицию в дереве MODx), но сам массив им не отсортирован
+  const cases = [...result.object.cases].sort(
+    (a: any, b: any) => (a.order ?? 0) - (b.order ?? 0)
+  );
+
+  return <ClientServices cases={cases} />;
 }

@@ -10,26 +10,87 @@ type Params = {
   slug: string | string[];
 }
 
+// У части услуг в MODx включён флаг «ресурс — папка», из-за чего их uri
+// хранится со слэшем на конце. Бэкендовый /api/services/[...slug] сравнивает
+// путь с uri буквально и на таких ресурсах всегда отдаёт 404, хотя ресурс
+// существует и опубликован (проверено: /api/services/{id} для них работает).
+// Резолвим id по дереву /api/services и переспрашиваем по нему — обходим
+// баг бэкенда, не трогая сам бэкенд.
+async function resolveServiceIdByPath(apiUrl: string, segments: string[]) {
+  const res = await fetch(`${apiUrl}/api/services`, {
+    next: { revalidate: 60 },
+  });
+
+  if (!res.ok) {
+    return null;
+  }
+
+  const data = await res.json();
+  const topLevel = data?.object?.cases;
+
+  if (!Array.isArray(topLevel) || segments.length === 0) {
+    return null;
+  }
+
+  const [firstSlug, ...restSlugs] = segments;
+  const category = topLevel.find((item: any) => item.alias === firstSlug);
+
+  if (!category) {
+    return null;
+  }
+
+  if (restSlugs.length === 0) {
+    return category.id ?? null;
+  }
+
+  const lastSlug = restSlugs[restSlugs.length - 1];
+  const child = (category.subservice ?? []).find((item: any) => item.alias === lastSlug);
+
+  return child?.id ?? null;
+}
+
 async function getService(slug: string | string[]) {
 
-  const slugUrl = typeof slug !== "string" ? slug.join('/') : slug;
+  const segments = typeof slug !== "string" ? slug : [slug];
+  const slugUrl = segments.join('/');
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
     const res = await fetch(`${API_URL}/api/services/${slugUrl}`, {
       next: { revalidate: 60 },
     });
 
-    if (!res.ok) {
-      if (res.status === 404) {
-        return null;
-      }
-      throw new Error(`Ошибка загрузки данных: ${res.status} ${res.statusText}`);
+    if (res.ok) {
+      return res.json();
     }
 
-    return res.json();
+    if (res.status !== 404) {
+      throw new Error(`Ошибка загрузки данных: ${res.status} ${res.statusText}`);
+    }
   } catch (error) {
     console.error("Ошибка получения данных проекта:", error);
+    return null;
+  }
+
+  try {
+    const id = await resolveServiceIdByPath(API_URL as string, segments);
+
+    if (!id) {
+      return null;
+    }
+
+    const byIdRes = await fetch(`${API_URL}/api/services/${id}`, {
+      next: { revalidate: 60 },
+    });
+
+    if (!byIdRes.ok) {
+      return null;
+    }
+
+    return byIdRes.json();
+  } catch (error) {
+    console.error("Ошибка получения данных проекта (fallback по id):", error);
     return null;
   }
 }

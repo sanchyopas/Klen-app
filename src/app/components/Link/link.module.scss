@@ -51,6 +51,42 @@
     }
   }
 
+  // Без отступа и без точки, точка выезжает слева по наведению
+  &.dotHover {
+    padding-left: 0;
+    padding-right: 0;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #424242;
+      position: absolute;
+      left: -24px;
+      top: 9px;
+      opacity: 0;
+      transition: all 0.25s;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        padding-left: 24px;
+
+        &:before {
+          left: 0;
+          opacity: 1;
+        }
+
+        &:active {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+      }
+    }
+  }
+
   &.dotReverce {
     padding-left: 0;
     padding-right: 24px;

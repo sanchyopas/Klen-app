@@ -39,8 +39,7 @@ export default async function ProjectsPage() {
   const projects = result.object.cases;
 
   const filtersData = {
-    types: result.object?.filter_projects || [],
-    years: result.object?.filter_period || [],
+    categories: result.object?.filter_categories || [],
   };
 
   return <ProjectsPageClient projects={projects} filtersData={filtersData} />;

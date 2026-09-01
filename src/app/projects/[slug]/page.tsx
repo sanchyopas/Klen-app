@@ -69,11 +69,28 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     notFound();
   }
 
+  const category = project?.object?.category;
+  const subcategories = project?.object?.subcategories;
+  const subcategory = Array.isArray(subcategories) ? subcategories[0] : subcategories;
+
+  // Категории и сабкатегории может не быть — тогда крошка просто не выводится
   const pathNames = [
     // { link: '/', name: 'Главная' },
     { link: '/projects', name: 'Проекты' },
-    { link: `/projects?type=${project?.object?.getTypes}`, name: project?.object?.getTypes },
-    { link: `/projects?year=${project?.object?.getYears}`, name: project?.object?.getYears },
+    ...(category?.slug
+      ? [{
+          link: `/projects?category=${encodeURIComponent(category.slug)}`,
+          name: category.title,
+        }]
+      : []),
+    ...(subcategory?.slug
+      ? [{
+          link: category?.slug
+            ? `/projects?category=${encodeURIComponent(category.slug)}&subcategory=${encodeURIComponent(subcategory.slug)}`
+            : `/projects?subcategory=${encodeURIComponent(subcategory.slug)}`,
+          name: subcategory.title,
+        }]
+      : []),
   ];
 
   return (

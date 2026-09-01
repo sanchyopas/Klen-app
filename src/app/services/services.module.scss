@@ -55,18 +55,6 @@
       opacity: 0.8;
     }
 
-    .linkList {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px 40px;
-      @media (max-width: 767px) {
-        gap: 8px 20px;
-      }
-
-      a {
-        text-transform: initial;
-      }
-    }
   }
 
   .noGapContent {
@@ -90,6 +78,149 @@
         object-fit: cover;
       }
     }
+  }
+
+  // Картинка выбранной категории: слои накладываются друг на друга и перекрещиваются
+  .img.imageContainer {
+    overflow: hidden;
+    aspect-ratio: 670 / 420;
+
+    @media (max-width: 767px) {
+      aspect-ratio: 1 / 1;
+    }
+
+    .animatedImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      // Анимацией управляет gsap, css-переход только мешал бы ему
+      transition: none;
+    }
+
+    .activeImage {
+      z-index: 1;
+    }
+  }
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px 40px;
+
+  @media (max-width: 767px) {
+    gap: 8px 20px;
+  }
+
+  a {
+    text-transform: initial;
+  }
+}
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordionItem {
+  & + .accordionItem {
+    margin-top: 24px;
+
+    @media (max-width: 767px) {
+      margin-top: 16px;
+    }
+  }
+
+  .accordionHead {
+    display: block;
+    width: 100%;
+    padding: 0;
+    background: none;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+    color: #424242;
+
+    h3 {
+      position: relative;
+      padding-left: 0;
+      opacity: 0.8;
+      transition: all 0.25s;
+
+      // Точка активного пункта — как у ссылок с точкой
+      &:before {
+        content: '';
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #424242;
+        position: absolute;
+        left: -24px;
+        top: 14px;
+        opacity: 0;
+        transition: all 0.25s;
+
+        @media (max-width: 767px) {
+          top: 10px;
+        }
+      }
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        h3 {
+          opacity: 1;
+        }
+      }
+
+      &:active {
+        h3 {
+          transform: scale(0.98);
+        }
+      }
+    }
+  }
+
+  &.active {
+    .accordionHead {
+      h3 {
+        opacity: 1;
+        padding-left: 24px;
+
+        &:before {
+          left: 0;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.accordionPanel {
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.accordionPanelInner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 0 0 24px;
+  color: #424242;
+
+  @media (max-width: 767px) {
+    gap: 16px;
+    padding: 16px 0 0 24px;
+  }
+
+  p {
+    margin: 0;
+    opacity: 0.8;
   }
 }
 

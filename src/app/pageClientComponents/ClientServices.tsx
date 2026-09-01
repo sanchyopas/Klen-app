@@ -118,19 +118,21 @@ export const ClientServices = ({cases}:Props) => {
 
                         <div className={s.linkList}>
                           {
-                            (item.subservice ?? []).map((itemLink: any, i: number) => (
-                              <LinkWithWrapper
-                                key={itemLink.id ?? i}
-                                className={s.linkWrapper}
-                                link={item.alias == itemLink.alias
-                                  ? `/services/${itemLink.alias}`
-                                  : `/services/${item.alias}/${itemLink.alias}`}
-                                dotReverce={false}
-                                dotOnHover={true}
-                                isWrapper={false}
-                                name={itemLink.pagetitle}
-                              />
-                            ))
+                            // Первым элементом subservice всегда идёт сама категория —
+                            // в раскрытом аккордеоне нужны только дочерние услуги
+                            (item.subservice ?? [])
+                              .filter((itemLink: any) => itemLink.alias !== item.alias)
+                              .map((itemLink: any, i: number) => (
+                                <LinkWithWrapper
+                                  key={itemLink.id ?? i}
+                                  className={s.linkWrapper}
+                                  link={`/services/${item.alias}/${itemLink.alias}`}
+                                  dotReverce={false}
+                                  dotOnHover={true}
+                                  isWrapper={false}
+                                  name={itemLink.pagetitle}
+                                />
+                              ))
                           }
                         </div>
                       </div>

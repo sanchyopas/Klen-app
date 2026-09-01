@@ -53,6 +53,7 @@
     p {
       margin: 0;
       opacity: 0.8;
+      text-transform: lowercase;
     }
 
   }
@@ -117,7 +118,7 @@
   }
 
   a {
-    text-transform: initial;
+    text-transform: lowercase;
   }
 }
 
@@ -149,6 +150,7 @@
       position: relative;
       padding-left: 0;
       opacity: 0.8;
+      text-transform: lowercase;
       transition: all 0.25s;
 
       // Точка активного пункта — как у ссылок с точкой

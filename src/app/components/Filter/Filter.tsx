@@ -72,6 +72,20 @@ const Filter: React.FC<FilterProps> = ({
     }
   }, [initialType, initialYear, initialCategory, initialSubcategory]);
 
+  // Пришли по ссылке с фильтром — раскрываем подкатегории выбранной категории,
+  // иначе отмеченную сабкатегорию не видно
+  useEffect(() => {
+    if (!initialCategory) {
+      return;
+    }
+
+    const category = categories.find((item) => item.slug === initialCategory);
+
+    if (category?.subcategories?.length) {
+      setOpenCategory(initialCategory);
+    }
+  }, [initialCategory, categories]);
+
   useEffect(() => {
     onFilterChange({
       type: selectedType,

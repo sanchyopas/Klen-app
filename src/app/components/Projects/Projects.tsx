@@ -10,12 +10,16 @@ import Image from "next/image";
 export default function Projects({ classes, title, link, projects, is_pc, isNextProjects, btn_name }: any) {
   const containerRef = useRef(null);
   const [prevProjects, setPrevProjects] = useState(projects);
-  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    if (!containerRef.current || isAnimating) return;
+    if (!containerRef.current) return;
 
-    if (JSON.stringify(prevProjects) === JSON.stringify(projects)) return; // ✅ Если проекты не изменились - выходим
+    // Если проекты не изменились - выходим
+    const isSameList =
+      prevProjects.length === projects.length &&
+      prevProjects.every((item: any, index: number) => item.id === projects[index].id);
+
+    if (isSameList) return;
 
     const items = gsap.utils.toArray(".project-card");
     if (items.length === 0) {
@@ -23,18 +27,17 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
       return;
     }
 
-    setIsAnimating(true);
+    // Прерываем незавершённую анимацию, иначе быстрые клики по фильтрам теряются
+    gsap.killTweensOf(items);
 
     gsap.to(items, {
       opacity: 0,
-      y: 50,
-      duration: 0.3,
+      y: 20,
+      duration: 0.2,
       ease: "power2.in",
-      stagger: 0.1,
-      onComplete: () => {
-        setPrevProjects(projects);
-        setIsAnimating(false);
-      },
+      // Общее время разлёта фиксировано: пауза до подмены не растёт с числом карточек
+      stagger: { amount: 0.12 },
+      onComplete: () => setPrevProjects(projects),
     });
   }, [projects]);
 
@@ -50,9 +53,9 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
       opacity: 1,
       y: 0,
       clipPath: "inset(0% 0% 0% 0%)",
-      duration: 0.5,
+      duration: 0.4,
       ease: "power2.out",
-      stagger: items.length > 1 ? 0.1 : 0,
+      stagger: items.length > 1 ? { amount: 0.3 } : 0,
     });
   }, [prevProjects]);
 
@@ -63,8 +66,8 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
 
         <div ref={containerRef} className={isNextProjects ? `${s.projectsList} ${s.nextProjects}` : s.projectsList}>
           {prevProjects.length > 0 ? (
-            prevProjects.map((project: any) => (
-              <ProjectCard key={project.id} id={project.id} slug={project.alias} title={project.main_screen.preview_text} image={project.main_screen.image} />
+            prevProjects.map((project: any, index: number) => (
+              <ProjectCard key={project.id} id={project.id} slug={project.alias} title={project.main_screen.preview_text} image={project.main_screen.image} priority={index < 2} />
             ))
           ) : (
             <div className={s.emptyMessage}>

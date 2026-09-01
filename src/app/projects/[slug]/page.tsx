@@ -70,27 +70,29 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   }
 
   const category = project?.object?.category;
-  const subcategories = project?.object?.subcategories;
-  const subcategory = Array.isArray(subcategories) ? subcategories[0] : subcategories;
+  const rawSubcategories = project?.object?.subcategories;
+  const subcategories = (Array.isArray(rawSubcategories) ? rawSubcategories : [rawSubcategories])
+    .filter((subcategory: any) => subcategory?.slug);
 
-  // Категории и сабкатегории может не быть — тогда крошка просто не выводится
+  const categoryQuery = category?.slug ? `category=${encodeURIComponent(category.slug)}` : "";
+
+  // Категории и сабкатегорий может не быть — тогда крошка просто не выводится
   const pathNames = [
     // { link: '/', name: 'Главная' },
     { link: '/projects', name: 'Проекты' },
     ...(category?.slug
       ? [{
-          link: `/projects?category=${encodeURIComponent(category.slug)}`,
+          link: `/projects?${categoryQuery}`,
           name: category.title,
         }]
       : []),
-    ...(subcategory?.slug
-      ? [{
-          link: category?.slug
-            ? `/projects?category=${encodeURIComponent(category.slug)}&subcategory=${encodeURIComponent(subcategory.slug)}`
-            : `/projects?subcategory=${encodeURIComponent(subcategory.slug)}`,
-          name: subcategory.title,
-        }]
-      : []),
+    // Сабкатегорий может быть несколько — выводим каждую отдельной крошкой
+    ...subcategories.map((subcategory: any) => ({
+      link: `/projects?${[categoryQuery, `subcategory=${encodeURIComponent(subcategory.slug)}`]
+        .filter(Boolean)
+        .join("&")}`,
+      name: subcategory.title,
+    })),
   ];
 
   return (

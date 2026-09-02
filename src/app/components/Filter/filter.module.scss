@@ -14,7 +14,27 @@
     transition: all 0.2s ease-in-out;
 
     @media (max-width: 767px) {
+      // Мобильный — аккордеон: каждая категория (кнопка + её список подкатегорий,
+      // см. .filterCategory) занимает свою строку
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
       padding-bottom: 0!important;
+    }
+  }
+
+  // Обёртка категории. На десктопе не участвует в layout (display: contents) —
+  // кнопка и список подкатегорий остаются прямыми flex-элементами .filterList,
+  // раскладка не меняется
+  .filterCategory {
+    display: contents;
+
+    @media (max-width: 767px) {
+      // На мобильном — обычный блок на всю ширину (сама категория аккордеона).
+      // Важно: не display:contents — у браузеров есть баг, из-за которого
+      // max-height на flex-элементе, чей родитель contents, считается в 0
+      display: block;
+      width: 100%;
     }
   }
 
@@ -31,6 +51,14 @@
     z-index: 2;
     &.open {
       opacity: 1;
+    }
+
+    @media (max-width: 767px) {
+      // Каждый пункт — заголовок аккордеона: своя строка
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 4px 0;
     }
   }
 
@@ -54,6 +82,11 @@
       left: -24px;
       top: 9px;
       transition: all 0.25s;
+
+      @media (max-width: 767px) {
+        // Компенсируем padding-top: 4px строки-аккордеона (см. выше)
+        top: 13px;
+      }
     }
     &.open {
       opacity: 1;
@@ -71,17 +104,16 @@
 
   }
 
+  // Позиционирующая/обрезающая обёртка. Сама раскладку элементов не задаёт —
+  // этим занимается .filterDropListInner (см. ниже); разделение нужно, чтобы
+  // на мобильном можно было мерить реальную высоту содержимого (scrollHeight),
+  // пока сама обёртка схлопнута через max-height
   .filterDropList {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 24px 0 8px;
     background: #ffffff;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 12px 24px;
     pointer-events: none;
     z-index: 1;
     transition: all .2s ease-in-out;
@@ -95,12 +127,35 @@
     }
 
     @media (max-width: 767px) {
-      flex-direction: column;
-      padding: 8px 0;
-      gap: 0;
-      top: 100%;
-      bottom: initial;
-      transform: translateY(-20px);
+      // На мобильном список подкатегорий больше не оверлей поверх контента,
+      // а обычный блок в потоке сразу под своей категорией — раскрывается
+      // через max-height (высоту считает JS, см. dropHeights в Filter.tsx),
+      // без transform/opacity — это уже не всплывающая панель, а аккордеон
+      position: static;
+      max-height: 0;
+      overflow: hidden;
+      pointer-events: auto;
+      opacity: 1;
+      transform: none;
+      transition: max-height 0.3s ease;
+
+      &.open {
+        max-height: var(--drop-height, 1000px);
+      }
+    }
+
+    .filterDropListInner {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      padding: 24px 0 8px;
+
+      @media (max-width: 767px) {
+        flex-direction: column;
+        gap: 0;
+        padding: 0 0 0 24px;
+      }
     }
 
     .filterItem {
@@ -128,7 +183,7 @@
         cursor: pointer;
 
         @media (max-width: 767px) {
-          padding: 8px 24px;
+          padding: 4px 24px;
         }
 
         &:before {
@@ -143,7 +198,7 @@
           top: 9px;
           transition: all 0.25s;
           @media (max-width: 767px) {
-            top: 17px;
+            top: 13px;
           }
         }
 

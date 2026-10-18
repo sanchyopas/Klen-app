@@ -11,9 +11,11 @@ type Props = {
   id: number;
   slug: string;
   priority?: boolean;
+  // Выбранные фильтры — чтобы на странице проекта рекомендовать проекты той же категории
+  linkQuery?: string;
 }
 
-export default function ProjectCard({ title, image, id, slug, priority = false }: Props) {
+export default function ProjectCard({ title, image, id, slug, priority = false, linkQuery }: Props) {
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -31,7 +33,7 @@ export default function ProjectCard({ title, image, id, slug, priority = false }
           loading={priority ? undefined : "lazy"}
           onLoad={() => setIsLoaded(true)}
         />
-      <Link href={`/projects/${slug}`} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} />
+      <Link href={`/projects/${slug}${linkQuery ? `?${linkQuery}` : ""}`} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} />
       <h3 className={s.name}>{title}</h3>
     </div>
   );

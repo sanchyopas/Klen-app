@@ -4,6 +4,7 @@ import Projects from "@/app/components/Projects/Projects";
 import Filter, { FilterValues } from "@/app/components/Filter/Filter";
 import s from "./projects.module.scss";
 import { useSearchParams } from "next/navigation";
+import { contextToQuery } from "@/app/utils/nextProjects";
 
 type Taxonomy = {
   id: string;
@@ -102,7 +103,11 @@ export default function ProjectsPageClient({ projects, filtersData }: Props) {
         initialSubcategory={filters.subcategory}
       />
 
-      {isLoad && <Projects classes={s.projectsPage} projects={filteredProjects} />}
+      {isLoad && <Projects
+        classes={s.projectsPage}
+        projects={filteredProjects}
+        linkQuery={contextToQuery({ category: filters.category, subcategory: filters.subcategory })}
+      />}
     </>
   );
 }

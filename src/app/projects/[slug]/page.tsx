@@ -8,10 +8,36 @@ import NextProjects from "@/app/components/NextProjects/NextProjects";
 import Breadcrumbs from "@/app/components/Breadcrumbs/Breadcrumbs";
 import s from "./project.module.scss"
 import {createMetadate} from "@/app/utils/seo";
+import {contextToQuery, pickNextProjects, resolveProjectsContext} from "@/app/utils/nextProjects";
 
 type Params = {
   slug: string
 }
+
+type SearchParams = {
+  category?: string | string[]
+  subcategory?: string | string[]
+}
+
+// Полный список проектов — из него подбираются рекомендации той же категории
+async function getProjects() {
+  try {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`${API_URL}/api/cases`, {
+      next: { revalidate: 60 },
+    });
+
+    if (!res.ok) return [];
+
+    const data = await res.json();
+    return Array.isArray(data?.object?.cases) ? data.object.cases : [];
+  } catch (error) {
+    console.error("Ошибка получения списка проектов:", error);
+    return [];
+  }
+}
+
+const firstParam = (value?: string | string[]) => (Array.isArray(value) ? value[0] : value) || null;
 
 async function getProject(slug: string) {
   try {
@@ -38,7 +64,13 @@ export async function generateMetadata(props: { params: Promise<Params> }) {
   const params = await props.params
   const {slug} = params;
 
-  return createMetadate(getProject, slug)
+  const metadata = await createMetadate(getProject, slug)
+
+  // Фильтры в query-параметрах не создают новых страниц для поисковиков
+  return {
+    ...metadata,
+    alternates: { canonical: `https://abklen.ru/projects/${slug}` },
+  }
 }
 
 // export async function generateMetadata(props: { params: Promise<Params> }) {
@@ -61,13 +93,28 @@ export async function generateMetadata(props: { params: Promise<Params> }) {
 
 
 
-export default async function ProjectPage({ params }: { params: Promise<Params> }) {
+export default async function ProjectPage({ params, searchParams }: {
+  params: Promise<Params>
+  searchParams: Promise<SearchParams>
+}) {
   const { slug } = await params;
-  const project = await getProject(slug);
+  const query = await searchParams;
+  const [project, projects] = await Promise.all([getProject(slug), getProjects()]);
 
   if (!project) {
     notFound();
   }
+
+  // Рекомендации — из выбранной в фильтре категории, а при переходе по прямой ссылке — из основной
+  const currentProject = projects.find((item: any) => item.id === project.object.id || item.alias === project.object.alias)
+    ?? project.object;
+  const projectsContext = resolveProjectsContext(currentProject, {
+    category: firstParam(query?.category),
+    subcategory: firstParam(query?.subcategory),
+  });
+  const nextProjects = projects.length
+    ? pickNextProjects(projects, currentProject, projectsContext)
+    : project?.object?.nextCases ?? [];
 
   const category = project?.object?.category;
   const rawSubcategories = project?.object?.subcategories;
@@ -111,7 +158,14 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       </div>
 
       {/*<NextProjects projects={project.object.nextCases} />*/}
-      <Projects title={"Следующий проект"} isNextProjects={true} projects={project?.object?.nextCases}/>
+      {nextProjects.length > 0 &&
+        <Projects
+          title={"Следующий проект"}
+          isNextProjects={true}
+          projects={nextProjects}
+          linkQuery={contextToQuery(projectsContext)}
+        />
+      }
     </>
   );
 }

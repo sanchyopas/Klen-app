@@ -7,7 +7,7 @@ import ProjectCard from "@/app/components/ProjectCard/ProjectCard";
 import LinkWithWrapper from "@/app/components/Link/Link";
 import Image from "next/image";
 
-export default function Projects({ classes, title, link, projects, is_pc, isNextProjects, btn_name }: any) {
+export default function Projects({ classes, title, link, projects, is_pc, isNextProjects, btn_name, linkQuery }: any) {
   const containerRef = useRef(null);
   const [prevProjects, setPrevProjects] = useState(projects);
 
@@ -67,7 +67,7 @@ export default function Projects({ classes, title, link, projects, is_pc, isNext
         <div ref={containerRef} className={isNextProjects ? `${s.projectsList} ${s.nextProjects}` : s.projectsList}>
           {prevProjects.length > 0 ? (
             prevProjects.map((project: any, index: number) => (
-              <ProjectCard key={project.id} id={project.id} slug={project.alias} title={project.main_screen.preview_text} image={project.main_screen.image} priority={index < 2} />
+              <ProjectCard key={project.id} id={project.id} slug={project.alias} title={project.main_screen.preview_text} image={project.main_screen.image} priority={index < 2} linkQuery={linkQuery} />
             ))
           ) : (
             <div className={s.emptyMessage}>

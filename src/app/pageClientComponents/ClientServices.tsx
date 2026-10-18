@@ -4,20 +4,32 @@ import LinkWithWrapper from "@/app/components/Link/Link";
 import {useGsapFadeIn} from "@/app/hooks/AnimationHooks/useGsapFadeIn";
 import {useEffect, useRef, useState} from "react";
 import {gsap} from "gsap";
+import Title from "@/app/components/Title/Title";
 
 type Props = {
   cases: any[]
+  // Фото, пока ни одна категория не раскрыта — задаётся на ресурсе «Услуги» в MODx
+  defaultImage?: string | null
+  // Заголовок и кнопка «все услуги» — для блока услуг на главной
+  title?: string
+  button_name?: string
+  button_link?: string
 }
 
-export const ClientServices = ({cases}:Props) => {
+export const ClientServices = ({cases, defaultImage: defaultImagePath, title, button_name, button_link}:Props) => {
   const elRef = useGsapFadeIn<HTMLDivElement>()
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  // По умолчанию все категории свёрнуты
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [panelHeights, setPanelHeights] = useState<number[]>([]);
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
   const panelRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  // Пока в админке фото не задано — показываем картинку первой категории
+  const fallbackImagePath = defaultImagePath || cases?.[0]?.main_screen?.image;
+  const defaultImage = fallbackImagePath ? `${API_URL}${fallbackImagePath}` : null;
 
   // Высота раскрытой панели зависит от числа подуслуг и переносов строк
   useEffect(() => {
@@ -32,10 +44,11 @@ export const ClientServices = ({cases}:Props) => {
   }, [cases]);
 
   // Смена картинки — как в блоке услуг на главной
-  const handleImageChange = (index: number) => {
-    const item = cases[index];
+  const handleImageChange = (index: number | null) => {
+    const item = index === null ? null : cases[index];
+    const src = item?.main_screen?.image ? `${API_URL}${item.main_screen.image}` : defaultImage;
 
-    if (!item?.main_screen?.image || !imageContainerRef.current) return;
+    if (!src || !imageContainerRef.current) return;
 
     // Подчищаем слои от прерванных анимаций, чтобы они не накапливались
     imageContainerRef.current
@@ -44,9 +57,9 @@ export const ClientServices = ({cases}:Props) => {
 
     const oldImage = imageContainerRef.current.querySelector(`.${s.activeImage}`) as HTMLImageElement | null;
     const newImage = document.createElement("img");
-    newImage.src = `${API_URL}${item.main_screen.image}`;
-    newImage.alt = item.main_screen.title ?? '';
-    newImage.title = item.main_screen.title ?? '';
+    newImage.src = src;
+    newImage.alt = item?.main_screen?.title ?? '';
+    newImage.title = item?.main_screen?.title ?? '';
     newImage.className = `${s.animatedImage} ${s.activeImage}`;
     newImage.style.opacity = "0";
     newImage.style.transform = "scale(1.2)";
@@ -76,17 +89,19 @@ export const ClientServices = ({cases}:Props) => {
     });
   };
 
+  // Повторный клик по раскрытой категории сворачивает её
   const handleSelect = (index: number) => {
-    if (index === activeIndex) return;
+    const nextIndex = index === activeIndex ? null : index;
 
-    handleImageChange(index);
-    setActiveIndex(index);
+    handleImageChange(nextIndex);
+    setActiveIndex(nextIndex);
   };
 
   return (
     <section ref={elRef} id={s.services}>
       <div className={s.two_columns_content}>
         <div className="container">
+          {!!title && <Title title={title} as="h2" className={s.title}/>}
           <div className={`${s.row} row`}>
             <div className="col-12 col-md-6">
               <div className={s.accordion}>
@@ -140,15 +155,24 @@ export const ClientServices = ({cases}:Props) => {
                   </div>
                 ))}
               </div>
+
+              {!!button_link && !!button_name &&
+                <LinkWithWrapper
+                  className={s.moreLink}
+                  link={button_link}
+                  dotReverce={false}
+                  isWrapper={true}
+                  name={button_name}
+                />
+              }
             </div>
 
             <div className="col-12 col-md-6">
               <div className={`${s.img} ${s.imageContainer}`} ref={imageContainerRef}>
-                {!!cases?.[0]?.main_screen?.image &&
+                {!!defaultImage &&
                   <img
-                    src={`${API_URL}${cases[0].main_screen.image}`}
-                    alt={cases[0].main_screen.title}
-                    title={cases[0].main_screen.title}
+                    src={defaultImage}
+                    alt=""
                     className={`${s.animatedImage} ${s.activeImage}`}
                   />
                 }

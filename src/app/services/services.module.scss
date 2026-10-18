@@ -108,6 +108,23 @@
   }
 }
 
+// Заголовок и кнопка «все услуги» — когда блок выводится на главной
+.title {
+  margin-bottom: 40px;
+
+  @media (max-width: 767px) {
+    margin-bottom: 24px;
+  }
+}
+
+.moreLink {
+  margin-top: 40px;
+
+  @media (max-width: 767px) {
+    margin-top: 24px;
+  }
+}
+
 .linkList {
   display: flex;
   flex-direction: column;

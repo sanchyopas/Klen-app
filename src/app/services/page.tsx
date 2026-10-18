@@ -39,5 +39,5 @@ export default async function ServicesPage() {
     (a: any, b: any) => (a.order ?? 0) - (b.order ?? 0)
   );
 
-  return <ClientServices cases={cases} />;
+  return <ClientServices cases={cases} defaultImage={result.object.default_image} />;
 }

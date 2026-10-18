@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import ServiceMobile from "@/app/components/ServicesMobile/ServicesMobile";
 import ProjectsMobile from "@/app/components/ProjectsMobile/ProjectsMobile";
 import {createMetadate} from "@/app/utils/seo";
+import { ClientServices } from "@/app/pageClientComponents/ClientServices";
 
 async function getData() {
   try {
@@ -30,12 +31,38 @@ async function getData() {
   }
 }
 
+// Категории услуг с подуслугами — для аккордеона, как в разделе «Услуги»
+async function getServices() {
+  try {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`${API_URL}/api/services`, {
+      next: { revalidate: 60 },
+    });
+
+    if (!res.ok) return null;
+
+    const data = await res.json();
+    const cases = data?.object?.cases;
+
+    if (!Array.isArray(cases)) return null;
+
+    return {
+      // Массив не отсортирован по дереву MODx — сортируем по order
+      cases: [...cases].sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0)),
+      defaultImage: data?.object?.default_image ?? null,
+    };
+  } catch (error) {
+    console.error("Error:", error);
+    return null;
+  }
+}
+
 export async function generateMetadata() {
   return createMetadate(getData)
 }
 
 export default async function Home() {
-  const result = await getData();
+  const [result, services] = await Promise.all([getData(), getServices()]);
 
   if (!result || !result.object) {
     notFound();
@@ -68,21 +95,34 @@ export default async function Home() {
           />
         </>
       )}
-      <Services
-        slides={result.object.services.list}
-        title={result.object.services.title_h2}
-        button_link={result.object.services.button_link}
-        button_name={result.object.services.button_name}
-        is_pc={true}
-      />
-      <ServiceMobile
-        is_mobile={true}
-        is_boolet={false}
-        slides={result.object.services.list}
-        title={result.object.services.title_h2}
-        link_btn={result.object.services.button_link}
-        name_btn={result.object.services.button_name}
-      />
+      {services?.cases.length ? (
+        <ClientServices
+          cases={services.cases}
+          defaultImage={services.defaultImage}
+          title={result.object.services?.title_h2 || "услуги"}
+          button_name={result.object.services?.button_name}
+          button_link={result.object.services?.button_link}
+        />
+      ) : (
+        // Если список услуг не загрузился — старый блок
+        <>
+          <Services
+            slides={result.object.services.list}
+            title={result.object.services.title_h2}
+            button_link={result.object.services.button_link}
+            button_name={result.object.services.button_name}
+            is_pc={true}
+          />
+          <ServiceMobile
+            is_mobile={true}
+            is_boolet={false}
+            slides={result.object.services.list}
+            title={result.object.services.title_h2}
+            link_btn={result.object.services.button_link}
+            name_btn={result.object.services.button_name}
+          />
+        </>
+      )}
     </>
   );
 }

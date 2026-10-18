@@ -116,6 +116,11 @@ export default function YandexMap({info}: InfoProps) {
       //.fromTo(buttonsRef.current, {opacity: 0, y: 20}, {opacity: 1, y: 0, stagger: 0.2}, "-=0.6");
   }, []);
 
+  // Маршрут до офиса в Яндекс Картах: точка отправления пустая — карты подставят
+  // местоположение пользователя, а в мобильном приложении оттуда же можно вызвать такси
+  const officeCoords = (info?.coords || "55.754948, 37.561625").replace(/\s+/g, "");
+  const routeUrl = `https://yandex.ru/maps/?rtext=~${officeCoords}&rtt=auto`;
+
   // const {handleOpenModalBid, handleOpenModalTender} = useModalHandlers();
   //
   // const {openModal} = useModalStore();
@@ -174,9 +179,14 @@ export default function YandexMap({info}: InfoProps) {
                     <img src={"/img/icon/location.svg"} alt={"KLЁN — architectural bureau telegram"}/>
                   </div>
                   <div className={s["contact-info__list-text"]}>
-                    <p className={s["contact-info__list-address"]}>
+                    <a
+                      href={routeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={s["contact-info__list-address"]}
+                    >
                       {info?.address}
-                    </p>
+                    </a>
                   </div>
                 </div>
               </div>

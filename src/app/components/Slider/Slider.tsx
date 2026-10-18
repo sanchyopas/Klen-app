@@ -28,6 +28,8 @@ type SliderProps = {
   title?: string;
   title_as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   class_name?: string;
+  // Стрелки по бокам от слайда, а не под ним (галереи проектов)
+  arrows_on_sides?: boolean;
 };
 
 type Slide = {
@@ -46,6 +48,7 @@ export default function Slider({
                                  title,
                                  title_as,
                                  class_name,
+                                 arrows_on_sides,
                                }: SliderProps) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -82,6 +85,17 @@ export default function Slider({
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+  const navigations = (
+    <div className={`${s["slider__navigations"]} ${arrows_on_sides ? s["slider__navigations--sides"] : ""}`}>
+      <button ref={prevRef} type="button" className={s["slider__prev"]} aria-label="Предыдущий слайд">
+        <img src="/img/icon/arrow_left.svg" alt=""/>
+      </button>
+      <button ref={nextRef} type="button" className={s["slider__next"]} aria-label="Следующий слайд">
+        <img src="/img/icon/arrow_right.svg" alt=""/>
+      </button>
+    </div>
+  );
+
   return (
     <>
       <div
@@ -91,6 +105,7 @@ export default function Slider({
         <div className="container">
           {!!title && <Title title={title} as={title_as} />}
 
+          <div className={s["slider__stage"]}>
           <Swiper
             speed={500}
             loop={true} // Основной слайдер зациклен
@@ -143,6 +158,8 @@ export default function Slider({
               </SwiperSlide>
             ))}
           </Swiper>
+          {arrows_on_sides && navigations}
+          </div>
 
           <div className={s["slider__actions"]}>
             {is_boolet ? (
@@ -171,14 +188,7 @@ export default function Slider({
               <LinkWithWrapper dotReverce={false} isWrapper={false} name={name_btn} link={link_btn}/>
             )}
 
-            <div className={s["slider__navigations"]}>
-              <button ref={prevRef} className={s["slider__prev"]}>
-                <img src="/img/icon/arrow_left.svg" alt=""/>
-              </button>
-              <button ref={nextRef} className={s["slider__next"]}>
-                <img src="/img/icon/arrow_right.svg" alt=""/>
-              </button>
-            </div>
+            {!arrows_on_sides && navigations}
           </div>
         </div>
       </div>

@@ -21,7 +21,7 @@ export const DynamicBlock = ({block}: any) => {
     case "Текст в 2 колонки по центру":
       return <TextTwoColumn text={block.text} />
     case "Фотогалерея":
-      return <Slider slide_contian={true} slides={Array.isArray(block.image) ? block.image : []} is_boolet={true}/>
+      return <Slider slide_contian={true} slides={Array.isArray(block.image) ? block.image : []} is_boolet={true} arrows_on_sides={true}/>
     case "Текст в 1 колонку по центру":
       return <SmallTextSection text={block.text}/>
     case "Текст по центру на 50% ширины":

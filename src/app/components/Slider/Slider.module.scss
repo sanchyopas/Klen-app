@@ -51,6 +51,57 @@
     gap: 40px;
   }
 
+  &__stage {
+    position: relative;
+  }
+
+  // Стрелки слева и справа от слайда: на десктопе — в боковых полях контейнера,
+  // на мобильном полей почти нет, поэтому кнопки лежат поверх краёв изображения
+  &__navigations--sides {
+    position: absolute;
+    inset: 0;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 2;
+
+    .slider__prev,
+    .slider__next {
+      pointer-events: auto;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      padding: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .slider__prev {
+      margin-left: 8px;
+    }
+
+    .slider__next {
+      margin-right: 8px;
+    }
+
+    @media screen and (min-width: 768px) {
+      .slider__prev,
+      .slider__next {
+        width: 32px;
+        height: 32px;
+        padding: 4px;
+        background: none;
+      }
+
+      .slider__prev {
+        margin-left: -36px;
+      }
+
+      .slider__next {
+        margin-right: -36px;
+      }
+    }
+  }
+
   &__next,
   &__prev {
     display: flex;

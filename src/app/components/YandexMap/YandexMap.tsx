@@ -116,10 +116,8 @@ export default function YandexMap({info}: InfoProps) {
       //.fromTo(buttonsRef.current, {opacity: 0, y: 20}, {opacity: 1, y: 0, stagger: 0.2}, "-=0.6");
   }, []);
 
-  // Маршрут до офиса в Яндекс Картах: точка отправления пустая — карты подставят
-  // местоположение пользователя, а в мобильном приложении оттуда же можно вызвать такси
-  const officeCoords = (info?.coords || "55.754948, 37.561625").replace(/\s+/g, "");
-  const routeUrl = `https://yandex.ru/maps/?rtext=~${officeCoords}&rtt=auto`;
+  // Карточка офиса в Яндекс Картах — оттуда можно построить маршрут или вызвать такси
+  const officeMapUrl = "https://yandex.ru/maps/-/CXFOfY-H";
 
   // const {handleOpenModalBid, handleOpenModalTender} = useModalHandlers();
   //
@@ -180,7 +178,7 @@ export default function YandexMap({info}: InfoProps) {
                   </div>
                   <div className={s["contact-info__list-text"]}>
                     <a
-                      href={routeUrl}
+                      href={officeMapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={s["contact-info__list-address"]}
